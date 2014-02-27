@@ -5,12 +5,12 @@
 #   Hubot says good bye on out
 
 byes = [
-  "See you tomorrow, %s!",
-  "Goodbye, %s!",
-  "Have a nice evening, %s!",
+  "See you tomorrow, %!",
+  "Goodbye, %!",
+  "Have a nice evening, %!",
 ]
 weekends = [
-  "Have a nice weekend, %s",
+  "Have a nice weekend, %",
 ]
 module.exports = (robot) ->
   robot.hear /(out|bye)/i, (msg) ->
