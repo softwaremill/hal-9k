@@ -6,11 +6,11 @@
 
 byes = [
   "See you tomorrow, %s!",
-  "Goodbye, $s!",
+  "Goodbye, %s!",
   "Have a nice evening, %s!",
 ]
 weekends = [
-  "Have a nice weekend, %",
+  "Have a nice weekend, %s",
 ]
 module.exports = (robot) ->
   robot.hear /(out|bye)/i, (msg) ->
