@@ -9,8 +9,7 @@
 
 module.exports = (robot) ->
   robot.respond /PING$/i, (msg) ->
-    msg.send "pong!"
-    msg.send "Play again?"
+    msg.send "pong!\nPlay again?"
 
   robot.respond /ECHO (.*)$/i, (msg) ->
     msg.send msg.match[1]
