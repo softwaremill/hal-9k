@@ -19,7 +19,7 @@ weekends = [
   "Bye %! Weekend, yeah!!!"
 ]
 module.exports = (robot) ->
-  robot.hear /(out|bye|pa|nara|dozo)/i, (msg) ->
+  robot.hear /^(out|bye|pa|nara|dozo)$/i, (msg) ->
     bye = msg.random byes
 
     if new Date().getDay() == 5
