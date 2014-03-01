@@ -12,4 +12,4 @@ module.exports = (robot) ->
 
   robot.respond /4te\?$/i, (msg) ->
     q = msg.random questions
-    msg.send q
+    msg.send "4te: " + q
