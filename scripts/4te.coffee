@@ -9,7 +9,7 @@ questions = [
   "Kogo uważasz za najbardziej histerskiego?"
 ]
 module.exports = (robot) ->
-  robot.respons /^4te\?$/i, (msg) ->
+  robot.response /^4te\?$/i, (msg) ->
     q = msg.random questions
 
     msg.send q
