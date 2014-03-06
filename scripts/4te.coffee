@@ -6,10 +6,12 @@
 
 questions = [
   "Najlepsze 4te pytanie do tej pory?",
-  "Kogo uważasz za najbardziej hipsterskiego?"
+  "Kogo uważasz za najbardziej hipsterskiego?",
+  "Twoje Boje: z jaką pokusą często walczysz?",
+  "Co lubisz w Polsce?"
 ]
 module.exports = (robot) ->
 
   robot.respond /4te\?$/i, (msg) ->
     q = msg.random questions
-    msg.send "4te: " + q
+    msg.send "#4te: " + q
