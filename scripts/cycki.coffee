@@ -1,8 +1,8 @@
 # Description:
-#   Messing around with the YouTube API.
+#   Messing around with the YouTube API and Google Images.
 #
 # Commands:
-#   hubot youtube me <query> - Searches YouTube for the query and returns the video embed link.
+#   hubot cycki
 
 sources = ['yt', 'img']
 
