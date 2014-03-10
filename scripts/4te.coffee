@@ -8,7 +8,8 @@ questions = [
   "Najlepsze 4te pytanie do tej pory?",
   "Kogo uważasz za najbardziej hipsterskiego?",
   "Twoje Boje: z jaką pokusą często walczysz?",
-  "Co lubisz w Polsce?"
+  "Co lubisz w Polsce?",
+  "Jak spędziłeś weekend?"
 ]
 module.exports = (robot) ->
 
