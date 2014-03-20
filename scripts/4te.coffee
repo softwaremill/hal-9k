@@ -12,7 +12,8 @@ questions = [
   "Jak spędziłeś weekend?",
   "To Se Ne Vrati: Za czym, co już nie wróci, tęsknisz?",
   "Jakie (jeżeli wogóle) paliłeś pierwsze papierosy?",
-  "Za jakim ciałem tęsknisz? (interpretacja dowolna)"
+  "Za jakim ciałem tęsknisz? (interpretacja dowolna)",
+  "Grajki. Na jakich instrumentach graliście lub gracie?"
 ]
 module.exports = (robot) ->
 
