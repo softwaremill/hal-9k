@@ -13,7 +13,8 @@ questions = [
   "To Se Ne Vrati: Za czym, co już nie wróci, tęsknisz?",
   "Jakie (jeżeli wogóle) paliłeś pierwsze papierosy?",
   "Za jakim ciałem tęsknisz? (interpretacja dowolna)",
-  "Grajki. Na jakich instrumentach graliście lub gracie?"
+  "Grajki. Na jakich instrumentach graliście lub gracie?",
+  "Jaka nowa technologia/aplikacja sprawiła, że złapałeś/łaś się za głowę?"
 ]
 module.exports = (robot) ->
 
