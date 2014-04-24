@@ -46,6 +46,11 @@ imageMe = (msg, query, animated, faces, cb) ->
   .query(q)
   .get() (err, res, body) ->
     images = JSON.parse(body)
+
+    unless images?
+      msg.send "Nie ma cycków :("
+      return
+
     images = images.responseData?.results
     if images?.length > 0
       image  = msg.random images
