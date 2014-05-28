@@ -20,7 +20,7 @@ yt = (robot, msg) ->
         orderBy: "relevance"
         'max-results': 15
         alt: 'json'
-        q: 'cycki'
+        q: 'cycki,tits'
       })
   .get() (err, res, body) ->
     videos = JSON.parse(body)
@@ -36,7 +36,7 @@ yt = (robot, msg) ->
         msg.send link.href
 
 imageMe = (msg) ->
-  q = v: '1.0', rsz: '8', q: 'cycki'
+  q = v: '1.0', rsz: '8', q: 'cycki,tits'
   msg.http('http://ajax.googleapis.com/ajax/services/search/images')
   .query(q)
   .get() (err, res, body) ->
