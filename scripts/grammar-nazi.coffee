@@ -7,7 +7,7 @@ module.exports = (robot) ->
     author = msg.message.user.name
     grammarFailure = msg.match[1]
     exclamationSentence = msg.random messages
-    msg.send 'Pisze się *' + errors[grammarFailure.toLowerCase().trim()] + '*, @' + author + ' ' + exclamationSentence + '!'
+    msg.send 'Grammar Nazi: pisze się *' + errors[grammarFailure.toLowerCase().trim()] + '*, @' + author + ' ' + exclamationSentence + '!'
 
 prepareGrammarNaziDetectingRegEx = () ->
   errorWords = []
