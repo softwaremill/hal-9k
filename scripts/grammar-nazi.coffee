@@ -20,6 +20,7 @@ prepareGrammarNaziDetectingRegEx = () ->
 errors =
   'wziąść'  : 'wziąć'
   'wziasc'  : 'wziąć'
+  'wziaść'  : 'wziąć'
   'pokarze' : 'pokażę'
   'pokarzę' : 'pokażę'
   'żądzić'  : 'rządzić'
