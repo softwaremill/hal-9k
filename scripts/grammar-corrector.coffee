@@ -90,7 +90,7 @@ messages = [
   'ja pitolę',
   'ile razy mam powtarzać?',
   'z tobą jak z małym dzieckiem',
-  'chyba egzystujesz w brodziku intelektualnym',
+  'chyba egzystujesz w intelektualnym brodziku',
   'chyba pracowałeś w Nabino',
   'no to prezent na urodziny ustalony, od SML dostaniesz słownik'
 ]
