@@ -1,5 +1,5 @@
 # Description:
-#   Grammar Nazi for Polish language. It listens on every channel to slap those making mistakes
+#   Grammar Corrector for Polish language. It listens on every channel to slap those making mistakes
 #
 
 module.exports = (robot) ->
@@ -7,7 +7,7 @@ module.exports = (robot) ->
     author = msg.message.user.name
     grammarFailure = msg.match[1]
     exclamationSentence = msg.random messages
-    msg.send 'Grammar Nazi: pisze się *' + errors[grammarFailure.toLowerCase().trim()] + '*, @' + author + ' ' + exclamationSentence + '!'
+    msg.send  '@' + author + ', ' + exclamationSentence + '! Pisze się *' + errors[grammarFailure.toLowerCase().trim()] + '*'
 
 prepareGrammarNaziDetectingRegEx = ->
   errorWords = []
@@ -87,5 +87,8 @@ messages = [
   'bitch please',
   'ja pitolę',
   'ile razy mam powtarzać?',
-  'z tobą jak z małym dzieckiem'
+  'z tobą jak z małym dzieckiem',
+  'chyba egzystujesz w brodziku intelektualnym',
+  'chyba pracowałeś w Nabino',
+  'no to prezent na urodziny ustalony, od SML dostaniesz słownik'
 ]
