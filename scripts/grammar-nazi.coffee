@@ -9,13 +9,13 @@ module.exports = (robot) ->
     exclamationSentence = msg.random messages
     msg.send 'Grammar Nazi: pisze się *' + errors[grammarFailure.toLowerCase().trim()] + '*, @' + author + ' ' + exclamationSentence + '!'
 
-prepareGrammarNaziDetectingRegEx = () ->
+prepareGrammarNaziDetectingRegEx = ->
   errorWords = []
   for k, v of errors
     errorWords.push k
+
   joinedErrors = errorWords.join('|')
-  grammarNaziDetectorRegex = new RegExp('.*(' + joinedErrors + ').*', 'i');
-  return  grammarNaziDetectorRegex
+  new RegExp '.*(' + joinedErrors + ').*', 'i'
 
 errors =
   'wziąść'  : 'wziąć'
@@ -76,8 +76,16 @@ errors =
   'nadzieji': 'nadziei'
   'swetr': 'sweter'
 
-
-
-
-messages = ['no kurde', 'do diaska', 'nieuku ty', 'ehh, szkoda słów',
-            'czy Ty sie w koncu tego nauczysz?', 'znany ekspercie od wszystkiego', 'chamie bez szkoły', 'bitch please', 'ja pitolę', "ile razy mam powtarzać?", "z tobą jak z małym dzieckiem"]
+messages = [
+  'no kurde',
+  'do diaska',
+  'nieuku ty',
+  'ehh, szkoda słów',
+  'czy Ty sie w koncu tego nauczysz?',
+  'znany ekspercie od wszystkiego',
+  'chamie bez szkoły',
+  'bitch please',
+  'ja pitolę',
+  'ile razy mam powtarzać?',
+  'z tobą jak z małym dzieckiem'
+]
