@@ -3,11 +3,29 @@
 #
 
 module.exports = (robot) ->
-  robot.hear prepareGrammarNaziDetectingRegEx(), (msg) ->
-    author = msg.message.user.name
-    grammarFailure = msg.match[1]
-    exclamationSentence = msg.random messages
-    msg.send  '@' + author + ', ' + exclamationSentence + '! Poprawna forma to *' + errors[grammarFailure.toLowerCase().trim()] + '*'
+  robot.hear /.*/, (msg) ->
+    msgWithoutPolishChars = replacePolishChars(msg.message.text)
+    regex = prepareGrammarNaziDetectingRegEx()
+    matches = regex.exec(msgWithoutPolishChars)
+    if (matches != null )
+      console.log('matches ' + matches)
+      console.log('matches[1] ' + matches[1])
+      author = msg.message.user.name
+      exclamationSentence = msg.random messages
+      msg.send  '@' + author + ', ' + exclamationSentence + '! Poprawna forma to *' + errors[matches[1]] + '*'
+
+replacePolishChars = (text) ->
+    text.toLowerCase()
+      .replace('ą', 'a')
+      .replace('ć', 'c')
+      .replace('ę', 'e')
+      .replace('ł', 'l')
+      .replace('ń', 'n')
+      .replace('ó', 'o')
+      .replace('ś', 's')
+      .replace('ż', 'z')
+      .replace('ź', 'z')
+
 
 prepareGrammarNaziDetectingRegEx = ->
   errorWords = []
@@ -15,68 +33,57 @@ prepareGrammarNaziDetectingRegEx = ->
     errorWords.push k
 
   joinedErrors = errorWords.join('|')
+  console.log(' errors ' + joinedErrors)
   new RegExp '.*(' + joinedErrors + ').*', 'i'
 
 errors =
-  'wziąść'  : 'wziąć'
   'wziasc'  : 'wziąć'
-  'wziaść'  : 'wziąć'
   'pokarze' : 'pokażę'
-  'pokarzę' : 'pokażę'
-  'żądzić'  : 'rządzić'
-  'żadzić'  : 'rządzić'
-  'żadzic'  : 'rządzić'
-  'ządzic'  : 'rządzić'
-  'rządać'  : 'żądać'
+  'zadzic'  : 'rządzić'
   'rzadac'  : 'żądać'
-  'rządac'  : 'żądać'
-  'pojedyńcz'  : 'pojedynczy'
-  'z tąd'  : 'stąd'
   'z tad'  : 'stąd'
-  'z tamtąd': 'stamtąd'
   'z tamtad': 'stamtąd'
-  'wogóle': 'w ogóle'
   'wogole': 'w ogóle'
-  'wogule': 'w ogóle'
+  'w ogule': 'w ogóle'
   'z przed': 'sprzed'
   'napewno': 'na pewno'
   'conamniej': 'co najmniej'
   'poprostu': 'po prostu'
   'na prawdę' : 'naprawdę'
-  'na prawde' : 'naprawdę'
   'nie prawda': 'nieprawda'
   'poprostu': 'po prostu'
   'nie prawda': 'nieprawda'
   'na przeciwko': 'naprzeciwko'
-  'umią'  : 'umieją'
   'umia'  : 'umieją'
-  'rozumią'  : 'rozumieją'
   'rozumia'  : 'rozumieją'
-  'przekonywujący': 'przekonujący'
   'przekonywujacy': 'przekonujący'
   'tylni': 'tylny'
-  'poszłem': 'poszedłem'
   'poszlem': 'poszedłem'
   'przyszlem': 'przyszedłem'
-  'przyszłem': 'przyszedłem'
+  'wyszlem': 'wyszedłem'
+  'rzyglem': 'rzygnąłem'
+  'rzyglam': 'rzygnęłam'
+  'zyglem': 'rzygnąłem'
+  'zyglam': 'rzygnęłam'
   'orginalny': 'oryginalny'
-  'wszechczasów': 'wszech czasów'
   'wszechczasow': 'wszech czasów'
-  'oddziaływuje': 'oddziałuje'
   'oddzialywuje': 'oddziałuje'
   'spowrotem': 'z powrotem'
-  'możnaby': 'można by'
   'moznaby': 'można by'
-  'na codzień': 'na co dzień'
   'na codzien': 'na co dzień'
-  'mogło by': 'mogłoby'
   'moglo by': 'mogłoby'
   'szyji': 'szyi'
-  'wgłąb': 'w włąb'
   'wglab': 'w włąb'
   'nielada': 'nie lada'
   'nadzieji': 'nadziei'
   'swetr': 'sweter'
+  'huj': 'chuj'
+  'hoj': 'chuj'
+  'grzegrzolka': 'gżegżółka'
+  'do prawdy': 'doprawdy'
+  'hamstwo': 'chamstwo'
+  'hamstwa': 'chamstwa'
+
 
 messages = [
   'no kurde',
