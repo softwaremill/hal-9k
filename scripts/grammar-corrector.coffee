@@ -33,7 +33,7 @@ prepareGrammarNaziDetectingRegEx = ->
     errorWords.push k
 
   joinedErrors = errorWords.join('|')
-  new RegExp '.*(' + joinedErrors + ').*', 'i'
+  new RegExp '(^|\s)(' + joinedErrors + ')($|\s)', 'i'
 
 errors =
   'wziasc'  : 'wziąć'
