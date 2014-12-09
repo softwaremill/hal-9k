@@ -72,7 +72,7 @@ errors =
   'na codzien': 'na co dzień'
   'moglo by': 'mogłoby'
   'szyji': 'szyi'
-  'wglab': 'w włąb'
+  'wglab': 'w głąb'
   'nielada': 'nie lada'
   'nadzieji': 'nadziei'
   'swetr': 'sweter'
