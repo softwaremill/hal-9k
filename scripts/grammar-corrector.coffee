@@ -33,7 +33,6 @@ prepareGrammarNaziDetectingRegEx = ->
     errorWords.push k
 
   joinedErrors = errorWords.join('|')
-  console.log(' errors ' + joinedErrors)
   new RegExp '.*(' + joinedErrors + ').*', 'i'
 
 errors =
