@@ -57,6 +57,8 @@ errors =
   'tylni': 'tylny'
   'poszłem': 'poszedłem'
   'poszlem': 'poszedłem'
+  'przyszlem': 'przyszedłem'
+  'przyszłem': 'przyszedłem'
   'orginalny': 'oryginalny'
   'wszechczasów': 'wszech czasów'
   'wszechczasow': 'wszech czasów'
