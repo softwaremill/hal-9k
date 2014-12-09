@@ -8,11 +8,9 @@ module.exports = (robot) ->
     regex = prepareGrammarNaziDetectingRegEx()
     matches = regex.exec(msgWithoutPolishChars)
     if (matches != null )
-      console.log('matches ' + matches)
-      console.log('matches[1] ' + matches[1])
       author = msg.message.user.name
       exclamationSentence = msg.random messages
-      msg.send  '@' + author + ', ' + exclamationSentence + '! Poprawna forma to *' + errors[matches[1]] + '*'
+      msg.send  '@' + author + ', ' + exclamationSentence + '! Poprawna forma to *' + errors[matches[0].trim()] + '*'
 
 replacePolishChars = (text) ->
     text.toLowerCase()
@@ -33,7 +31,7 @@ prepareGrammarNaziDetectingRegEx = ->
     errorWords.push k
 
   joinedErrors = errorWords.join('|')
-  new RegExp '(^|\s)(' + joinedErrors + ')($|\s)', 'i'
+  new RegExp '(^|\\s)(' + joinedErrors + ')($|\\s)', 'i'
 
 errors =
   'wziasc'  : 'wziąć'
