@@ -81,6 +81,7 @@ errors =
   'do prawdy': 'doprawdy'
   'hamstwo': 'chamstwo'
   'hamstwa': 'chamstwa'
+  'dobzi': 'dobrzy'
 
 
 messages = [
