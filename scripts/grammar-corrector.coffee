@@ -67,6 +67,7 @@ errors =
   'oddzialywuje': 'oddziałuje'
   'spowrotem': 'z powrotem'
   'moznaby': 'można by'
+  'trzebaby': 'trzeba by'
   'na codzien': 'na co dzień'
   'moglo by': 'mogłoby'
   'szyji': 'szyi'
