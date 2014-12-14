@@ -82,6 +82,11 @@ errors =
   'hamstwo': 'chamstwo'
   'hamstwa': 'chamstwa'
   'dobzi': 'dobrzy'
+  'przesowac': 'przesuwac'
+  'przesowam': 'przesuwam'
+  'przesonalem': 'przesunalem'
+  'przesonelam': 'przesunelam'
+
 
 
 messages = [
