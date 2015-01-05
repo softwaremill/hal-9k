@@ -46,7 +46,7 @@ errors =
   'napewno': 'na pewno'
   'conamniej': 'co najmniej'
   'poprostu': 'po prostu'
-  'na prawdę' : 'naprawdę'
+  'na prawde' : 'naprawdę'
   'nie prawda': 'nieprawda'
   'poprostu': 'po prostu'
   'nie prawda': 'nieprawda'
