@@ -16,7 +16,6 @@ module.exports = (robot) ->
       error = matches[0].trim()
       correctForm = errors[matches[0].trim()]
       msg.send  '@' + author + ', ' + exclamationSentence + '! Poprawna forma to *' + correctForm + '*'
-
       sendMessageToStatsApp(robot, msg, author, error, correctForm)
 
 replacePolishChars = (text) ->
@@ -42,7 +41,7 @@ sendMessageToStatsApp = (robot, msg, author, error, correctForm) ->
   .header('Auth-token', TOKEN)
   .post(request) (err, res, body) ->
     status = res.statusCode
-    msg.send 'Status ' + status ', body = ' + body
+    msg.send "Status #{status}, body = #{body}"
 
 prepareGrammarNaziDetectingRegEx = ->
   errorWords = []
