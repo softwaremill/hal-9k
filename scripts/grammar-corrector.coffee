@@ -41,7 +41,9 @@ sendMessageToStatsApp = (robot, msg, author, error, correctForm) ->
   .header('Auth-token', TOKEN)
   .post(request) (err, res, body) ->
     status = res.statusCode
-    msg.send "Status #{status}, body = #{body}"
+    if err
+      msg.send "Status #{status}, error = #{err}"
+
 
 prepareGrammarNaziDetectingRegEx = ->
   errorWords = []
