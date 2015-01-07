@@ -2,6 +2,9 @@
 #   Grammar Corrector for Polish language. It listens on every channel to slap those making mistakes
 #
 
+GRAMMAR_STATS_URL = process.env.HUBOT_GRAMMAR_STATS_APP_URL
+TOKEN = process.env.HUBOT_GRAMMAR_STATS_APP_AUTH_TOKEN
+
 module.exports = (robot) ->
   robot.hear /.*/, (msg) ->
     msgWithoutPolishChars = replacePolishChars(msg.message.text)
@@ -10,7 +13,11 @@ module.exports = (robot) ->
     if (matches != null )
       author = msg.message.user.name
       exclamationSentence = msg.random messages
-      msg.send  '@' + author + ', ' + exclamationSentence + '! Poprawna forma to *' + errors[matches[0].trim()] + '*'
+      error = matches[0].trim()
+      correctForm = errors[matches[0].trim()]
+      msg.send  '@' + author + ', ' + exclamationSentence + '! Poprawna forma to *' + correctForm + '*'
+
+      sendMessageToStatsApp(robot, msg, author, error, correctForm)
 
 replacePolishChars = (text) ->
     text.toLowerCase()
@@ -24,6 +31,18 @@ replacePolishChars = (text) ->
       .replace('ż', 'z')
       .replace('ź', 'z')
 
+sendMessageToStatsApp = (robot, msg, author, error, correctForm) ->
+
+  request = JSON.stringify(
+    {"userName": author, "error": error, "correctForm": correctForm}
+  )
+
+  robot.http(GRAMMAR_STATS_URL)
+  .header('Accept', 'application/json')
+  .header('Auth-token', TOKEN)
+  .post(request) (err, res, body) ->
+    status = res.statusCode
+    msg.send 'Status ' + status ', body = ' + body
 
 prepareGrammarNaziDetectingRegEx = ->
   errorWords = []
