@@ -38,7 +38,7 @@ sendMessageToStatsApp = (robot, msg, author, error, correctForm) ->
   )
 
   robot.http(GRAMMAR_STATS_URL + '/mistakes')
-  .header('Accept', 'application/json')
+  .header('Content-Type', 'application/json')
   .header('Auth-token', TOKEN)
   .post(request) (err, res, body) ->
     status = res.statusCode
