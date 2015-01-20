@@ -43,8 +43,8 @@ sendMessageToStatsApp = (robot, msg, author, error, correctForm) ->
     status = res.statusCode
     if err
       msg.send "Status #{status}, error = #{err}"
-    else if body.message
-      msg.send body.message
+    else
+      msg.send body
 
 
 prepareGrammarNaziDetectingRegEx = ->
