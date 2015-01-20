@@ -45,7 +45,7 @@ sendMessageToStatsApp = (robot, msg, author, error, correctForm) ->
       msg.send "Status #{status}, error = #{err}"
     else
       jsonBody = JSON.parse(body)
-      msg.send jsonBody.message
+      setTimeout (-> msg.send jsonBody.message), 3000
 
 
 prepareGrammarNaziDetectingRegEx = ->
