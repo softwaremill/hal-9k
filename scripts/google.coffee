@@ -9,7 +9,7 @@
 #   HUBOT_GOOGLE_SEARCH_CX
 #
 # Commands:
-#   hubot (dlaczego|jak|czemu) <query>? - returns URL's and Title's for 5 first results from custom search
+#   hubot (dlaczego|jak|jaka|czemu) <query>? - returns URL's and Title's for 5 first results from custom search
 #
 # Notes:
 #   Limits for free version is 100 queries per day per API key
