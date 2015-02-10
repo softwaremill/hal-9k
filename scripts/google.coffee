@@ -1,25 +1,40 @@
 # Description:
-#   Returns the URL of the first google hit for a query
-# 
+#   A way to interact with the Google Custom Search API
+#
 # Dependencies:
 #   None
 #
 # Configuration:
-#   None
+#   HUBOT_GOOGLE_SEARCH_KEY
+#   HUBOT_GOOGLE_SEARCH_CX
 #
 # Commands:
-#   hubot (dlaczego|jak|czemu) <query> - Googles <query> & returns 1st result's URL
+#   hubot (dlaczego|jak|czemu) <query>? - returns URL's and Title's for 5 first results from custom search
+#
+# Notes:
+#   Limits for free version is 100 queries per day per API key
 #
 # Author:
-#   searls
+#   Airborn
 
 module.exports = (robot) ->
-  robot.respond /^(dlaczego|jak|czemu)(.*)\?$/i, (msg) ->
-    googleMe msg, msg.match[3], (url) ->
-      msg.send url
-
-googleMe = (msg, query, cb) ->
-  msg.http('http://www.google.com/search')
-    .query(q: query)
+  robot.respond /(dlaczeo|jak|czemu)(\s)(.*)\?$/i, (msg) ->
+    msg
+    .http("https://www.googleapis.com/customsearch/v1")
+    .query
+        key: process.env.HUBOT_GOOGLE_SEARCH_KEY
+        cx: process.env.HUBOT_GOOGLE_SEARCH_CX
+        fields: "items(title,link)"
+        num: 5
+        q: msg.match[1] + " " + msg.match[3]
     .get() (err, res, body) ->
-      cb body.match(/class="r"><a href="\/url\?q=([^"]*)(&amp;sa.*)">/)?[1] || "A to ciekawe, muszę poczytać o '#{query}'"
+      resp = "";
+      results = JSON.parse(body)
+      if results.error
+        results.error.errors.forEach (err) ->
+          resp += err.message
+      else
+        results.items.forEach (item) ->
+          resp += item.title + " - " + item.link + "\n"
+
+      msg.send resp
