@@ -37,4 +37,4 @@ module.exports = (robot) ->
         results.items.forEach (item) ->
           resp += item.title + " - " + item.link + "\n"
 
-      msg.send resp
+      msg.send "A więc tak ...\n" + resp
