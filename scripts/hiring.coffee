@@ -17,6 +17,8 @@ trello = require('./hiring/trello')(
   process.env.HUBOT_TRELLO_TOKEN
 )
 
+email = require('./hiring/email')
+
 HIRING_ROOM_NAME = process.env.HUBOT_HIRING_ROOM_NAME
 
 module.exports = (robot) ->
@@ -43,14 +45,20 @@ showStatus = (query, robot, msg) ->
   trello.findListByCardQuery(query, robot, replyWithListName, error(msg))
 
 sendSurvey = (query, robot, msg) ->
-  doSend = (email) ->
-    msg.reply("[WIP] Wysłałem ankietę do #{email}")
+  onSuccess = (address) ->
+    -> msg.reply("Wysłałem ankietę do #{address}")
 
-  findEmail(query, robot, msg, doSend)
+  onError = (err) ->
+    erorr(msg)("nie udało się wysłać ankiety (#{err})")
+
+  send = (address) ->
+    email.sendSurvey(address, onSuccess(address), onError)
+
+  findEmail(query, robot, msg, send)
 
 sendTask = (query, robot, msg) ->
-  doSend = (email) ->
-    msg.reply("[WIP] Wysłałem zadanie do #{email}")
+  doSend = (address) ->
+    msg.reply("[WIP] Wysłałem zadanie do #{address}")
 
   findEmail(query, robot, msg, doSend)
 
@@ -68,9 +76,9 @@ error = (msg) ->
 
 findEmail = (query, robot, msg, callback) ->
   extractEmail = (card) ->
-    email = card.name.match(/#(.*)#/)
-    if email
-      callback email[1]
+    matches = card.name.match(/#(.*)#/)
+    if matches?
+      callback matches[1]
     else
       error(msg)("nie znalazłem adresu e-mail dla \"#{query}\"")
 
