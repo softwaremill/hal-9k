@@ -50,6 +50,9 @@ sendSurvey = (query, robot, msg) ->
     -> trello.moveToGotSurvey(card, robot, onSuccess(address), onError)
 
   processCard = (card) ->
+    unless trello.isNew(card)
+      return error(msg)('ankiety wysyłam tylko do kartek z listy "Nowe"')
+
     emailAddress = extractEmailAddress(card)
     if emailAddress?
       email.sendSurvey(emailAddress, moveCard(card, emailAddress), onError)

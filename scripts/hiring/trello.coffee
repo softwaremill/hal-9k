@@ -43,6 +43,8 @@ moveToGotSurvey = (card, robot, successCallback, errorCallback) ->
 moveCardToList = (card, targetListId, robot, successCallback, errorCallback) ->
   put("https://api.trello.com/1/cards/#{card.id}/idList", {value: targetListId}, robot, successCallback, errorCallback)
 
+isNew = (card) -> card.idList is lists.new
+
 query = (url, queryParams, robot) -> robot.http(url).query(_.assign(KEY_AND_TOKEN, queryParams))
 
 request = (f, successCallback, errorCallback) ->
@@ -62,3 +64,4 @@ module.exports =
   findCard: findCard
   findListByCardQuery: findListByCardQuery
   moveToGotSurvey: moveToGotSurvey
+  isNew: isNew
