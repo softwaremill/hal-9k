@@ -11,12 +11,7 @@
 #   hubot hr zadanie <name> - sends task to the email specified in the card matching <name>
 #
 
-trello = require('./hiring/trello')(
-  process.env.HUBOT_HIRING_BOARD_ID,
-  process.env.HUBOT_TRELLO_KEY,
-  process.env.HUBOT_TRELLO_TOKEN
-)
-
+trello = require('./hiring/trello')
 email = require('./hiring/email')
 
 HIRING_ROOM_NAME = process.env.HUBOT_HIRING_ROOM_NAME

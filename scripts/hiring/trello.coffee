@@ -1,41 +1,42 @@
 _ = require('lodash');
 
-module.exports = (boardId, key, token) ->
-  findCard = (query, robot, successCallback, errorCallback) ->
-    searchParams =
-      modelTypes: 'cards'
-      idBoards: boardId
-      query: query
+BOARD_ID = process.env.HUBOT_HIRING_BOARD_ID
+KEY = process.env.HUBOT_TRELLO_KEY
+TOKEN = process.env.HUBOT_TRELLO_TOKEN
 
-    extractCard = (json) ->
-      switch json.cards.length
-        when 0 then errorCallback "nie znalazłem kartki dla \"#{query}\""
-        when 1 then successCallback json.cards[0]
-        else errorCallback "znalazłem więcej niż jedną kartkę dla \"#{query}\""
+findCard = (query, robot, successCallback, errorCallback) ->
+  searchParams =
+    modelTypes: 'cards'
+    idBoards: BOARD_ID
+    query: query
 
-    get('https://api.trello.com/1/search', searchParams, robot, extractCard, errorCallback)
+  extractCard = (json) ->
+    switch json.cards.length
+      when 0 then errorCallback "nie znalazłem kartki dla \"#{query}\""
+      when 1 then successCallback json.cards[0]
+      else errorCallback "znalazłem więcej niż jedną kartkę dla \"#{query}\""
 
-  findListByCardQuery = (cardQuery, robot, successCallback, errorCallback) ->
-    getListForCard = (card) ->
-      get("https://api.trello.com/1/lists/#{card.idList}", {}, robot, successCallback, errorCallback)
+  get('https://api.trello.com/1/search', searchParams, robot, extractCard, errorCallback)
 
-    findCard(cardQuery, robot, getListForCard, errorCallback)
+findListByCardQuery = (cardQuery, robot, successCallback, errorCallback) ->
+  getListForCard = (card) ->
+    get("https://api.trello.com/1/lists/#{card.idList}", {}, robot, successCallback, errorCallback)
 
+  findCard(cardQuery, robot, getListForCard, errorCallback)
 
-  get = (url, queryParams, robot, successCallback, errorCallback) ->
-    trelloKeyAndToken =
-      key: key
-      token: token
+get = (url, queryParams, robot, successCallback, errorCallback) ->
+  trelloKeyAndToken =
+    key: KEY
+    token: TOKEN
 
-    robot.http(url)
-    .query(_.assign(trelloKeyAndToken, queryParams))
-    .get() (err, res, body) ->
-      if err
-        errorCallback err
-      else
-        successCallback JSON.parse(body)
+  robot.http(url)
+  .query(_.assign(trelloKeyAndToken, queryParams))
+  .get() (err, res, body) ->
+    if err
+      errorCallback err
+    else
+      successCallback JSON.parse(body)
 
-  return {
-    findCard: findCard,
-    findListByCardQuery: findListByCardQuery
-  }
+module.exports =
+  findCard: findCard,
+  findListByCardQuery: findListByCardQuery
