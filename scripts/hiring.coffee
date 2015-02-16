@@ -44,12 +44,19 @@ sendSurvey = (query, robot, msg) ->
     -> msg.reply("Wysłałem ankietę do #{address}")
 
   onError = (err) ->
-    erorr(msg)("nie udało się wysłać ankiety (#{err})")
+    error(msg)("nie udało się wysłać ankiety (#{err})")
 
-  send = (address) ->
-    email.sendSurvey(address, onSuccess(address), onError)
+  moveCard = (card, address) ->
+    -> trello.moveToGotSurvey(card, robot, onSuccess(address), onError)
 
-  findEmail(query, robot, msg, send)
+  processCard = (card) ->
+    emailAddress = extractEmailAddress(card)
+    if emailAddress?
+      email.sendSurvey(emailAddress, moveCard(card, emailAddress), onError)
+    else
+      error(msg)("nie znalazłem adresu e-mail dla \"#{query}\"")
+
+  trello.findCard(query, robot, processCard, error(msg))
 
 sendTask = (query, robot, msg) ->
   doSend = (address) ->
@@ -69,12 +76,6 @@ error = (msg) ->
   (err) ->
     msg.reply("Sorry, #{err}")
 
-findEmail = (query, robot, msg, callback) ->
-  extractEmail = (card) ->
-    matches = card.name.match(/#(.*)#/)
-    if matches?
-      callback matches[1]
-    else
-      error(msg)("nie znalazłem adresu e-mail dla \"#{query}\"")
-
-  trello.findCard(query, robot, extractEmail, error(msg))
+extractEmailAddress = (card) ->
+  matches = card.name.match(/#(.*)#/)
+  matches[1] if matches?

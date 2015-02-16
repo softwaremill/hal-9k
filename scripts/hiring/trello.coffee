@@ -1,8 +1,21 @@
-_ = require('lodash');
+_ = require('lodash')
 
 BOARD_ID = process.env.HUBOT_HIRING_BOARD_ID
-KEY = process.env.HUBOT_TRELLO_KEY
-TOKEN = process.env.HUBOT_TRELLO_TOKEN
+
+KEY_AND_TOKEN =
+  key: process.env.HUBOT_TRELLO_KEY
+  token: process.env.HUBOT_TRELLO_TOKEN
+
+lists =
+  new: '51acaaefbeac745c31005967'
+  gotSurvey: '51ade0b03e79ff244a001071'
+  preScreening: '51f63c8487eaf62c15003a51'
+  taskInProgress: '51f63c74faa4a1497b00446b'
+  codeReview: '51f63cb51e9bf75b7b00386e'
+  technicalCall: '5478db810b6b5ab72c591a59'
+  lunch: '5478db8c51399a1f75cc45b2'
+  withDoubts: '51acaaefbeac745c31005969'
+  rejected: '51acaaefbeac745c31005968'
 
 findCard = (query, robot, successCallback, errorCallback) ->
   searchParams =
@@ -24,19 +37,28 @@ findListByCardQuery = (cardQuery, robot, successCallback, errorCallback) ->
 
   findCard(cardQuery, robot, getListForCard, errorCallback)
 
-get = (url, queryParams, robot, successCallback, errorCallback) ->
-  trelloKeyAndToken =
-    key: KEY
-    token: TOKEN
+moveToGotSurvey = (card, robot, successCallback, errorCallback) ->
+  moveCardToList(card, lists.gotSurvey, robot, successCallback, errorCallback)
 
-  robot.http(url)
-  .query(_.assign(trelloKeyAndToken, queryParams))
-  .get() (err, res, body) ->
+moveCardToList = (card, targetListId, robot, successCallback, errorCallback) ->
+  put("https://api.trello.com/1/cards/#{card.id}/idList", {value: targetListId}, robot, successCallback, errorCallback)
+
+query = (url, queryParams, robot) -> robot.http(url).query(_.assign(KEY_AND_TOKEN, queryParams))
+
+request = (f, successCallback, errorCallback) ->
+  f (err, res, body) ->
     if err
       errorCallback err
     else
       successCallback JSON.parse(body)
 
+get = (url, queryParams, robot, successCallback, errorCallback) ->
+  request(query(url, queryParams, robot).get(), successCallback, errorCallback)
+
+put = (url, queryParams, robot, successCallback, errorCallback) ->
+  request(query(url, queryParams, robot).put(), successCallback, errorCallback)
+
 module.exports =
-  findCard: findCard,
+  findCard: findCard
   findListByCardQuery: findListByCardQuery
+  moveToGotSurvey: moveToGotSurvey
