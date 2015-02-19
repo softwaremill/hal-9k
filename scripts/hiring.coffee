@@ -8,7 +8,7 @@
 #   hubot hr help - shows HR commands
 #   hubot hr status <name> - shows status of the Trello card matching <name>
 #   hubot hr ankieta <name> - sends survey to the email specified in the card matching <name>
-#   hubot hr zadanie <name>/<bitbucket login> - creates a Bitbucket repository with write access for <bitbucket login>, sends notification to the email specified in the card matching <name>
+#   hubot hr zadanie <name | bitbucket_login> - creates a Bitbucket repository with write access for <bitbucket_login>, sends notification to the email specified in the card matching <name>
 #
 
 trello = require('./hiring/trello')
@@ -67,7 +67,7 @@ showUsage = (robot, msg) ->
     hr help - wyświetla tę pomoc
     hr status <nazwa> - pokazuje status kandydata pasującego do <nazwa>
     hr ankieta <nazwa> - wysyła ankietę do kandydata pasującego do <nazwa>
-    hr zadanie <nazwa>/<login na Bitbucket> - tworzy repozytorium z dostępem dla <login na Bitbucket>, wysyła informację do kandydata pasującego do <nazwa>
+    hr zadanie <nazwa | login_na_Bitbucket> - tworzy repozytorium z dostępem dla <login_na_Bitbucket>, wysyła informację do kandydata pasującego do <nazwa>
   """)
 
 error = (msg) ->

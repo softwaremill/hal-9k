@@ -9,6 +9,8 @@ module.exports.sendTask = (query, robot, msg) ->
   unless nameAndLogin?
     error(msg)("nie umiem wyciągnąć nazwy kandydata i loginu na Bitbucket z \"#{query}\"")
 
+  return console.log(nameAndLogin)
+
   onSuccess = (address) ->
     -> msg.reply("Wysłałem zadanie do #{address}")
 
@@ -38,10 +40,10 @@ module.exports.sendTask = (query, robot, msg) ->
   trello.findCard(nameAndLogin.name, robot, processCard, error(msg))
 
 extractNameAndBitbucketLogin = (query) ->
-  matches = query.match(/(.*)\/(.*)/)
+  matches = query.match(/(.*)\s*\|\s*(.*)/)
   if matches? and matches.length is 3
-    name: matches[1]
-    login: matches[2]
+    name: matches[1].trim()
+    login: matches[2].trim()
 
 extractRepositoryName = (s) ->
   matches = s.match(/(.*)#.*#/)
