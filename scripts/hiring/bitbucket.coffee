@@ -39,7 +39,7 @@ getRepositoryStats = (name, robot, successCallback, errorCallback) ->
         lastCommitOn: if actualCommits.length > 0 then formatDate(actualCommits[0].date) else null
 
   getCommits = (repository) ->
-    get("/2.0/repositories/softwaremill/#{name}/commits/master", robot, parseJson(computeStats(repository)), errorCallback)
+    get("/2.0/repositories/softwaremill/#{name}/commits", robot, parseJson(computeStats(repository)), errorCallback)
 
   get("/2.0/repositories/softwaremill/#{name}", robot, parseJson(getCommits), errorCallback)
 
