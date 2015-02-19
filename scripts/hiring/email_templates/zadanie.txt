@@ -1,0 +1,14 @@
+Cześć,
+
+Link do Twojego repozytorium:
+
+#url#
+
+Treść zadania znajdziesz w pliku "zadanie.pdf". Czekamy na informację, że cały kod jest już w repozytorium i wtedy ruszymy z code-review. W razie wątpliwości odnośnie zadania - pytaj, jestem klientem.
+
+Powodzenia! :)
+
+--
+Pozdrawiam
+Pani Halinka od HR–ów
+SoftwareMill

@@ -37,13 +37,22 @@ findListByCardQuery = (cardQuery, robot, successCallback, errorCallback) ->
 
   findCard(cardQuery, robot, getListForCard, errorCallback)
 
+extractEmailAddress = (card) ->
+  matches = card.name.match(/#(.*)#/)
+  matches[1] if matches?
+
 moveToGotSurvey = (card, robot, successCallback, errorCallback) ->
   moveCardToList(card, lists.gotSurvey, robot, successCallback, errorCallback)
+
+moveToTaskInProgress = (card, robot, successCallback, errorCallback) ->
+  moveCardToList(card, lists.taskInProgress, robot, successCallback, errorCallback)
 
 moveCardToList = (card, targetListId, robot, successCallback, errorCallback) ->
   put("https://api.trello.com/1/cards/#{card.id}/idList", {value: targetListId}, robot, successCallback, errorCallback)
 
 isNew = (card) -> card.idList is lists.new
+
+isPreScreening = (card) -> card.idList is lists.preScreening
 
 query = (url, queryParams, robot) -> robot.http(url).query(_.assign(KEY_AND_TOKEN, queryParams))
 
@@ -63,5 +72,8 @@ put = (url, queryParams, robot, successCallback, errorCallback) ->
 module.exports =
   findCard: findCard
   findListByCardQuery: findListByCardQuery
+  extractEmailAddress: extractEmailAddress
   moveToGotSurvey: moveToGotSurvey
+  moveToTaskInProgress: moveToTaskInProgress
   isNew: isNew
+  isPreScreening: isPreScreening

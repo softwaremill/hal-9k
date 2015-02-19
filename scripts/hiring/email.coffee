@@ -3,9 +3,13 @@ fs = require('fs')
 
 SUBJECT_PREFIX = '[SoftwareMill]'
 
-exports.sendSurvey = (to, successCallback, errorCallback) ->
+sendSurvey = (to, successCallback, errorCallback) ->
   body = emailTemplate('ankieta')
   send(to, 'Ankieta', body, successCallback, errorCallback)
+
+sendTask = (to, repositoryUrl, successCallback, errorCallback) ->
+  body = emailTemplate('zadanie').replace(/#url#/, repositoryUrl)
+  send(to, 'Zadanie', body, successCallback, errorCallback)
 
 send = (to, subject, body, successCallback, errorCallback) ->
   email = new sendgrid.Email(
@@ -26,3 +30,7 @@ send = (to, subject, body, successCallback, errorCallback) ->
 
 emailTemplate = (templateName) ->
   fs.readFileSync("./scripts/hiring/email_templates/#{templateName}.txt").toString()
+
+module.exports =
+  sendSurvey: sendSurvey
+  sendTask: sendTask

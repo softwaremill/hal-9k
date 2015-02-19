@@ -8,11 +8,12 @@
 #   hubot hr help - shows HR commands
 #   hubot hr status <name> - shows status of the Trello card matching <name>
 #   hubot hr ankieta <name> - sends survey to the email specified in the card matching <name>
-#   hubot hr zadanie <name> - sends task to the email specified in the card matching <name>
+#   hubot hr zadanie <name>/<bitbucket login> - creates a Bitbucket repository with write access for <bitbucket login>, sends notification to the email specified in the card matching <name>
 #
 
 trello = require('./hiring/trello')
 email = require('./hiring/email')
+taskSender = require './hiring/taskSender'
 
 HIRING_ROOM_NAME = process.env.HUBOT_HIRING_ROOM_NAME
 
@@ -27,7 +28,7 @@ module.exports = (robot) ->
         switch action
           when 'status' then showStatus(query, robot, msg)
           when 'ankieta' then sendSurvey(query, robot, msg)
-          when 'zadanie' then sendTask(query, robot, msg)
+          when 'zadanie' then taskSender.sendTask(query, robot, msg)
       else if action is 'help'
         showUsage(robot, msg)
       else
@@ -61,18 +62,12 @@ sendSurvey = (query, robot, msg) ->
 
   trello.findCard(query, robot, processCard, error(msg))
 
-sendTask = (query, robot, msg) ->
-  doSend = (address) ->
-    msg.reply("[WIP] Wysłałem zadanie do #{address}")
-
-  findEmail(query, robot, msg, doSend)
-
 showUsage = (robot, msg) ->
   msg.reply("""
     hr help - wyświetla tę pomoc
     hr status <nazwa> - pokazuje status kandydata pasującego do <nazwa>
     hr ankieta <nazwa> - wysyła ankietę do kandydata pasującego do <nazwa>
-    hr zadanie <nazwa> - wysyła zadanie do kandydata pasującego do <nazwa>
+    hr zadanie <nazwa>/<login na Bitbucket> - tworzy repozytorium z dostępem dla <login na Bitbucket>, wysyła informację do kandydata pasującego do <nazwa>
   """)
 
 error = (msg) ->
