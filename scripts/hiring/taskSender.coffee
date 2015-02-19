@@ -7,7 +7,7 @@ module.exports.sendTask = (query, robot, msg) ->
   nameAndLogin = extractNameAndBitbucketLogin(query)
 
   unless nameAndLogin?
-    error(msg)("nie umiem wyciągnąć nazwy kandydata i loginu na Bitbucket z \"#{query}\"")
+    return error(msg)("nie umiem wyciągnąć nazwy kandydata i loginu na Bitbucket z \"#{query}\"")
 
   onSuccess = (address) ->
     -> msg.reply("Wysłałem zadanie do #{address}")
