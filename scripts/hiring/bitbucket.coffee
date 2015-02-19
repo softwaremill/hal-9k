@@ -1,3 +1,5 @@
+_ = require 'lodash'
+moment = require 'moment'
 backend = require '../common/backend'
 
 USERNAME = process.env.HUBOT_BITBUCKET_USERNAME
@@ -27,17 +29,56 @@ createRepositoryAndGrantAccess = (name, allowedLogin, robot, successCallback, er
 
   createRepository()
 
+getRepositoryStats = (name, robot, successCallback, errorCallback) ->
+  computeStats = (repository) ->
+    (commits) ->
+      actualCommits = _.reject(commits.values, (commit) -> _.startsWith(commit.message, 'Zadanie'))
+      successCallback
+        createdOn: formatDate(repository.created_on)
+        numberOfCommits: actualCommits.length
+        lastCommitOn: if actualCommits.length > 0 then formatDate(actualCommits[0].date) else null
+
+  getCommits = (repository) ->
+    get("/2.0/repositories/softwaremill/#{name}/commits/master", robot, parseJson(computeStats(repository)), errorCallback)
+
+  get("/2.0/repositories/softwaremill/#{name}", robot, parseJson(getCommits), errorCallback)
+
+parseJson = (callback) ->
+  (json) ->
+    callback(JSON.parse(json))
+
+formatDate = (date) ->
+  moment(date).format('YYYY-MM-DD [o] HH:mm')
+
 httpRequest = (f, successCallback, errorCallback) ->
-  f (err, res) ->
+  f (err, res, body) ->
     if err?
       errorCallback err
     else if res.statusCode isnt 200
       errorCallback res.statusCode
     else
-      successCallback()
+      successCallback(body)
+
+extractRepositoryName = (query) ->
+  matches = query.match(/(.*)#.*#/)
+  if matches? and matches[1].length > 0
+    matches[1].trim().toLowerCase()
+      .replace(/\s+/, '_')
+      .replace('ą', 'a')
+      .replace('ć', 'c')
+      .replace('ę', 'e')
+      .replace('ł', 'l')
+      .replace('ń', 'n')
+      .replace('ó', 'o')
+      .replace('ś', 's')
+      .replace('ż', 'z')
+      .replace('ź', 'z')
 
 authenticated = (url, robot) ->
   robot.http("https://api.bitbucket.org/#{url}").auth(USERNAME, PASSWORD)
+
+get = (url, robot, successCallback, errorCallback) ->
+  httpRequest(authenticated(url, robot).get(), successCallback, errorCallback)
 
 postJson = (url, data, robot, successCallback, errorCallback) ->
   httpRequest(authenticated(url, robot).header('Content-Type', 'application/json').post(JSON.stringify(data)),
@@ -48,3 +89,5 @@ put = (url, data, robot, successCallback, errorCallback) ->
 
 module.exports =
   createRepositoryAndGrantAccess: createRepositoryAndGrantAccess
+  getRepositoryStats: getRepositoryStats
+  extractRepositoryName: extractRepositoryName

@@ -27,7 +27,7 @@ module.exports.sendTask = (query, robot, msg) ->
 
     emailAddress = trello.extractEmailAddress(card)
     if emailAddress?
-      repositoryName = extractRepositoryName(card.name)
+      repositoryName = bitbucket.extractRepositoryName(card.name)
       if repositoryName?
         bitbucket.createRepositoryAndGrantAccess(repositoryName, nameAndLogin.login, robot, sendEmail(emailAddress, card), onError)
       else
@@ -42,18 +42,3 @@ extractNameAndBitbucketLogin = (query) ->
   if matches? and matches.length is 3
     name: matches[1].trim()
     login: matches[2].trim()
-
-extractRepositoryName = (s) ->
-  matches = s.match(/(.*)#.*#/)
-  if matches? and matches[1].length > 0
-    matches[1].trim().toLowerCase()
-      .replace(/\s+/, '_')
-      .replace('ą', 'a')
-      .replace('ć', 'c')
-      .replace('ę', 'e')
-      .replace('ł', 'l')
-      .replace('ń', 'n')
-      .replace('ó', 'o')
-      .replace('ś', 's')
-      .replace('ż', 'z')
-      .replace('ź', 'z')
