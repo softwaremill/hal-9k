@@ -11,8 +11,9 @@
 #   hubot hr zadanie <name | bitbucket_login> - creates a Bitbucket repository with write access for <bitbucket_login>, sends notification to the email specified in the card matching <name>
 #
 
-trello = require('./hiring/trello')
-email = require('./hiring/email')
+error = require './hiring/error'
+statusProvider = require './hiring/statusProvider'
+surveySender = require './hiring/surveySender'
 taskSender = require './hiring/taskSender'
 
 HIRING_ROOM_NAME = process.env.HUBOT_HIRING_ROOM_NAME
@@ -26,54 +27,18 @@ module.exports = (robot) ->
       query = msg.match[2]
       if query
         switch action
-          when 'status' then showStatus(query, robot, msg)
-          when 'ankieta' then sendSurvey(query, robot, msg)
+          when 'status' then statusProvider.getStatus(query, robot, msg)
+          when 'ankieta' then surveySender.sendSurvey(query, robot, msg)
           when 'zadanie' then taskSender.sendTask(query, robot, msg)
       else if action is 'help'
         showUsage(robot, msg)
       else
         error(msg)("potrzebuję imienia i/lub nazwiska kandydata")
 
-showStatus = (query, robot, msg) ->
-  replyWithListName = (json) ->
-    msg.reply("#{query} ma status \"#{json.name}\"")
-
-  trello.findListByCardQuery(query, robot, replyWithListName, error(msg))
-
-sendSurvey = (query, robot, msg) ->
-  onSuccess = (address) ->
-    -> msg.reply("Wysłałem ankietę do #{address}")
-
-  onError = (err) ->
-    error(msg)("nie udało się wysłać ankiety (#{err})")
-
-  moveCard = (card, address) ->
-    -> trello.moveToGotSurvey(card, robot, onSuccess(address), onError)
-
-  processCard = (card) ->
-    unless trello.isNew(card)
-      return error(msg)('ankiety wysyłam tylko do kartek z listy "Nowe"')
-
-    emailAddress = extractEmailAddress(card)
-    if emailAddress?
-      email.sendSurvey(emailAddress, moveCard(card, emailAddress), onError)
-    else
-      error(msg)("nie znalazłem adresu e-mail dla \"#{query}\"")
-
-  trello.findCard(query, robot, processCard, error(msg))
-
 showUsage = (robot, msg) ->
   msg.reply("""
     hr help - wyświetla tę pomoc
     hr status <nazwa> - pokazuje status kandydata pasującego do <nazwa>
     hr ankieta <nazwa> - wysyła ankietę do kandydata pasującego do <nazwa>
-    hr zadanie <nazwa | login_na_Bitbucket> - tworzy repozytorium z dostępem dla <login_na_Bitbucket>, wysyła informację do kandydata pasującego do <nazwa>
+    hr zadanie <nazwa | login_na_bitbucket> - tworzy repozytorium z dostępem dla <login_na_bitbucket>, wysyła informację do kandydata pasującego do <nazwa>
   """)
-
-error = (msg) ->
-  (err) ->
-    msg.reply("Sorry, #{err}")
-
-extractEmailAddress = (card) ->
-  matches = card.name.match(/#(.*)#/)
-  matches[1] if matches?

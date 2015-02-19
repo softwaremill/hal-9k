@@ -1,4 +1,4 @@
-_ = require('lodash')
+_ = require 'lodash'
 
 BOARD_ID = process.env.HUBOT_HIRING_BOARD_ID
 

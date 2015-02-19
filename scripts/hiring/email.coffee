@@ -1,5 +1,5 @@
 sendgrid = require('sendgrid')(process.env.SENDGRID_USERNAME, process.env.SENDGRID_PASSWORD)
-fs = require('fs')
+fs = require 'fs'
 
 SUBJECT_PREFIX = '[SoftwareMill]'
 
