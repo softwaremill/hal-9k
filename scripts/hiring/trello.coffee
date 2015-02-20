@@ -7,15 +7,33 @@ KEY_AND_TOKEN =
   token: process.env.HUBOT_TRELLO_TOKEN
 
 lists =
-  new: '51acaaefbeac745c31005967'
-  gotSurvey: '51ade0b03e79ff244a001071'
-  preScreening: '51f63c8487eaf62c15003a51'
-  taskInProgress: '51f63c74faa4a1497b00446b'
-  codeReview: '51f63cb51e9bf75b7b00386e'
-  technicalCall: '5478db810b6b5ab72c591a59'
-  lunch: '5478db8c51399a1f75cc45b2'
-  withDoubts: '51acaaefbeac745c31005969'
-  rejected: '51acaaefbeac745c31005968'
+  new:
+    id: '51acaaefbeac745c31005967'
+    name: 'Nowe'
+  gotSurvey:
+    id: '51ade0b03e79ff244a001071'
+    name: 'Dostał(a) ankietę'
+  preScreening:
+    id: '51f63c8487eaf62c15003a51'
+    name: 'Pre-screening call'
+  taskInProgress:
+    id: '51f63c74faa4a1497b00446b'
+    name: 'Robi zadanie'
+  codeReview:
+    id: '51f63cb51e9bf75b7b00386e'
+    name: 'Code review'
+  technicalCall:
+    id: '5478db810b6b5ab72c591a59'
+    name: 'Rozmowa techniczna'
+  lunch:
+    id: '5478db8c51399a1f75cc45b2'
+    name: 'Lunch'
+  withDoubts:
+    id: '51acaaefbeac745c31005969'
+    name: 'Z wątpliwościami'
+  rejected:
+    id: '51acaaefbeac745c31005968'
+    name: 'Odrzucone'
 
 findCard = (query, robot, successCallback, errorCallback) ->
   searchParams =
@@ -23,16 +41,20 @@ findCard = (query, robot, successCallback, errorCallback) ->
     idBoards: BOARD_ID
     query: query
 
+  fillListName = (card) ->
+    card.listName = findListById(card.idList).name
+    successCallback(card)
+
   extractCard = (json) ->
     switch json.cards.length
       when 0 then errorCallback "nie znalazłem kartki dla \"#{query}\""
-      when 1 then successCallback json.cards[0]
+      when 1 then fillListName json.cards[0]
       else errorCallback "znalazłem więcej niż jedną kartkę dla \"#{query}\""
 
   get('https://api.trello.com/1/search', searchParams, robot, extractCard, errorCallback)
 
-findListById = (id, robot, successCallback, errorCallback) ->
-  get("https://api.trello.com/1/lists/#{id}", {}, robot, successCallback, errorCallback)
+findListById = (id) ->
+  _.find(lists, id: id)
 
 extractEmailAddress = (card) ->
   matches = card.name.match(/#(.*)#/)
@@ -44,14 +66,16 @@ moveToGotSurvey = (card, robot, successCallback, errorCallback) ->
 moveToTaskInProgress = (card, robot, successCallback, errorCallback) ->
   moveCardToList(card, lists.taskInProgress, robot, successCallback, errorCallback)
 
-moveCardToList = (card, targetListId, robot, successCallback, errorCallback) ->
-  put("https://api.trello.com/1/cards/#{card.id}/idList", {value: targetListId}, robot, successCallback, errorCallback)
+moveCardToList = (card, targetList, robot, successCallback, errorCallback) ->
+  put("https://api.trello.com/1/cards/#{card.id}/idList", {value: targetList.id}, robot, successCallback, errorCallback)
 
-isNew = (card) -> card.idList is lists.new
+isNew = (card) -> isCardInList(card, lists.new)
 
-isPreScreening = (card) -> card.idList is lists.preScreening
+isPreScreening = (card) -> isCardInList(card, lists.preScreening)
 
-isTaskInProgress = (card) -> card.idList is lists.taskInProgress
+isTaskInProgress = (card) -> isCardInList(card, lists.taskInProgress)
+
+isCardInList  = (card, list) -> card.idList is list.id
 
 query = (url, queryParams, robot) -> robot.http(url).query(_.assign(KEY_AND_TOKEN, queryParams))
 
@@ -70,7 +94,6 @@ put = (url, queryParams, robot, successCallback, errorCallback) ->
 
 module.exports =
   findCard: findCard
-  findListById: findListById
   extractEmailAddress: extractEmailAddress
   moveToGotSurvey: moveToGotSurvey
   moveToTaskInProgress: moveToTaskInProgress
