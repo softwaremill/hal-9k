@@ -25,13 +25,14 @@ module.exports = (robot) ->
       error(msg)("akcja \"hr #{action}\" działa tylko na kanale ##{HIRING_ROOM_NAME}")
     else
       query = msg.match[2]
-      if query
+      if action is 'help'
+        showUsage(robot, msg)
+      else if action is 'status'
+        statusProvider.getStatus(query, robot, msg)
+      else if query
         switch action
-          when 'status' then statusProvider.getStatus(query, robot, msg)
           when 'ankieta' then surveySender.sendSurvey(query, robot, msg)
           when 'zadanie' then taskSender.sendTask(query, robot, msg)
-      else if action is 'help'
-        showUsage(robot, msg)
       else
         error(msg)("potrzebuję imienia i/lub nazwiska kandydata")
 

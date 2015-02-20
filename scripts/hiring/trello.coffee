@@ -41,17 +41,23 @@ findCard = (query, robot, successCallback, errorCallback) ->
     idBoards: BOARD_ID
     query: query
 
-  fillListName = (card) ->
-    card.listName = findListById(card.idList).name
-    successCallback(card)
-
   extractCard = (json) ->
     switch json.cards.length
       when 0 then errorCallback "nie znalazłem kartki dla \"#{query}\""
-      when 1 then fillListName json.cards[0]
+      when 1 then successCallback fillListName(json.cards[0])
       else errorCallback "znalazłem więcej niż jedną kartkę dla \"#{query}\""
 
   get('https://api.trello.com/1/search', searchParams, robot, extractCard, errorCallback)
+
+findAllCards = (robot, successCallback, errorCallback) ->
+  fillListNames = (cards) ->
+    successCallback(_.map(cards, fillListName))
+
+  get("https://api.trello.com/1/boards/#{BOARD_ID}/cards", {}, robot, fillListNames, errorCallback)
+
+fillListName = (card) ->
+    card.listName = findListById(card.idList).name
+    card
 
 findListById = (id) ->
   _.find(lists, id: id)
@@ -94,6 +100,7 @@ put = (url, queryParams, robot, successCallback, errorCallback) ->
 
 module.exports =
   findCard: findCard
+  findAllCards: findAllCards
   extractEmailAddress: extractEmailAddress
   moveToGotSurvey: moveToGotSurvey
   moveToTaskInProgress: moveToTaskInProgress
