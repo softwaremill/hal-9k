@@ -15,7 +15,7 @@ send = (to, subject, body, successCallback, errorCallback) ->
   email = new sendgrid.Email(
     to: to
     from: 'pani.halinka.od.hr@softwaremill.com'
-    fromname: 'Pani Halinka od HR–ów w SoftwareMill'
+    fromname: 'Urocza Pani Halinka od HR–ów w SoftwareMill'
     cc: 'czlowieki@softwaremill.com'
     subject: "#{SUBJECT_PREFIX} #{subject}"
     text: body

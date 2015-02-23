@@ -1,6 +1,6 @@
 Cześć,
 
-Dzięki za przesłanie CV. Ponieważ wygląda interesująco, jako jego uzupełnienie prosimy o wypełnienie dla nas krótkiej ankiety.
+Dzięki za przesłanie CV. Ponieważ wygląda interesująco, jako uzupełnienie chcielibyśmy Cię poprosić o wypełnienie dla nas krótkiej ankiety
 
 Podasz w niej trochę informacji o swoich oczekiwaniach wobec nowego miejsca pracy i planach zawodowych na przyszłość. Pozwoli nam to zobaczyć czy Twoje plany rozwoju zawodowego są zbieżne z tym, co w SoftwareMill możemy zaoferować naszym pracownikom.
 
@@ -9,5 +9,5 @@ https://docs.google.com/a/softwaremill.pl/spreadsheet/viewform?formkey=dFZiYnpxV
 
 --
 Pozdrawiam
-Pani Halinka od HR–ów
+Urocza Pani Halinka od HR–ów
 http://SoftwareMill.com
