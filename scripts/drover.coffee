@@ -1,3 +1,14 @@
+# Description:
+#   Drover - utility to setup up reminder in cron based format.
+#
+# Commands:
+#   hubot cron list - lists all the defined reminders
+#   hubot cron "<message>" at "<cron expression>" on "<channel name with #> - adds new reminder for given cron expression and channel
+#   hubot cron "<message>" at "<cron expression>" - adds new reminder for given cron expression for defaul channel (#!_wazne_)
+#   hubot cron delete all - deletes all reminders
+#   hubot cron delete <number> - deletes reminder for given index (to check index type "hubot cron list")
+#
+
 CronJob = require('cron').CronJob
 
 timeZone = 'Europe/Amsterdam'
