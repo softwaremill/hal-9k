@@ -121,7 +121,7 @@ module.exports = (robot) ->
 
   robot.respond /cron delete (\d+)/i, (msg) ->
     jobIndex = msg.match[1]
-    job = jobManager remove jobIndex
+    job = jobManager.remove(jobIndex)
     if(job?)
       msg.reply "Job removed: #{job}"
     else
