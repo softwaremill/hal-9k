@@ -11,14 +11,14 @@
 CronJob = require('cron').CronJob
 
 timeZone = 'Europe/Amsterdam'
-defaultChannel = '#hubottest'
+defaultChannel = '#_wazne_'
 
 CRON_JOBS_LIST = "CRON_JOBS_LIST"
 
 class Job
 
   constructor: (@message, @cronExpr, @channel, functionToCall) ->
-    @cronJob = new CronJob "* " + cronExpr,
+    @cronJob = new CronJob "0 " + cronExpr,
       ->
         functionToCall(channel, message)
     , null, true, timeZone
