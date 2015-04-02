@@ -1,7 +1,28 @@
 CronJob = require('cron').CronJob
 
 timeZone = 'Europe/Amsterdam'
-defaultChannel = 'hubottest'
+defaultChannel = '#hubottest'
+
+class Job
+
+  constructor: (@message, @cronExpr, @jobChannel, robot) ->
+    @cronJob = new CronJob("* " + cronExpr, ( ->
+      robot.messageRoom(jobChannel, message)
+    ), null, true, timeZone)
+
+  start: ->
+    @cronJob.start()
+
+  stop: ->
+    @cronJob.stop()
+
+  getNiceMessage: ->
+    if(@message.length > 50)
+      return "#{@message.substring(0, 50)}(...)"
+    return @message
+
+  toString: ->
+    return "#{@getNiceMessage()} (expr: #{@cronExpr} channel: #{@jobChannel})"
 
 class JobManager
 
@@ -9,25 +30,13 @@ class JobManager
     @jobs = []
 
   addJob: (message, cronExpr, jobChannel) ->
-    temp = @robot
     channel = if jobChannel? then jobChannel else defaultChannel
-    newJob = new CronJob("* " + cronExpr, ( ->
-      temp.messageRoom(channel, message)
-    ), null, true, timeZone)
-    newJob.job_name = message
-    newJob.cronExpr = cronExpr
+    newJob = new Job(message, cronExpr, channel, @robot)
     newJob.start()
-    newJob.getName = ->
-      if(this.job_name.length > 50)
-        return "#{this.job_name.substring(0, 50)}  (...)"
-      return this.job_name
-    newJob.toMessage = ->
-      return "#{this.getName()} ( #{this.cronExpr} )"
     @jobs.push(newJob)
 
   removeAll: ->
-    for job in @jobs
-      do(job) -> job.stop()
+    job.stop() for job in @jobs
     @jobs = []
 
   remove: (jobIndex) ->
@@ -61,24 +70,21 @@ module.exports = (robot) ->
 
 
   robot.respond /cron list/i, (msg) ->
-    i = 0
     jobs = jobManager.jobs
-    while i < jobs.length
-      msg.reply "#{i} : #{jobs[i].toMessage()}"
-      i++
-    msg.reply "You can remove cron job with: cron delete (number)"
+    msg.reply("#{i} : #{jobs[i].toString()}") for job, i in jobs
+    msg.reply("You can remove cron job with: cron delete (number).")
 
   robot.respond /cron delete all/i, (msg) ->
     jobManager.removeAll()
-    msg.reply "All jobs stoped"
+    msg.reply("All jobs stopped.")
 
   robot.respond /cron delete (\d+)/i, (msg) ->
     jobIndex = msg.match[1]
     job = jobManager.remove(jobIndex)
-    if(job != null)
-      msg.reply "Job removed: #{job.getName()}"
+    if(job?)
+      msg.reply("Job removed: #{job.toString()}")
     else
-      msg.reply "No job with index #{jobIndex}"
+      msg.reply("No job with index #{jobIndex}")
 
 
 
