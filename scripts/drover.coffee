@@ -5,9 +5,9 @@ defaultChannel = '#hubottest'
 
 class Job
 
-  constructor: (@message, @cronExpr, @jobChannel, robot) ->
+  constructor: (@message, @cronExpr, @jobChannel, functionToCall) ->
     @cronJob = new CronJob("* " + cronExpr, ( ->
-      robot.messageRoom(jobChannel, message)
+      functionToCall(jobChannel, message)
     ), null, true, timeZone)
 
   start: ->
@@ -26,12 +26,12 @@ class Job
 
 class JobManager
 
-  constructor: (@robot) ->
+  constructor: ->
     @jobs = []
 
-  addJob: (message, cronExpr, jobChannel) ->
-    channel = if jobChannel? then jobChannel else defaultChannel
-    newJob = new Job(message, cronExpr, channel, @robot)
+  addJob: (message, cronExpr, functionToCall, jobChannel) ->
+    channel = jobChannel or defaultChannel
+    newJob = new Job(message, cronExpr, channel, functionToCall)
     newJob.start()
     @jobs.push(newJob)
 
@@ -48,15 +48,18 @@ class JobManager
     return null
 
 module.exports = (robot) ->
-  jobManager = new JobManager(robot)
-  jobManager.addJob("Wysylac faktury patalachy!", '1 * * * *')
+  jobManager = new JobManager()
+  remind = (channel, message) ->
+    robot.messageRoom(channel, message)
+
+  jobManager.addJob("Wysylac faktury patalachy!", '1 * * * *', remind)
 
   robot.respond /cron "(.*)" at "(.*)" on "(.*)"/i, (msg) ->
     jobName = msg.match[1]
     jobCronExpr = msg.match[2]
     jobChannel = msg.match[3]
     try
-      jobManager.addJob(jobName, jobCronExpr, jobChannel)
+      jobManager.addJob(jobName, jobCronExpr, remind, jobChannel)
     catch error
       msg.reply(error)
 
