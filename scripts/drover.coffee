@@ -5,7 +5,6 @@
 #   hubot cron list - lists all the defined reminders
 #   hubot cron "<message>" at "<cron expression>" on "<channel name with #> - adds new reminder for given cron expression and channel
 #   hubot cron "<message>" at "<cron expression>" - adds new reminder for given cron expression for defaul channel (#!_wazne_)
-#   hubot cron delete all - deletes all reminders
 #   hubot cron delete <number> - deletes reminder for given index (to check index type "hubot cron list")
 
 CronJob = require('cron').CronJob
@@ -74,9 +73,6 @@ class JobManager
       return job
     return null
 
-  reload: ->
-    @initJobs(@getJobsFunction, @functionToCall)
-
 module.exports = (robot) ->
   getJobs = ->
     loadedJobs = robot.brain.get(CRON_JOBS_LIST)
@@ -126,8 +122,3 @@ module.exports = (robot) ->
       msg.reply "Job removed: #{job}"
     else
       msg.reply "No job with index #{jobIndex}"
-
-  robot.respond /reload/i, (msg)->
-    jobManager.reload()
-    jobs = jobManager.jobs
-    msg.reply "#{i} : #{jobs[i]}" for job, i in jobs
