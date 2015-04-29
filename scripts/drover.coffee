@@ -110,6 +110,7 @@ module.exports = (robot) ->
     jobs = jobManager.jobs
     msg.reply "#{i} : #{jobs[i]}" for job, i in jobs
     msg.reply "You can remove cron job with: cron delete (number)."
+    msg.reply "For more details go to https://kiwi.softwaremill.com/display/ORG/Automatyczne+przypomnienia+z+Januszem"
 
   robot.respond /cron delete all/i, (msg) ->
     jobManager.removeAll()
