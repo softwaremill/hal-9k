@@ -6,6 +6,7 @@
 #   hubot cron "<message>" at "<cron expression>" on "<channel name with #> - adds new reminder for given cron expression and channel
 #   hubot cron "<message>" at "<cron expression>" - adds new reminder for given cron expression for defaul channel (#!_wazne_)
 #   hubot cron delete <number> - deletes reminder for given index (to check index type "hubot cron list")
+#   hubot cron show   <number> - prints full job definition for given index (to check index type "hubot cron list")
 
 CronJob = require('cron').CronJob
 
@@ -32,6 +33,9 @@ class Job
     if @message.length > 50
       return "#{@message.substring(0, 50)}(...)"
     return @message
+
+  getDefinition: ->
+    return "#{@message}\" at \"#{@cronExpr}\" on \"#{@channel}\""
 
   toString: ->
     return "#{@getNiceMessage()} (expr: #{@cronExpr} channel: #{@channel})"
@@ -72,6 +76,13 @@ class JobManager
       @saveJobs()
       return job
     return null
+
+  get: (jobIndex) ->
+    if jobIndex < @jobs.length
+      job = @jobs[jobIndex]
+      return job
+    return null
+
 
 module.exports = (robot) ->
   getJobs = ->
@@ -124,4 +135,12 @@ module.exports = (robot) ->
     else
       msg.reply "No job with index #{jobIndex}"
 
+  robot.respond /cron show (\d+)/i, (msg) ->
+    jobIndex = msg.match[1]
+    job = jobManager.get(jobIndex)
+    if(job?)
+      msg.reply "Job: #{job.getDefinition()}"
+    else
+      msg.reply "No job with index #{jobIndex}"
+    
       
