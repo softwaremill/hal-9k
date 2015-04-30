@@ -35,7 +35,7 @@ class Job
     return @message
 
   getDefinition: ->
-    return "#{@message}\" at \"#{@cronExpr}\" on \"#{@channel}\""
+    return "\"#{@message}\" at \"#{@cronExpr}\" on \"#{@channel}\""
 
   toString: ->
     return "#{@getNiceMessage()} (expr: #{@cronExpr} channel: #{@channel})"
