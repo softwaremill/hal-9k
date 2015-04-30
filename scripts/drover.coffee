@@ -118,6 +118,9 @@ module.exports = (robot) ->
       msg.reply error
 
   robot.respond /cron list/i, (msg) ->
+    if jobManager is null
+      msg.reply "Jobs loading in progress..."
+      return
     jobs = jobManager.jobs
     msg.reply "#{i} : #{jobs[i]}" for job, i in jobs
     msg.reply "You can remove cron job with: cron delete (number)."
@@ -137,6 +140,9 @@ module.exports = (robot) ->
 
   robot.respond /cron show (\d+)/i, (msg) ->
     jobIndex = msg.match[1]
+    if jobManager is null
+      msg.reply "Jobs loading in progress..."
+      return
     job = jobManager.get(jobIndex)
     if(job?)
       msg.reply "Job: #{job.getDefinition()}"
