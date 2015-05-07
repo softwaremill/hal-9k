@@ -51,6 +51,11 @@ about redis at all.
 
 [redistogo]: https://redistogo.com/
 
+#### Run Redis locally
+
+    brew install redis
+    redis-server
+
 ## Adapters
 
 Adapters are the interface to the service you want your hubot to run on. This
