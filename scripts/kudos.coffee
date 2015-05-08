@@ -9,8 +9,6 @@ users = require './common/users'
 kudos = require './kudos/kudosDao'
 
 module.exports = (robot) ->
-  kudos.checkSecret(robot)
-
   robot.respond /kudos show @?(.*)/i, (res) ->
     kudosUser = res.match[1]
 

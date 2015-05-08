@@ -1,31 +1,23 @@
-SECRET = process.env.JANUSZ_BACKEND_SECRET
+backend = require '../common/backend'
+
+errorHandler = (messageResponse) ->
+  (err, errCode) -> messageResponse.reply("Error #{errCode}")
 
 module.exports.getKudos = (robot, messageResponse, userId) ->
-  robot.http("http://misc.sml.cumulushost.eu:9095/kudos/#{userId}")
-  .get() (err, res, body) ->
-    messageResponse.reply(body)
+  successHandler = (successBody) ->
+    messageResponse.reply(successBody)
+
+  backend.get("/kudos/#{userId}", robot, successHandler, errorHandler(messageResponse))
 
 module.exports.addKudos = (robot, messageResponse, kudosReceiverId, description) ->
-  unless SECRET?
-    messageResponse.reply("JANUSZ_BACKEND_SECRET env variable not set. Cant add kudos :(")
-  else
-    data = JSON.stringify({
-      userName: kudosReceiverId,
-      description: description,
-      kudoer: messageResponse.message.user.id
-    })
+  data = {
+    userName: kudosReceiverId,
+    description: description,
+    kudoer: messageResponse.message.user.id
+  }
 
-    robot.http("http://misc.sml.cumulushost.eu:9095/kudos")
-    .header("Auth-token", SECRET)
-    .header("Content-Type", "application/json")
-    .post(data) (err, res, body) ->
-      jsonBody = JSON.parse(body)
+  successHandler = (successBody) ->
+    jsonBody = JSON.parse(successBody)
+    messageResponse.reply(if jsonBody.message? then jsonBody.message else successBody)
 
-      if jsonBody.status == 500 and jsonBody.exception?.match /.*AuthenticationFailedException/
-        messageResponse.reply("Authentication failure. Set env variable JANUSZ_BACKEND_SECRET to proper value")
-      else
-        messageResponse.reply(if jsonBody.message? then jsonBody.message else body)
-
-module.exports.checkSecret = (robot) ->
-  unless SECRET?
-    robot.logger.warning "JANUSZ_BACKEND_SECRET env variable not set. Won't be able to add kudos"
+  backend.post("/kudos", data, robot, successHandler, errorHandler(messageResponse))
