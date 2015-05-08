@@ -5,14 +5,14 @@ module.exports.getKudos = (robot, messageResponse, userId) ->
   .get() (err, res, body) ->
     messageResponse.reply(body)
 
-module.exports.addKudos = (robot, messageResponse, kudoerId, description) ->
+module.exports.addKudos = (robot, messageResponse, kudosReceiverId, description) ->
   unless SECRET?
     messageResponse.reply("JANUSZ_BACKEND_SECRET env variable not set. Cant add kudos :(")
   else
     data = JSON.stringify({
-      userName: messageResponse.message.user.id,
+      userName: kudosReceiverId,
       description: description,
-      kudoer: kudoerId
+      kudoer: messageResponse.message.user.id
     })
 
     robot.http("http://misc.sml.cumulushost.eu:9095/kudos")
