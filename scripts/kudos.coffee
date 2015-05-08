@@ -22,7 +22,7 @@ module.exports = (robot) ->
       kudos.getKudos(robot, res, user.id)
 
 
-  robot.respond /kudos add (\w*) (.*)/i, (res) ->
+  robot.respond /kudos add @?(\w*) (.*)/i, (res) ->
     kudosReceiver = res.match[1]
     kudosDesc = res.match[2]
 
