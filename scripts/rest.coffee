@@ -6,7 +6,7 @@ module.exports = (robot) ->
   unless SECRET?
     robot.logger.warning "REST_API_SECRET env variable not set. Won't be able to serve users data"
 
-  robot.router.post '/users', (req, res) ->
+  robot.router.get '/users', (req, res) ->
     data = if req.body.payload? then JSON.parse req.body.payload else req.body
     secret = data.secret
 
