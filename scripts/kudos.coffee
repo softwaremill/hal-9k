@@ -8,7 +8,10 @@
 users = require './common/users'
 kudos = require './kudos/kudosDao'
 
+
 module.exports = (robot) ->
+  kudos.checkSecret(robot)
+
   robot.respond /kudos show (.*)/i, (res) ->
     kudosUser = res.match[1]
 
@@ -16,18 +19,15 @@ module.exports = (robot) ->
     if (user == undefined)
       res.reply "Nie znam żadnego #{kudosUser}."
     else
-      message = kudos.getKudos(user.id)
-      res.reply(message)
+      kudos.getKudos(robot, res, user.id)
 
 
   robot.respond /kudos add (\w*) (.*)/i, (res) ->
-    kudosUser = res.match[1]
+    kudosReceiver = res.match[1]
     kudosDesc = res.match[2]
 
-    user = users.getUser(robot, kudosUser)
+    user = users.getUser(robot, kudosReceiver)
     if (user == undefined)
-      res.reply "Nie znam żadnego #{kudosUser}."
+      res.reply "Nie znam żadnego #{kudosReceiver}."
     else
-      message = kudos.addKudos(user.id, kudosDesc)
-      res.reply(message)
-
+      kudos.addKudos(robot, res, user.id, kudosDesc)
