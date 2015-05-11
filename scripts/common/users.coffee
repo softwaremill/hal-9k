@@ -4,4 +4,8 @@ module.exports.getUser = (robot, username) ->
       return user
 
 module.exports.getAllUsers = (robot) ->
-  return robot.brain.data.users
+  usersAsList = for key, user of robot.brain.data.users
+    user
+
+  return usersAsList
+
