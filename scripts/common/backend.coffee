@@ -18,6 +18,9 @@ httpRequest = (f, successCallback, errorCallback) ->
       successCallback(body)
 
 prepareRequest = (endpoint, robot) ->
+  unless URL?
+    robot.logger.warning "HUBOT_GRAMMAR_STATS_APP_URL env variable not set. Won't be able to send data to backend"
+
   unless TOKEN?
     robot.logger.warning "HUBOT_GRAMMAR_STATS_APP_AUTH_TOKEN env variable not set. Won't be able to send data to backend"
 

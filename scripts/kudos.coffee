@@ -8,6 +8,19 @@
 users = require './common/users'
 kudos = require './kudos/kudosDao'
 
+displayKudos = (robot, res, kudos) ->
+  allUsers = users.getAllUsers(robot)
+  userIdToNick = {}
+
+  for user in allUsers
+    userIdToNick[user.id] = user.name
+
+  kudosAsString = for kudo in JSON.parse(kudos)
+    "Od #{userIdToNick[kudo.kudoer]}: #{kudo.description}\n"
+
+  res.reply(kudosAsString.join(''))
+
+
 module.exports = (robot) ->
   robot.respond /kudos show @?(.*)/i, (res) ->
     kudosUser = res.match[1]
@@ -16,7 +29,14 @@ module.exports = (robot) ->
     if (user == undefined)
       res.reply "Nie znam żadnego #{kudosUser}."
     else
-      kudos.getKudos(robot, res, user.id)
+      successHandler = (successBody) ->
+        displayKudos(robot, res, successBody)
+
+      errorHandler = (err, errCode) ->
+        robot.logger.error "Error getting kudos from the backend. Error: #{error}"
+        res.reply("Error #{errCode}")
+
+      kudos.getKudos(robot, user.id, successHandler, errorHandler)
 
 
   robot.respond /kudos add @?(\w*) (.*)/i, (res) ->

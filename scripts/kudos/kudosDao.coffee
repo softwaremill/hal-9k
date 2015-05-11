@@ -3,11 +3,10 @@ backend = require '../common/backend'
 errorHandler = (messageResponse) ->
   (err, errCode) -> messageResponse.reply("Error #{errCode}")
 
-module.exports.getKudos = (robot, messageResponse, userId) ->
-  successHandler = (successBody) ->
-    messageResponse.reply(successBody)
-
-  backend.get("/kudos/#{userId}", robot, successHandler, errorHandler(messageResponse))
+#  onSuccess is a function: (successBody) -> do_smth
+#  onError is a functin: (error, errorCode) -> do_smth
+module.exports.getKudos = (robot, userId, onSuccess, onError) ->
+  backend.get("/kudos/#{userId}", robot, onSuccess, onError)
 
 module.exports.addKudos = (robot, messageResponse, kudosReceiverId, description) ->
   data = {
