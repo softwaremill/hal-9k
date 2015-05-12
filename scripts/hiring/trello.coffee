@@ -10,6 +10,9 @@ lists =
   new:
     id: '51acaaefbeac745c31005967'
     name: 'Nowe'
+  gotOnHold:
+    id: '550bf67451ab199493bdd811'
+    name:'Dostał(a) maila z "on-hold"'
   gotSurvey:
     id: '51ade0b03e79ff244a001071'
     name: 'Dostał(a) ankietę'
@@ -56,8 +59,8 @@ findAllCards = (robot, successCallback, errorCallback) ->
   get("https://api.trello.com/1/boards/#{BOARD_ID}/cards", {}, robot, fillListNames, errorCallback)
 
 fillListName = (card) ->
-    card.listName = findListById(card.idList).name
-    card
+  card.listName = findListById(card.idList)?.name
+  card
 
 findListById = (id) ->
   _.find(lists, id: id)
