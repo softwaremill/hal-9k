@@ -22,7 +22,7 @@ displayKudos = (robot, res, kudos) ->
 
 
 module.exports = (robot) ->
-  robot.respond /kudos show @?(.*)/i, (res) ->
+  showKudos = (res) ->
     kudosUser = res.match[1]
 
     user = users.getUser(robot, kudosUser)
@@ -38,8 +38,10 @@ module.exports = (robot) ->
 
       kudos.getKudos(robot, user.id, successHandler, errorHandler)
 
+  robot.respond /kudos show @?(.*)/i, showKudos
+  robot.respond /kudos pokaż dla @?(.*)/i, showKudos
 
-  robot.respond /kudos add @?(\w*) (.*)/i, (res) ->
+  addKudos = (res) ->
     kudosReceiver = res.match[1]
     kudosDesc = res.match[2]
 
@@ -48,3 +50,15 @@ module.exports = (robot) ->
       res.reply "Nie znam żadnego #{kudosReceiver}."
     else
       kudos.addKudos(robot, res, user.id, kudosDesc)
+
+  robot.respond /kudos add @?(\w*) (.*)/i, addKudos
+  robot.respond /kudos dodaj dla @?(\w*) (.*)/i, addKudos
+
+  robot.respond /kudos help/i, (res) ->
+    res.reply("""
+      kudos help - wyświetla tę pomoc
+      kudos show <nazwa> - pokazuje kudosy dla użytkownika <nazwa>
+      kudos pokaż dla <nazwa> - j.w.
+      kudos add <nazwa> <treść> - dodaje kudosa o treści <treść> dla użytkownika <nazwa>
+      kudos dodaj dla <nazwa> <treść> - j.w.
+    """)
