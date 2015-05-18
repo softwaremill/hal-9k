@@ -9,14 +9,8 @@ users = require './common/users'
 kudos = require './kudos/kudosDao'
 
 displayKudos = (robot, res, kudos) ->
-  allUsers = users.getAllUsers(robot)
-  userIdToNick = {}
-
-  for user in allUsers
-    userIdToNick[user.id] = user.name
-
   kudosAsString = for kudo in JSON.parse(kudos)
-    "Od #{userIdToNick[kudo.kudoer]}: #{kudo.description}\n"
+    "Od #{kudo.kudoer}: #{kudo.description}\n"
 
   res.reply(kudosAsString.join(''))
 
