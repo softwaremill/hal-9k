@@ -10,7 +10,7 @@ kudos = require './kudos/kudosDao'
 
 displayKudos = (robot, res, kudos) ->
   kudosAsString = for kudo in JSON.parse(kudos)
-    "Od #{kudo.kudoer}: #{kudo.description}\n"
+    "Od #{kudo.kudoer.name}: #{kudo.description}\n"
 
   res.reply(kudosAsString.join(''))
 
