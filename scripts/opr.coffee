@@ -1,8 +1,8 @@
 store = require("./twjanusz/messagesMemory")
 
-GENERAL_ROOM_NAME = "tajny-agent-janusz"
+GENERAL_ROOM_NAME = "ogolne"
 
-MAX_COUNT_ALLOWED = 50
+MAX_COUNT_ALLOWED = 100
 TIMESPAN_IN_MINUTES = 15
 
 store = require("./twjanusz/messagesMemory")
