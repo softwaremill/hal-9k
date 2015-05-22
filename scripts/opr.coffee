@@ -22,7 +22,7 @@ module.exports = (robot) ->
         store.clearForUser(user)
 
         oprText = res.random opr
-        res.reply("#{user.name} w ciągu ostatnich #{messagesRealMinutes} minut wyprodukowałeś #{timespanSummary.count} wiadomości. #{oprText}")
+        res.reply("W ciągu ostatnich #{messagesRealMinutes} minut wyprodukowałeś #{timespanSummary.count} wiadomości. #{oprText}")
 
 
 opr = [
