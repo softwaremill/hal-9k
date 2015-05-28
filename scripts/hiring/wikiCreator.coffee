@@ -29,7 +29,7 @@ module.exports.create = (query, robot, msg) ->
         fullName: candidateName
         email: emailAddress
       }
-      backend.put('/rest/hiring/wiki-page', data, robot, onSuccess(candidateName), onError)
+      backend.put('/hiring/wiki-page', data, robot, onSuccess(candidateName), onError)
     else
       error(msg)("Nie znalazłem adresu e-mail w \"#{card.name}\"")
 
