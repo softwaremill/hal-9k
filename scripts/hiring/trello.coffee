@@ -69,6 +69,10 @@ extractEmailAddress = (card) ->
   matches = card.name.match(/#(.*)#/)
   matches[1] if matches?
 
+extractFullName = (card) ->
+  matches = card.name.match(/^(.*?) #/)
+  matches[1] if matches?
+
 moveToGotSurvey = (card, robot, successCallback, errorCallback) ->
   moveCardToList(card, lists.gotSurvey, robot, successCallback, errorCallback)
 
@@ -79,6 +83,8 @@ moveCardToList = (card, targetList, robot, successCallback, errorCallback) ->
   put("https://api.trello.com/1/cards/#{card.id}/idList", {value: targetList.id}, robot, successCallback, errorCallback)
 
 isNew = (card) -> isCardInList(card, lists.new)
+
+isGotSurvey = (card) -> isCardInList(card, lists.gotSurvey)
 
 isPreScreening = (card) -> isCardInList(card, lists.preScreening)
 
@@ -105,8 +111,10 @@ module.exports =
   findCard: findCard
   findAllCards: findAllCards
   extractEmailAddress: extractEmailAddress
+  extractFullName: extractFullName
   moveToGotSurvey: moveToGotSurvey
   moveToTaskInProgress: moveToTaskInProgress
   isNew: isNew
   isPreScreening: isPreScreening
+  isGotSurvey: isGotSurvey
   isTaskInProgress: isTaskInProgress
