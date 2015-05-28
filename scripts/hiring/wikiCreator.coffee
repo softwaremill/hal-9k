@@ -8,7 +8,7 @@ module.exports.create = (query, robot, msg) ->
   unless name?
     return error(msg)("nie umiem wyciągnąć nazwy kandydata z \"#{query}\"")
 
-  trello.findCard(name, robot, createWikiPage(card), error(msg))
+  trello.findCard(name, robot, createWikiPage, error(msg))
 
   onSuccess = (name) ->
     -> msg.reply("Strona na kiwi wiki dla #{name} stworzona")
