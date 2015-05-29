@@ -20,7 +20,6 @@ module.exports.create = (query, robot, msg) ->
     msg.reply("data = " + JSON.stringify(data))
 
   createWikiPage = (card) ->
-    msg.reply("card = " + JSON.stringify(card))
     trello.getCardAttachmentUrls(card, onDataFetchSuccess, onError)
 
 #    unless trello.isPreScreening(card) || trello.isGotSurvey(card) || trello.isTaskInProgress(card)
