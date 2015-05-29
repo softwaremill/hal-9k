@@ -16,22 +16,28 @@ module.exports.create = (query, robot, msg) ->
   onError = (err) ->
     error(msg)("Nie udało się stworzyć strony na kiwi (#{err})")
 
-  createWikiPage = (card) ->
-    unless trello.isPreScreening(card) || trello.isGotSurvey(card) || trello.isTaskInProgress(card)
-      return error(msg)('Stronę na kiwi tworzę tylko dla osób w statusie "Dostał ankietę", "Pre-screening" lub "Robi zadanie"')
+  onDataFetchSuccess = (data) ->
+    msg.reply("data = " + data)
 
-    emailAddress = trello.extractEmailAddress(card)
-    candidateName = trello.extractFullName(card)
-    if candidateName.indexOf('no fluff') >=0
-      return error(msg)('Znalazłem "no fluff" zamiast imienia i nazwiska kandydata. Popraw karteczkę w Trello.')
-    if emailAddress?
-      data = {
-        fullName: candidateName
-        email: emailAddress
-      }
-      backend.put('/hiring/wiki-page', data, robot, onSuccess(candidateName), onError)
-    else
-      error(msg)("Nie znalazłem adresu e-mail w \"#{card.name}\"")
+  createWikiPage = (card) ->
+    msg.reply("card = " + card)
+    trello.getCardAttachmentUrls(card, onDataFetchSuccess, onError)
+
+#    unless trello.isPreScreening(card) || trello.isGotSurvey(card) || trello.isTaskInProgress(card)
+#      return error(msg)('Stronę na kiwi tworzę tylko dla osób w statusie "Dostał ankietę", "Pre-screening" lub "Robi zadanie"')
+#
+#    emailAddress = trello.extractEmailAddress(card)
+#    candidateName = trello.extractFullName(card)
+#    if candidateName.indexOf('no fluff') >=0
+#      return error(msg)('Znalazłem "no fluff" zamiast imienia i nazwiska kandydata. Popraw karteczkę w Trello.')
+#    if emailAddress?
+#      data = {
+#        fullName: candidateName
+#        email: emailAddress
+#      }
+#      backend.put('/hiring/wiki-page', data, robot, onSuccess(candidateName), onError)
+#    else
+#      error(msg)("Nie znalazłem adresu e-mail w \"#{card.name}\"")
 
   trello.findCard(name, robot, createWikiPage, error(msg))
 

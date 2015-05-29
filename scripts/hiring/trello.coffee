@@ -65,6 +65,9 @@ fillListName = (card) ->
 findListById = (id) ->
   _.find(lists, id: id)
 
+getCardAttachmentUrls = (card, successCallback, errorCallback) ->
+  get("https://api.trello.com/1/cards/#{card.id}/attachements", {}, robot, successCallback, errorCallback)
+
 extractEmailAddress = (card) ->
   matches = card.name.match(/#(.*)#/)
   matches[1] if matches?
@@ -110,6 +113,7 @@ put = (url, queryParams, robot, successCallback, errorCallback) ->
 module.exports =
   findCard: findCard
   findAllCards: findAllCards
+  getCardAttachmentUrls: getCardAttachmentUrls
   extractEmailAddress: extractEmailAddress
   extractFullName: extractFullName
   moveToGotSurvey: moveToGotSurvey
