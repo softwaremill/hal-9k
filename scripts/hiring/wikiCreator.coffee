@@ -22,7 +22,6 @@ module.exports.create = (query, robot, msg) ->
 
     emailAddress = trello.extractEmailAddress(card)
     candidateName = trello.extractFullName(card)
-    error(msg)('emailAddress=' + emailAddress + " " + candidateName)
     if candidateName.indexOf('no fluff') >=0
       return error(msg)('Znalazłem "no fluff" zamiast imienia i nazwiska kandydata. Popraw karteczkę w Trello.')
     if emailAddress?
