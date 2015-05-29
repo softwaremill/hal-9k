@@ -17,7 +17,7 @@ module.exports.create = (query, robot, msg) ->
     error(msg)("Nie udało się stworzyć strony na kiwi (#{err})")
 
   onDataFetchSuccess = (data) ->
-    msg.reply("data = " + JSON.stringify(data))
+    -> msg.reply("data = " + JSON.stringify(data))
 
   createWikiPage = (card) ->
     trello.getCardAttachmentUrls(card, onDataFetchSuccess, onError)
