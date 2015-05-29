@@ -66,7 +66,7 @@ findListById = (id) ->
   _.find(lists, id: id)
 
 getCardAttachmentUrls = (card, successCallback, errorCallback) ->
-  get("https://api.trello.com/1/cards/#{card.id}/attachements", {}, robot, successCallback, errorCallback)
+  get("https://api.trello.com/1/cards/#{card.id}/attachments", {}, robot, successCallback, errorCallback)
 
 extractEmailAddress = (card) ->
   matches = card.name.match(/#(.*)#/)
