@@ -15,8 +15,8 @@ module.exports.create = (query, robot, msg) ->
     emailAddress = trello.extractEmailAddress(card)
     candidateName = trello.extractFullName(card)
 
-    onSuccess = (name) ->
-      -> msg.reply("Strona na kiwi dla #{name} stworzona")
+    onSuccess = (data) ->
+      -> msg.reply("Strona na kiwi stworzona - #{data.message}")
 
     onError = (err) ->
       error(msg)("Nie udało się stworzyć strony na kiwi (#{err})")
@@ -34,7 +34,7 @@ module.exports.create = (query, robot, msg) ->
           email: emailAddress
           attachments: urls
         }
-        backend.put('/hiring/wiki-page', data, robot, onSuccess(candidateName), onError)
+        backend.put('/hiring/wiki-page', data, robot, onSuccess, onError)
       else
         error(msg)("Nie znalazłem adresu e-mail w \"#{card.name}\"")
 
