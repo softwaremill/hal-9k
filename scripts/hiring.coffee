@@ -21,7 +21,7 @@ wikiCreator = require './hiring/wikiCreator'
 HIRING_ROOM_NAME = process.env.HUBOT_HIRING_ROOM_NAME
 
 module.exports = (robot) ->
-  robot.respond /hr (help|status|ankieta|wiki|zadanie|review)\s?((.*\s*)+)/i, (msg) ->
+  robot.respond /hr (help|status|ankieta|wiki|kiwi|zadanie|review)\s?((.*\s*)+)/i, (msg) ->
     action = msg.match[1]
     if msg.message.room isnt HIRING_ROOM_NAME
       error(msg)("akcja \"hr #{action}\" działa tylko na kanale ##{HIRING_ROOM_NAME}")
@@ -36,6 +36,7 @@ module.exports = (robot) ->
           when 'ankieta' then surveySender.sendSurvey(query, robot, msg)
           when 'zadanie' then taskSender.sendTask(query, robot, msg)
           when 'wiki' then wikiCreator.create(query, robot, msg)
+          when 'kiwi' then wikiCreator.create(query, robot, msg)
           when 'review' then msg.reply("review #{query}")
       else
         error(msg)("potrzebuję imienia i/lub nazwiska kandydata")
@@ -45,6 +46,6 @@ showUsage = (robot, msg) ->
     hr help - wyświetla tę pomoc
     hr status <nazwa> - pokazuje status kandydata pasującego do <nazwa>
     hr ankieta <nazwa> - wysyła ankietę do kandydata pasującego do <nazwa>
-    hr wiki <nazwa> - tworzy stronę na Kiwi o kandydacie pasującym do <nazwa>
+    hr wiki|kiwi <nazwa> - tworzy stronę na Kiwi o kandydacie pasującym do <nazwa>
     hr zadanie <nazwa | login_na_bitbucket> - tworzy repozytorium z dostępem dla <login_na_bitbucket>, wysyła informację do kandydata pasującego do <nazwa>
   """)
