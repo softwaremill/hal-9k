@@ -16,7 +16,8 @@ module.exports.create = (query, robot, msg) ->
     candidateName = trello.extractFullName(card)
 
     onSuccess = (data) ->
-      -> msg.reply("Strona na kiwi stworzona - #{data.message}")
+      response = JSON.parse(data)
+      msg.reply("Strona na kiwi stworzona - #{response.message}")
 
     onError = (err) ->
       error(msg)("Nie udało się stworzyć strony na kiwi (#{err})")
