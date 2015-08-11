@@ -15,8 +15,8 @@ module.exports = (robot) ->
       exclamationSentence = msg.random messages
       error = matches[0].trim()
       correctForm = errors[matches[0].trim()]
-      msg.send  '@' + author + ', ' + exclamationSentence + '! Poprawna forma to *' + correctForm + '*'
-      sendMessageToStatsApp(robot, msg, author, error, correctForm)
+      response = '@' + author + ', ' + exclamationSentence + '! Poprawna forma to *' + correctForm + '*'
+      sendMessageToStatsAppAndRespondToUser(robot, msg, author, error, correctForm, response)
 
 replacePolishChars = (text) ->
     text.toLowerCase()
@@ -30,7 +30,7 @@ replacePolishChars = (text) ->
       .replace('ż', 'z')
       .replace('ź', 'z')
 
-sendMessageToStatsApp = (robot, msg, author, error, correctForm) ->
+sendMessageToStatsAppAndRespondToUser = (robot, msg, author, error, correctForm, response) ->
 
   request = JSON.stringify(
     {"userName": author, "error": error, "correctForm": correctForm}
@@ -42,11 +42,10 @@ sendMessageToStatsApp = (robot, msg, author, error, correctForm) ->
   .post(request) (err, res, body) ->
     status = res.statusCode
     if err
-      msg.send "Status #{status}, error = #{err}"
+      msg.send response + "\nStatus #{status}, error = #{err}"
     else
       jsonBody = JSON.parse(body)
-      setTimeout (-> msg.send 'A tak w ogóle to... '), 2000
-      setTimeout (-> msg.send jsonBody.message), 3000
+      msg.send response + "\nA tak w ogóle to...\n" + jsonBody.message
 
 
 prepareGrammarNaziDetectingRegEx = ->
