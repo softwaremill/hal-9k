@@ -45,7 +45,7 @@ sendMessageToStatsAppAndRespondToUser = (robot, msg, author, error, correctForm,
       msg.send response + "\nStatus #{status}, error = #{err}"
     else
       jsonBody = JSON.parse(body)
-      msg.send response + "\nA tak w ogóle to...\n" + jsonBody.message
+      msg.send response + "\nA tak w ogóle to " + jsonBody.message
 
 
 prepareGrammarNaziDetectingRegEx = ->
