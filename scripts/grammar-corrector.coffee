@@ -7,15 +7,42 @@ TOKEN = process.env.HUBOT_GRAMMAR_STATS_APP_AUTH_TOKEN
 
 module.exports = (robot) ->
   robot.hear /.*/, (msg) ->
+    if(msg.message.text.indexOf(' ort ') == -1)
+      request = JSON.stringify(
+        {"userName": msg.message.user.name, "msg": msg.message.text}
+      )
+      robot.http(GRAMMAR_STATS_URL + '/mistakes')
+      .header('Content-Type', 'application/json')
+      .header('Auth-token', TOKEN)
+      .post(request) (err, res, body) ->
+        if !err
+          jsonBody = JSON.parse(body)
+          if jsonBody.mistake
+            msg.send jsonBody.message
+
+  addRule = (res) ->
+    error = res.match[1]
+    correctForm = res.match[2]
+
     request = JSON.stringify(
-      {"userName": msg.message.user.name, "msg": msg.message.text}
+      {"error": error, "correctForm": correctForm}
     )
 
-    robot.http(GRAMMAR_STATS_URL + '/mistakes')
+    robot.http(GRAMMAR_STATS_URL + '/rules')
     .header('Content-Type', 'application/json')
     .header('Auth-token', TOKEN)
-    .post(request) (err, res, body) ->
-      if !err
+    .post(request) (err, response, body) ->
+      status = response.statusCode
+      if err
+        res.reply "Status #{status}, error = #{err}"
+      else
         jsonBody = JSON.parse(body)
-        if jsonBody.mistake
-          msg.send jsonBody.message
+        res.reply jsonBody.message
+
+  robot.respond /ort nie @?(.+?) tylko (.+)/i, addRule
+
+  robot.respond /ort help/i, (res) ->
+    res.reply("""
+        ort help - wyświetla tę pomoc
+        ort nie <błędne wyrażenie> tylko <poprawne wyrażenie> - dodaje regułę poprawiającą <błędne wyrażenie> na <poprawne wyrażenie>
+      """)
