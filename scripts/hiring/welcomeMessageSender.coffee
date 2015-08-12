@@ -2,7 +2,7 @@ error = require './error'
 trello = require './trello'
 email = require './email'
 
-module.exports.sendTask = (query, robot, msg) ->
+module.exports.sendWelcomeMessage = (query, robot, msg) ->
   nameAndFirstName = extractNameAndWelcomeName(query)
 
   unless nameAndFirstName?
