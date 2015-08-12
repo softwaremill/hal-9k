@@ -13,7 +13,7 @@ sendTask = (to, repositoryUrl, successCallback, errorCallback) ->
 
 sendWelcomeMessage = (to, name, successCallback, errorCallback) ->
   body = emailTemplate('welcome').replace(/#name#/, name)
-  send(to, 'Witaj, cieszymy się że jesteś :)', body, successCallback, errorCallback)
+  send(to, 'Witaj, cieszymy się, że jesteś :)', body, successCallback, errorCallback)
 
 send = (to, subject, body, successCallback, errorCallback) ->
   console.log("Wysyłam maila: #{to} | #{subject}")
