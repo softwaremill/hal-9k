@@ -11,6 +11,10 @@ sendTask = (to, repositoryUrl, successCallback, errorCallback) ->
   body = emailTemplate('zadanie').replace(/#url#/, repositoryUrl)
   send(to, 'Zadanie', body, successCallback, errorCallback)
 
+sendWelcomeMessage = (to, name, successCallback, errorCallback) ->
+  body = emailTemplate('welcome').replace(/#name#/, name)
+  send(to, 'Witaj, cieszymy się że jesteś :)', body, successCallback, errorCallback)
+
 send = (to, subject, body, successCallback, errorCallback) ->
   email = new sendgrid.Email(
     to: to
@@ -34,3 +38,4 @@ emailTemplate = (templateName) ->
 module.exports =
   sendSurvey: sendSurvey
   sendTask: sendTask
+  sendWelcomeMessage: sendWelcomeMessage
