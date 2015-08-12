@@ -23,7 +23,7 @@ wikiCreator = require './hiring/wikiCreator'
 HIRING_ROOM_NAME = process.env.HUBOT_HIRING_ROOM_NAME
 
 module.exports = (robot) ->
-  robot.respond /hr (help|status|ankieta|wiki|kiwi|zadanie|review)\s?((.*\s*)+)/i, (msg) ->
+  robot.respond /hr (help|status|welcome|ankieta|wiki|kiwi|zadanie|review)\s?((.*\s*)+)/i, (msg) ->
     action = msg.match[1]
     if msg.message.room isnt HIRING_ROOM_NAME
       error(msg)("akcja \"hr #{action}\" działa tylko na kanale ##{HIRING_ROOM_NAME}")

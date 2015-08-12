@@ -15,7 +15,7 @@ module.exports.sendWelcomeMessage = (query, robot, msg) ->
     error(msg)("Nie udało się wysłać maila (#{err})")
 
   sendEmail = (address, name) ->
-    -> email.sendWelcomeMessage(address, name, onSuccess, onError)
+    email.sendWelcomeMessage(address, name, onSuccess(address), onError)
 
   sendWelcomeMessage = (card) ->
     unless trello.isNew

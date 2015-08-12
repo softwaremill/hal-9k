@@ -16,6 +16,7 @@ sendWelcomeMessage = (to, name, successCallback, errorCallback) ->
   send(to, 'Witaj, cieszymy się że jesteś :)', body, successCallback, errorCallback)
 
 send = (to, subject, body, successCallback, errorCallback) ->
+  console.log("Wysyłam maila: #{to} | #{subject}")
   email = new sendgrid.Email(
     to: to
     from: 'pani.halinka.od.hr@softwaremill.com'
