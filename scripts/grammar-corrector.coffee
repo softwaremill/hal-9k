@@ -41,8 +41,31 @@ module.exports = (robot) ->
 
   robot.respond /ort nie @?(.+?) tylko (.+)/i, addRule
 
+  removeRule = (res) ->
+    error = res.match[1]
+
+    request = JSON.stringify(
+      {"error": error}
+    )
+
+    robot.http(GRAMMAR_STATS_URL + '/rules')
+    .header('Content-Type', 'application/json')
+    .header('Auth-token', TOKEN)
+    .delete(request) (err, response, body) ->
+      status = response.statusCode
+      if err
+        res.reply "Status #{status}, error = #{err}"
+      else
+        jsonBody = JSON.parse(body)
+        res.reply jsonBody.message
+
+  robot.respond /ort usun @?(.+)/i, removeRule
+  robot.respond /ort delete @?(.+)/i, removeRule
+
   robot.respond /ort help/i, (res) ->
     res.reply("""
         ort help - wyświetla tę pomoc
         ort nie <błędne wyrażenie> tylko <poprawne wyrażenie> - dodaje regułę poprawiającą <błędne wyrażenie> na <poprawne wyrażenie>
+        ort usun <błędne wyrażenie> - usuwa regułę poprawiającą <błędne wyrażenie>
+        ort delete <błędne wyrażenie> - j.w.
       """)
