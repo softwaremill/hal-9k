@@ -55,4 +55,6 @@ module.exports = (robot) ->
       kudos pokaż dla <nazwa> - j.w.
       kudos add <nazwa> <treść> - dodaje kudosa o treści <treść> dla użytkownika <nazwa>
       kudos dodaj dla <nazwa> <treść> - j.w.
+
+      Kudosy są dostępne na stronie http://kudos.softwaremill.com
     """)
