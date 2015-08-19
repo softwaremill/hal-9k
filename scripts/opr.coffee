@@ -24,6 +24,12 @@ module.exports = (robot) ->
         oprText = res.random opr
         res.reply("Napisanie ostatnich #{timespanSummary.count} wiadomości zajęło Ci zaledwie #{messagesRealMinutes} minut. #{oprText}")
 
+  robot.hear /debugTajnyWsp (.*)/, (res) ->
+    user = res.match[1]
+    replText = "Room name: #{res.message.room}"
+    replText += "\n" + store.countInTimespan(user, TIMESPAN_IN_MINUTES * 60)
+    res.reply(res.message.room)
+
 
 opr = [
   "Zajmij się zwiększaniem PKB!"
