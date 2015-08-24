@@ -5,9 +5,6 @@ GENERAL_ROOM_NAME = "ogolne"
 MAX_COUNT_ALLOWED = 100
 TIMESPAN_IN_MINUTES = 15
 
-store = require("./twjanusz/messagesMemory")
-
-
 module.exports = (robot) ->
   robot.hear /.*/, (res) ->
     user = res.message.user
@@ -24,12 +21,12 @@ module.exports = (robot) ->
         oprText = res.random opr
         res.reply("Napisanie ostatnich #{timespanSummary.count} wiadomości zajęło Ci zaledwie #{messagesRealMinutes} minut. #{oprText}")
 
-  robot.hear /debugTajnyWsp (.*)/, (res) ->
+  robot.respond /debugTajnyWsp (.*)/i, (res) ->
     user = res.match[1]
     replText = "Room name: #{res.message.room}"
-    replText += "\n" + store.countInTimespan(user, TIMESPAN_IN_MINUTES * 60)
-    res.reply(res.message.room)
-
+    res.reply(replText)
+    replText = store.countInTimespan(user, TIMESPAN_IN_MINUTES * 60)
+    res.reply(replText)
 
 opr = [
   "Zajmij się zwiększaniem PKB!"
