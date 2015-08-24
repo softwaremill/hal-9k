@@ -10,24 +10,22 @@ module.exports = (robot) ->
   robot.hear /.*/, (res) ->
     user = res.message.user
     if res.message.room is GENERAL_ROOM_NAME
-      store.add(user)
-      timespanSummary = store.countInTimespan(user, TIMESPAN_IN_MINUTES * 60)
+      store.add(user.name)
+      timespanSummary = store.countInTimespan(user.name, TIMESPAN_IN_MINUTES * 60)
       if timespanSummary.count >= MAX_COUNT_ALLOWED
         messagesRealTimespan = (new Date()).getTime() - timespanSummary.firstTimestamp
         messagesRealMinutes = Math.ceil(messagesRealTimespan / 1000 / 60)
         console.log("First message to now: #{messagesRealMinutes}")
 
-        store.clearForUser(user)
+        store.clearForUser(user.name)
 
         oprText = res.random opr
         res.reply("Napisanie ostatnich #{timespanSummary.count} wiadomości zajęło Ci zaledwie #{messagesRealMinutes} minut. #{oprText}")
 
-  robot.respond /debugTajnyWsp (.*)/i, (res) ->
+  robot.respond /debugTajnyWsp/i, (res) ->
 #   Works only in private messages to @janusz
     if (res.message.room == res.message.user.name)
-      user = users.getUser(robot, res.match[1])
-      repl = store.countInTimespan(user, TIMESPAN_IN_MINUTES * 60)
-      res.reply("user: #{user.name}, count: #{repl.count}, timestamp: #{repl.firstTimestamp}")
+      res.reply(store.dump())
 
 opr = [
   "Zajmij się zwiększaniem PKB!"

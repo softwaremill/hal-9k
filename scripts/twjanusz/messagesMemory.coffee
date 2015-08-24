@@ -14,6 +14,17 @@ module.exports.countInTimespan = (user, timespanInSeconds) ->
 module.exports.clearForUser = (user) ->
   store[user].length = 0
 
+#This is for debug only
+dump = () ->
+  dumpStr = ""
+  for k, v of store
+    dumpStr += "Type of k: #{typeof k}\n"
+    dumpStr += "#{k}:  #{v}"
+
+  return dumpStr
+
+module.exports.dump = dump
+
 discardOutdated = (timeoutSec) ->
   now = new Date().getTime()
   Object.keys(store).forEach( (user) ->
