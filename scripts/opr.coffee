@@ -26,7 +26,7 @@ module.exports = (robot) ->
     user = users.getUser(robot, res.match[1])
 
 #   Works only in private messages to @janusz
-    if (res.message.room == user.name)
+    if (res.message.room == res.message.user.name)
       repl = store.countInTimespan(user, TIMESPAN_IN_MINUTES * 60)
       res.reply("count: #{repl.count}, timestamp: #{repl.firstTimestamp}")
 
