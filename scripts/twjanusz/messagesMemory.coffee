@@ -18,8 +18,10 @@ module.exports.clearForUser = (user) ->
 dump = () ->
   dumpStr = ""
   for k, v of store
-    dumpStr += "Type of k: #{typeof k}\n"
-    dumpStr += "#{k}:  #{v}"
+    dumpStr += "#{k}:\n"
+    for timestamp in v
+      date = new Date(timestamp)
+      dumpStr += "  #{timestamp} (#{date.getHours()}:#{date.getMinutes()}:#{date.getSeconds()})\n"
 
   return dumpStr
 
