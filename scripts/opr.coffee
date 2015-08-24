@@ -23,12 +23,11 @@ module.exports = (robot) ->
         res.reply("Napisanie ostatnich #{timespanSummary.count} wiadomości zajęło Ci zaledwie #{messagesRealMinutes} minut. #{oprText}")
 
   robot.respond /debugTajnyWsp (.*)/i, (res) ->
-    user = users.getUser(robot, res.match[1])
-
 #   Works only in private messages to @janusz
     if (res.message.room == res.message.user.name)
+      user = users.getUser(robot, res.match[1])
       repl = store.countInTimespan(user, TIMESPAN_IN_MINUTES * 60)
-      res.reply("count: #{repl.count}, timestamp: #{repl.firstTimestamp}")
+      res.reply("user: #{user.name}, count: #{repl.count}, timestamp: #{repl.firstTimestamp}")
 
 opr = [
   "Zajmij się zwiększaniem PKB!"
