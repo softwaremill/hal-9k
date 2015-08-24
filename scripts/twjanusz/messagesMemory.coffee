@@ -7,8 +7,8 @@ module.exports.add = (user) ->
 module.exports.countInTimespan = (user, timespanInSeconds) ->
   discardOutdated(timespanInSeconds)
   return {
-    count: store[user].length
-    firstTimestamp: store[user][0]
+    count: if store[user]? then store[user].length else 0
+    firstTimestamp: if store[user]? then store[user][0] else null
   }
 
 module.exports.clearForUser = (user) ->

@@ -1,4 +1,5 @@
 store = require("./twjanusz/messagesMemory")
+users = require './common/users'
 
 GENERAL_ROOM_NAME = "ogolne"
 
@@ -22,11 +23,12 @@ module.exports = (robot) ->
         res.reply("Napisanie ostatnich #{timespanSummary.count} wiadomości zajęło Ci zaledwie #{messagesRealMinutes} minut. #{oprText}")
 
   robot.respond /debugTajnyWsp (.*)/i, (res) ->
-    user = res.match[1]
-    replText = "Room name: #{res.message.room}"
-    res.reply(replText)
-    replText = store.countInTimespan(user, TIMESPAN_IN_MINUTES * 60)
-    res.reply(replText)
+    user = users.getUser(robot, res.match[1])
+
+#   Works only in private messages to @janusz
+    if (res.message.room == user.name)
+      repl = store.countInTimespan(user, TIMESPAN_IN_MINUTES * 60)
+      res.reply("count: #{repl.count}, timestamp: #{repl.firstTimestamp}")
 
 opr = [
   "Zajmij się zwiększaniem PKB!"
