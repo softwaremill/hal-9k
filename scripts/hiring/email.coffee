@@ -15,6 +15,10 @@ sendWelcomeMessage = (to, name, successCallback, errorCallback) ->
   body = emailTemplate('welcome').replace(/#name#/, name)
   send(to, 'Witaj, cieszymy się, że jesteś :)', body, successCallback, errorCallback)
 
+sendOnHoldMessage = (to, name, successCallback, errorCallback) ->
+  body = emailTemplate('onhold').replace(/#name#/, name)
+  send(to, 'Witaj, dziękujemy za CV :)', body, successCallback, errorCallback)
+
 send = (to, subject, body, successCallback, errorCallback) ->
   console.log("Wysyłam maila: #{to} | #{subject}")
   email = new sendgrid.Email(
@@ -40,3 +44,4 @@ module.exports =
   sendSurvey: sendSurvey
   sendTask: sendTask
   sendWelcomeMessage: sendWelcomeMessage
+  sendOnHoldMessage: sendOnHoldMessage
