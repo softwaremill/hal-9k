@@ -10,7 +10,7 @@ kudos = require './kudos/kudosDao'
 
 displayKudos = (robot, res, kudos) ->
   kudosAsString = for kudo in JSON.parse(kudos)
-    "Od #{kudo.kudoer.name}: #{kudo.description}\n"
+    "Od #{kudo.kudoer.name}: #{kudo.description} (id=#{kudo.id})\n"
 
   res.reply(kudosAsString.join(''))
 
@@ -48,6 +48,13 @@ module.exports = (robot) ->
   robot.respond /kudos add @?(\w*) (.*)/i, addKudos
   robot.respond /kudos dodaj dla @?(\w*) (.*)/i, addKudos
 
+  addPlusOne = (res) ->
+    kudosId = res.match[1]
+    kudosDesc = res.match[2].trim
+    kudos.addPlusOne(robot, res, kudosId, kudosDesc)
+
+  robot.respond /kudos \+1 @?([0-9]+)(.*)/i, addPlusOne
+
   robot.respond /kudos help/i, (res) ->
     res.reply("""
       kudos help - wyświetla tę pomoc
@@ -55,6 +62,7 @@ module.exports = (robot) ->
       kudos pokaż dla <nazwa> - j.w.
       kudos add <nazwa> <treść> - dodaje kudosa o treści <treść> dla użytkownika <nazwa>
       kudos dodaj dla <nazwa> <treść> - j.w.
+      kudos +1 <id> <komentarz> - dodaje +1 do kudosa o id <id> z opcjonalnym komentarzem <komentarz>
 
       Kudosy są dostępne na stronie http://kudos.softwaremill.com
     """)

@@ -20,3 +20,15 @@ module.exports.addKudos = (robot, messageResponse, kudosReceiverId, description)
     messageResponse.reply(if jsonBody.message? then jsonBody.message else successBody)
 
   backend.post("/rest/kudos", data, robot, successHandler, errorHandler(messageResponse))
+
+module.exports.addPlusOne = (robot, messageResponse, kudoId, description) ->
+  data = {
+    description: description,
+    userName: messageResponse.message.user.id
+  }
+
+  successHandler = (successBody) ->
+    jsonBody = JSON.parse(successBody)
+    messageResponse.reply(if jsonBody.message? then jsonBody.message else successBody)
+
+  backend.post("/rest/kudos/#{kudoId}/plusOnes", data, robot, successHandler, errorHandler(messageResponse))
