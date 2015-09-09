@@ -50,10 +50,10 @@ module.exports = (robot) ->
 
   addPlusOne = (res) ->
     kudosId = res.match[1]
-    kudosDesc = res.match[2].trim
+    kudosDesc = res.match[2]
     kudos.addPlusOne(robot, res, kudosId, kudosDesc)
 
-  robot.respond /kudos \+1 @?([0-9]+)(.*)/i, addPlusOne
+  robot.respond /kudos \+1 @?([0-9]+)\s?((.*\s*)+)/i, addPlusOne
 
   robot.respond /kudos help/i, (res) ->
     res.reply("""
