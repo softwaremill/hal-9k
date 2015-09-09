@@ -30,6 +30,7 @@ module.exports = (robot) ->
         robot.logger.error "Error getting kudos from the backend. Error: #{error}"
         res.reply("Error #{errCode}")
 
+      res.reply("userID = #{user.id}")
       kudos.getKudos(robot, user.id, successHandler, errorHandler)
 
   robot.respond /kudos show @?(.*)/i, showKudos
