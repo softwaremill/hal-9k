@@ -56,6 +56,8 @@ module.exports = (robot) ->
   robot.respond /kudos \+1 @?([0-9]+)\s?((.*\s*)+)/i, addPlusOne
 
   robot.respond /kudos help/i, (res) ->
+    kudosAppLogin = process.env.HUBOT_KUDOS_APP_LOGIN
+    kudosAppPassword = process.env.HUBOT_KUDOS_APP_PASSWORD
     res.reply("""
       kudos help - wyświetla tę pomoc
       kudos show <nazwa> - pokazuje kudosy dla użytkownika <nazwa>
@@ -65,4 +67,6 @@ module.exports = (robot) ->
       kudos +1 <id> <komentarz> - dodaje +1 do kudosa o id <id> z opcjonalnym komentarzem <komentarz>
 
       Kudosy są dostępne na stronie http://kudos.softwaremill.com
+      Login: #{kudosAppLogin}
+      Hasło: #{kudosAppPassword}
     """)
