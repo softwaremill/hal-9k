@@ -3,8 +3,8 @@ fs = require 'fs'
 
 SUBJECT_PREFIX = '[SoftwareMill]'
 
-sendSurvey = (to, successCallback, errorCallback) ->
-  body = emailTemplate('ankieta')
+sendSurvey = (to, name, successCallback, errorCallback) ->
+  body = emailTemplate('ankieta').replace(/#name#/, name)
   send(to, 'Ankieta', body, successCallback, errorCallback)
 
 sendTask = (to, repositoryUrl, successCallback, errorCallback) ->

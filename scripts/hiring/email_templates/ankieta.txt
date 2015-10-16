@@ -1,11 +1,11 @@
-Cześć,
+Cześć #name#
 
 Dzięki za przesłanie CV. Jako uzupełnienie chcielibyśmy Cię poprosić o wypełnienie dla nas krótkiej ankiety.
 
 Podasz w niej trochę informacji o swoich oczekiwaniach wobec nowego miejsca pracy i planach zawodowych na przyszłość. Pozwoli nam to zobaczyć czy Twoje plany rozwoju zawodowego i oczekiwania wobec nowej firmy są zbieżne z tym, co w SoftwareMill możemy zaoferować naszym pracownikom.
 
 Link do ankiety:
-https://docs.google.com/forms/d/13E3UjwcdIQ7bFuCuqfYZRVJm_OFP92LUpt9GU8bkfoY/viewform
+https://docs.google.com/a/softwaremill.pl/forms/d/1WLThif8nSmyBr3IpHYjJLZwYxCRZtp0zj6joCsm9NHc/viewform
 
 --
 Pozdrawiam

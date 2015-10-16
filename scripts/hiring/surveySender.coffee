@@ -3,6 +3,11 @@ trello = require './trello'
 email = require './email'
 
 module.exports.sendSurvey = (query, robot, msg) ->
+  nameAndFirstName = extractNameAndWelcomeName(query)
+
+  unless nameAndFirstName?
+    return error(msg)("Nie umiem wyciągnąć nazwy kandydata i imienia do szablonu z \"#{query}\"")
+
   onSuccess = (address) ->
     -> msg.reply("Wysłałem ankietę do #{address}")
 
@@ -18,7 +23,7 @@ module.exports.sendSurvey = (query, robot, msg) ->
 
     emailAddress = trello.extractEmailAddress(card)
     if emailAddress?
-      email.sendSurvey(emailAddress, moveCard(card, emailAddress), onError)
+      email.sendSurvey(emailAddress, nameAndFirstName.firstName,  moveCard(card, emailAddress), onError)
     else
       error(msg)("nie znalazłem adresu e-mail dla \"#{query}\"")
 

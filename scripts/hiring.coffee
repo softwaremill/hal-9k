@@ -9,7 +9,7 @@
 #   hubot hr status <name> - shows status of the Trello card matching <name>
 #   hubot hr welcome <name> | <firstName> - sends welcome message with <firstName> used in template
 #   hubot hr onhold <name> | <firstName> - sends onhold message with <firstName> used in template
-#   hubot hr ankieta <name> - sends survey to the email specified in the card matching <name>
+#   hubot hr ankieta <name> | <firstName> - sends survey to the email specified in the card matching <name> with <firstName> used in template
 #   hubot hr wiki <nazwa> - creates wiki page about candidate matching <name>
 #   hubot hr zadanie <name | bitbucket_login> - creates a Bitbucket repository with write access for <bitbucket_login>, sends notification to the email specified in the card matching <name>
 #
@@ -53,7 +53,7 @@ showUsage = (robot, msg) ->
     hr status <nazwa> - pokazuje status kandydata pasującego do <nazwa>
     hr welcome <name | firstName> - wysyła powitalnego maila do kandudata <name> używając <firstName> w szablonie wiadomości
     hr onhold <name | firstName> - wysyła maila z info o wstrzymaniu rekrutacji do kandudata <name> używając <firstName> w szablonie wiadomości
-    hr ankieta <nazwa> - wysyła ankietę do kandydata pasującego do <nazwa>
+    hr ankieta <nazwa | firstName>  - wysyła ankietę do kandydata pasującego do <nazwa> używając <firstName> w szablonie wiadomości
     hr wiki|kiwi <nazwa> - tworzy stronę na Kiwi o kandydacie pasującym do <nazwa>
     hr zadanie <nazwa | login_na_bitbucket> - tworzy repozytorium z dostępem dla <login_na_bitbucket>, wysyła informację do kandydata pasującego do <nazwa>
   """)
