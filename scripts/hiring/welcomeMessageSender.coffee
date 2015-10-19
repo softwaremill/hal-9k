@@ -1,9 +1,10 @@
 error = require './error'
 trello = require './trello'
 email = require './email'
+queryParser = require './queryParser'
 
 module.exports.sendWelcomeMessage = (query, robot, msg) ->
-  nameAndFirstName = extractNameAndWelcomeName(query)
+  nameAndFirstName = queryParser.extractNameAndWelcomeName(query)
 
   unless nameAndFirstName?
     return error(msg)("Nie umiem wyciągnąć nazwy kandydata i imienia do szablonu z \"#{query}\"")
@@ -28,9 +29,3 @@ module.exports.sendWelcomeMessage = (query, robot, msg) ->
       error(msg)("Nie znalazłem adresu e-mail w \"#{card.name}\"")
 
   trello.findCard(nameAndFirstName.name, robot, sendWelcomeMessage, error(msg))
-
-extractNameAndWelcomeName = (query) ->
-  matches = query.match(/(.*)\s*\|\s*(.*)/)
-  if matches? and matches.length is 3
-    name: matches[1].trim()
-    firstName: matches[2].trim()

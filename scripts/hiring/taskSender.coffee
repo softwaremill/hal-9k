@@ -2,9 +2,10 @@ error = require './error'
 trello = require './trello'
 email = require './email'
 bitbucket = require './bitbucket'
+queryParser = require './queryParser'
 
 module.exports.sendTask = (query, robot, msg) ->
-  nameAndLogin = extractNameAndBitbucketLogin(query)
+  nameAndLogin = queryParser.extractNameAndWelcomeName(query)
 
   unless nameAndLogin?
     return error(msg)("nie umiem wyciągnąć nazwy kandydata i loginu na Bitbucket z \"#{query}\"")
@@ -36,9 +37,3 @@ module.exports.sendTask = (query, robot, msg) ->
       error(msg)("nie znalazłem adresu e-mail w \"#{card.name}\"")
 
   trello.findCard(nameAndLogin.name, robot, processCard, error(msg))
-
-extractNameAndBitbucketLogin = (query) ->
-  matches = query.match(/(.*)\s*\|\s*(.*)/)
-  if matches? and matches.length is 3
-    name: matches[1].trim()
-    login: matches[2].trim()

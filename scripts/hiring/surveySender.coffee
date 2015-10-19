@@ -1,10 +1,10 @@
 error = require './error'
 trello = require './trello'
 email = require './email'
+queryParser = require './queryParser'
 
 module.exports.sendSurvey = (query, robot, msg) ->
-  nameAndFirstName = extractNameAndWelcomeName(query)
-
+  nameAndFirstName = queryParser.extractNameAndWelcomeName(query)
   unless nameAndFirstName?
     return error(msg)("Nie umiem wyciągnąć nazwy kandydata i imienia do szablonu z \"#{query}\"")
 
