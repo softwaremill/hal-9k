@@ -25,6 +25,6 @@ module.exports.sendSurvey = (query, robot, msg) ->
     if emailAddress?
       email.sendSurvey(emailAddress, nameAndFirstName.firstName,  moveCard(card, emailAddress), onError)
     else
-      error(msg)("nie znalazłem adresu e-mail dla \"#{query}\"")
+      error(msg)("nie znalazłem adresu e-mail dla \"#{nameAndFirstName.name}\"")
 
-  trello.findCard(query, robot, processCard, error(msg))
+  trello.findCard(nameAndFirstName.name, robot, processCard, error(msg))
