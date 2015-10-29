@@ -30,7 +30,7 @@ module.exports.sendTask = (query, robot, msg) ->
     if emailAddress?
       repositoryName = bitbucket.extractRepositoryName(card.name)
       if repositoryName?
-        bitbucket.createRepositoryAndGrantAccess(repositoryName, nameAndLogin.login, robot, sendEmail(emailAddress, card), onError)
+        bitbucket.createRepositoryAndGrantAccess(repositoryName, nameAndLogin.firstName, robot, sendEmail(emailAddress, card), onError)
       else
         error(msg)("nie umiem utworzyć nazwy repozytorium na podstawie \"#{card.name}\"")
     else
