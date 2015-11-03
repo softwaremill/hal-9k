@@ -1,4 +1,4 @@
-sendgrid = require('sendgrid')(process.env.SENDGRID_USERNAME, process.env.SENDGRID_PASSWORD)
+mailgun = require('mailgun-js')({apiKey: process.env.MAILGUN_APIKEY, domain: process.env.MAILGUN_DOMAIN});
 fs = require 'fs'
 
 SUBJECT_PREFIX = '[SoftwareMill]'
@@ -21,18 +21,17 @@ sendOnHoldMessage = (to, name, successCallback, errorCallback) ->
 
 send = (to, subject, body, successCallback, errorCallback) ->
   console.log("Wysyłam maila: #{to} | #{subject}")
-  email = new sendgrid.Email(
-    to: to
-    from: 'pani.halinka.od.hr@softwaremill.com'
-    fromname: 'Urocza Pani Halinka od HR–ów w SoftwareMill'
-    cc: 'czlowieki@softwaremill.com'
-    subject: "#{SUBJECT_PREFIX} #{subject}"
+  data = {
+    to: to,
+    from: "Urocza Pani Halinka od HR–ów w SoftwareMill <pani.halinka.od.hr@softwaremill.com>",
+    cc: 'czlowieki@softwaremill.com',
+    subject: "#{SUBJECT_PREFIX} #{subject}",
     text: body
-  )
+  };
 
-  sendgrid.send(email, (err) ->
-    if err?
-      errorCallback err
+  mailgun.messages().send(data, (error, body) ->
+    if error?
+      errorCallback error
     else
       successCallback()
   )
