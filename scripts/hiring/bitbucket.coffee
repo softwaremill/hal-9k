@@ -55,7 +55,7 @@ httpRequest = (f, successCallback, errorCallback) ->
     if err?
       errorCallback err
     else if res.statusCode isnt 200
-      errorCallback res.statusCode
+      errorCallback JSON.stringify(res)
     else
       successCallback(body)
 
