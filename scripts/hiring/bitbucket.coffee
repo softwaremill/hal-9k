@@ -53,9 +53,11 @@ formatDate = (date) ->
 httpRequest = (f, successCallback, errorCallback) ->
   f (err, res, body) ->
     if err?
+      console.log("Error in request to Bitbucket API: " + err)
       errorCallback err
     else if res.statusCode isnt 200
-      errorCallback JSON.stringify(res)
+      console.log("Error response from Bitbucket API: " + err)
+      errorCallback res
     else
       successCallback(body)
 
