@@ -20,14 +20,15 @@
     "url": "https://github.com/github/hubot.git"
   },
   "dependencies": {
+    "cron": "1.0.0",
     "flip": "~0.1.1",
     "hubot": ">= 2.6.0 < 3.0.0",
+    "hubot-google-images": "^0.2.5",
     "hubot-scripts": ">= 2.5.0 < 3.0.0",
     "hubot-slack": "^3.2.1",
     "lodash": "~3.1.0",
     "mailgun-js": "0.7.4",
     "moment": "2.9.0",
-    "cron": "1.0.0",
     "time": "0.11.2"
   },
   "engines": {
