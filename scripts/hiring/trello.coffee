@@ -85,6 +85,9 @@ moveToTaskInProgress = (card, robot, successCallback, errorCallback) ->
 moveCardToList = (card, targetList, robot, successCallback, errorCallback) ->
   put("https://api.trello.com/1/cards/#{card.id}/idList", {value: targetList.id}, robot, successCallback, errorCallback)
 
+addCardComment = (card, text, robot, successCallback, errorCallback) ->
+  post("https://api.trello.com/1/cards/#{card.id}/actions/comments", {text: text}, robot, successCallback, errorCallback)
+
 isNew = (card) -> isCardInList(card, lists.new)
 
 isGotSurvey = (card) -> isCardInList(card, lists.gotSurvey)
@@ -107,6 +110,9 @@ request = (f, successCallback, errorCallback) ->
 get = (url, queryParams, robot, successCallback, errorCallback) ->
   request(query(url, queryParams, robot).get(), successCallback, errorCallback)
 
+post = (url, queryParams, robot, successCallback, errorCallback) ->
+  request(query(url, queryParams, robot).post(), successCallback, errorCallback)
+
 put = (url, queryParams, robot, successCallback, errorCallback) ->
   request(query(url, queryParams, robot).put(), successCallback, errorCallback)
 
@@ -118,6 +124,7 @@ module.exports =
   extractFullName: extractFullName
   moveToGotSurvey: moveToGotSurvey
   moveToTaskInProgress: moveToTaskInProgress
+  addCardComment: addCardComment
   isNew: isNew
   isPreScreening: isPreScreening
   isGotSurvey: isGotSurvey
