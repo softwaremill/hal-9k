@@ -29,6 +29,34 @@ Then you can interact with hubot by typing `hubot help`.
     help - Displays all of the help commands that Hubot knows about.
     ...
 
+Several environmental variables are used for configuration of different generic and internal features:
+
+ - BitBucket
+    - `HUBOT_BITBUCKET_USERNAME`
+    - `HUBOT_BITBUCKET_PASSWORD`
+ - Google
+    - `HUBOT_GOOGLE_API`
+    - `HUBOT_GOOGLE_CSE_ID`
+    - `HUBOT_GOOGLE_CSE_KEY`
+    - `HUBOT_GOOGLE_SEARCH_CX`
+    - `HUBOT_GOOGLE_SEARCH_KEY`
+ - Slack
+    - `HUBOT_SLACK_TOKEN`
+ - users
+    - `REST_API_SECRET`
+ - grammar
+    - `HUBOT_GRAMMAR_STATS_APP_URL`
+    - `HUBOT_GRAMMAR_STATS_APP_AUTH_TOKEN`
+ - kudos
+    - `HUBOT_KUDOS_APP_LOGIN`
+    - `HUBOT_KUDOS_APP_PASSWORD`
+ - hiring
+    - `HUBOT_TRELLO_KEY`
+    - `HUBOT_TRELLO_TOKEN`
+    - `HUBOT_HIRING_BOARD_ID`
+    - `HUBOT_HIRING_ROOM_NAME`
+    - `MAILGUN_DOMAIN`
+    - `MAILGUN_APIKEY`
 
 ### Scripting
 
