@@ -13,6 +13,9 @@ lists =
   gotOnHold:
     id: '550bf67451ab199493bdd811'
     name:'Dostał(a) maila z "on-hold"'
+  welcomed:
+    id: '5666fb69903929453a8622c9'
+    name: 'Powitany(a)'
   gotSurvey:
     id: '51ade0b03e79ff244a001071'
     name: 'Dostał(a) ankietę'
@@ -76,6 +79,9 @@ extractFullName = (card) ->
   matches = card.name.match(/^(.*?) #/)
   matches[1] if matches?
 
+moveToWelcomed = (card, robot, successCallback, errorCallback) ->
+  moveCardToList(card, lists.welcomed, robot, successCallback, errorCallback)
+
 moveToGotSurvey = (card, robot, successCallback, errorCallback) ->
   moveCardToList(card, lists.gotSurvey, robot, successCallback, errorCallback)
 
@@ -89,6 +95,8 @@ addCardComment = (card, text, robot, successCallback, errorCallback) ->
   post("https://api.trello.com/1/cards/#{card.id}/actions/comments", {text: text}, robot, successCallback, errorCallback)
 
 isNew = (card) -> isCardInList(card, lists.new)
+
+isWelcomed = (card) -> isCardInList(card, lists.welcomed)
 
 isGotSurvey = (card) -> isCardInList(card, lists.gotSurvey)
 
@@ -122,10 +130,12 @@ module.exports =
   getCardAttachmentUrls: getCardAttachmentUrls
   extractEmailAddress: extractEmailAddress
   extractFullName: extractFullName
+  moveToWelcomed: moveToWelcomed
   moveToGotSurvey: moveToGotSurvey
   moveToTaskInProgress: moveToTaskInProgress
   addCardComment: addCardComment
   isNew: isNew
+  isWelcomed: isWelcomed
   isPreScreening: isPreScreening
   isGotSurvey: isGotSurvey
   isTaskInProgress: isTaskInProgress

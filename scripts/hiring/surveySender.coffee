@@ -18,8 +18,8 @@ module.exports.sendSurvey = (query, robot, msg) ->
     -> trello.moveToGotSurvey(card, robot, onSuccess(address), onError)
 
   processCard = (card) ->
-    unless trello.isNew(card)
-      return error(msg)('ankiety wysyłam tylko do kartek z listy "Nowe"')
+    unless trello.isWelcomed(card)
+      return error(msg)('ankiety wysyłam tylko do kartek z listy "Powitany(a)"')
 
     emailAddress = trello.extractEmailAddress(card)
     if emailAddress?

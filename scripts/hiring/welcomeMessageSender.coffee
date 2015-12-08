@@ -9,17 +9,16 @@ module.exports.sendWelcomeMessage = (query, robot, msg) ->
   unless nameAndFirstName?
     return error(msg)("Nie umiem wyciągnąć nazwy kandydata i imienia do szablonu z \"#{query}\"")
 
-  replyMessageSent = (text) ->
+  replyMessageSent = (address) ->
     () ->
-      msg.reply(text)
+      msg.reply("Wysłałem powitalnego maila do #{address}")
 
-  replyCommentFailed = (err) ->
-    error(msg)("Wysłałem maila powiatalnego, ale nie udało się dodać komentarza do kartki (#{err})")
+  replyMoveFailed = (err) ->
+    error(msg)("Wysłałem maila powiatalnego, ale nie udało się przenieść kartki do powitanych (#{err})")
 
-  commentMessageSent = (card, address) ->
+  moveToWelcomed = (card, address) ->
     () ->
-      text = "Wysłałem powitalnego maila do #{address}"
-      trello.addCardComment(card, text, robot, replyMessageSent(text), replyCommentFailed)
+      trello.moveToWelcomed(card, robot, replyMessageSent(address), replyMoveFailed)
 
   replyEmailFailed = (err) ->
     error(msg)("Nie udało się wysłać maila (#{err})")
@@ -30,7 +29,7 @@ module.exports.sendWelcomeMessage = (query, robot, msg) ->
 
     address = trello.extractEmailAddress(card)
     if address?
-      email.sendWelcomeMessage(address, nameAndFirstName.firstName, commentMessageSent(card, address), replyEmailFailed)
+      email.sendWelcomeMessage(address, nameAndFirstName.firstName, moveToWelcomed(card, address), replyEmailFailed)
     else
       error(msg)("Nie znalazłem adresu e-mail w \"#{card.name}\"")
 
