@@ -38,33 +38,33 @@ ensureConfig = (out) ->
 ##############################
 
 createCard = (msg, list_name, cardName) ->
-  msg.reply "Sure thing boss. I'll create that card for you."
+  msg.reply "Spoko szefie, już dodaj kartkę!"
   ensureConfig msg.send
   id = lists[list_name.toLowerCase()].id
   trello.post "/1/cards", {name: cardName, idList: id}, (err, data) ->
-    msg.reply "There was an error creating the card" if err
-    msg.reply "OK, I created that card for you. You can see it here: #{data.url}" unless err
+    msg.reply "Nie mogę utworzyć kartki :(" if err
+    msg.reply "Gotowe, kartka zrobioan, tu jest: #{data.url}" unless err
 
 showCards = (msg, list_name) ->
-  msg.reply "Looking up the cards for #{list_name}, one sec."
+  msg.reply "Czekaj, szukam kartek na #{list_name} ..."
   ensureConfig msg.send
   id = lists[list_name.toLowerCase()].id
-  msg.send "I couldn't find a list named: #{list_name}." unless id
+  msg.send "Nie ma takiej listy #{list_name} :(" unless id
   if id
     trello.get "/1/lists/#{id}", {cards: "open"}, (err, data) ->
-      msg.reply "There was an error showing the list." if err
-      msg.reply "Here are all the cards in #{data.name}:" unless err and data.cards.length == 0
+      msg.reply "Jakiś błąd przy listowaniu :(" if err
+      msg.reply "Oto kartki z #{data.name}:" unless err and data.cards.length == 0
       msg.send "* [#{card.shortLink}] #{card.name} - #{card.shortUrl}" for card in data.cards unless err and data.cards.length == 0
-      msg.reply "No cards are currently in the #{data.name} list." if data.cards.length == 0 and !err
+      msg.reply "Nie ma żadnych kartek na #{data.name}" if data.cards.length == 0 and !err
 
 moveCard = (msg, card_id, list_name) ->
   ensureConfig msg.send
   id = lists[list_name.toLowerCase()].id
-  msg.reply "I couldn't find a list named: #{list_name}." unless id
+  msg.reply "Nie ma takiej listy #{list_name}." unless id
   if id
     trello.put "/1/cards/#{card_id}/idList", {value: id}, (err, data) ->
-      msg.reply "Sorry boss, I couldn't move that card after all." if err
-      msg.reply "Yep, ok, I moved that card to #{list_name}." unless err
+      msg.reply "Nie dałem rady przesunąć tej kartki :(" if err
+      msg.reply "Gotowe, kartka przesunięta do #{list_name}." unless err
 
 module.exports = (robot) ->
   # fetch our board data when the script is loaded
@@ -81,11 +81,11 @@ module.exports = (robot) ->
     list_name = msg.match[1]
 
     if card_name.length == 0
-      msg.reply "You must give the card a name"
+      msg.reply "Hej, a gdzie nazwa kartki?!?"
       return
 
     if list_name.length == 0
-      msg.reply "You must give a list name"
+      msg.reply "Hej, a gdzie nazwa listy?!?"
       return
     return unless ensureConfig()
 
@@ -98,14 +98,13 @@ module.exports = (robot) ->
     moveCard msg, msg.match[1], msg.match[2]
 
   robot.respond /trello list lists/i, (msg) ->
-    msg.reply "Here are all the lists on your board."
+    msg.reply "Oto wszystkie listy:"
     Object.keys(lists).forEach (key) ->
       msg.send " * " + key
 
   robot.respond /trello help/i, (msg) ->
-    msg.reply "Here are all the commands for me."
-    msg.send " *  trello new \"<ListName>\" <TaskName>"
-    msg.send " *  trello list \"<ListName>\""
+    msg.send " *  trello new '<ListName>' <TaskName>"
+    msg.send " *  trello list '<ListName>'"
     msg.send " *  shows * [<card.shortLink>] <card.name> - <card.shortUrl>"
-    msg.send " *  trello move <card.shortlink> \"<ListName>\""
+    msg.send " *  trello move <card.shortlink> '<ListName>'"
     msg.send " *  trello list lists"
