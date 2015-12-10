@@ -12,7 +12,7 @@ module.exports = (robot) ->
     output = Util.inspect(robot.brain.data, false, 4)
     msg.send output
 
-  robot.respond /pokaż szkodników$/i, (msg) ->
+  robot.respond /pokaż (szkodników|użytkowników)$/i, (msg) ->
     response = ""
 
     for own key, user of robot.brain.data.users
