@@ -22,7 +22,9 @@ module.exports = (robot) ->
 
     msg.send response
 
-  robot.respond /(help|pomoc|\?)/i, (msg) ->
-    msg.send "pokaż mózg - wyświetla zawartość mózgu"
-    msg.send "pokaż szkodników|użytkwoników - wyświetla wiedzę o użytkownikach"
+  robot.respond /mózg$/i, (msg) ->
+    msg.send "Mam :)"
 
+  robot.respond /mózg (help|pomoc|\?)$/i, (msg) ->
+    msg.send "hubot pokaż mózg - wyświetla zawartość mózgu"
+    msg.send "hubot pokaż szkodników|użytkowników - wyświetla wiedzę o użytkownikach"
