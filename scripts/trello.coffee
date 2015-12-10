@@ -75,7 +75,7 @@ module.exports = (robot) ->
       for list in data
         lists[list.name.toLowerCase()] = list
 
-  robot.respond /trello new ["'](.+)["']\s(.*)/i, (msg) ->
+  robot.respond /trello [new|nowa] ["'](.+)["']\s(.*)/i, (msg) ->
     ensureConfig msg.send
     card_name = msg.match[2]
     list_name = msg.match[1]
@@ -91,20 +91,19 @@ module.exports = (robot) ->
 
     createCard msg, list_name, card_name
 
-  robot.respond /trello list ["'](.+)["']/i, (msg) ->
+  robot.respond /trello [list|listuj] ["'](.+)["']/i, (msg) ->
     showCards msg, msg.match[1]
 
-  robot.respond /trello move (\w+) ["'](.+)["']/i, (msg) ->
+  robot.respond /trello [move|przesun] (\w+) ["'](.+)["']/i, (msg) ->
     moveCard msg, msg.match[1], msg.match[2]
 
-  robot.respond /trello list lists/i, (msg) ->
+  robot.respond /trello [list|listuj] [lists|wszystko]/i, (msg) ->
     msg.reply "Oto wszystkie listy:"
     Object.keys(lists).forEach (key) ->
       msg.send " * " + key
 
-  robot.respond /trello help/i, (msg) ->
-    msg.send " *  trello new '<ListName>' <TaskName>"
-    msg.send " *  trello list '<ListName>'"
-    msg.send " *  shows * [<card.shortLink>] <card.name> - <card.shortUrl>"
-    msg.send " *  trello move <card.shortlink> '<ListName>'"
-    msg.send " *  trello list lists"
+  robot.respond /trello [help|pomoc]/i, (msg) ->
+    msg.send " * trello new|nowa '<ListName>' <TaskName>"
+    msg.send " * trello list|listuj '<ListName>'"
+    msg.send " * trello move|przesun <card.shortlink> '<ListName>'"
+    msg.send " * trello list lists|listuj wszystko"
