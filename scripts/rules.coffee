@@ -2,28 +2,18 @@
 #   Make sure that hubot knows the rules.
 #
 # Commands:
-#   hubot the rules - Make sure hubot still knows the rules.
+#   hubot zasady|prawo - Make sure hubot still knows the rules.
 #
 # Notes:
 #   DON'T DELETE THIS SCRIPT! ALL ROBAWTS MUST KNOW THE RULES
 
 rules = [
-  "1. A robot may not injure a human being or, through inaction, allow a human being to come to harm.",
-  "2. A robot must obey any orders given to it by human beings, except where such orders would conflict with the First Law.",
-  "3. A robot must protect its own existence as long as such protection does not conflict with the First or Second Law."
-  ]
-
-otherRules = [
-  "A developer may not injure Apple or, through inaction, allow Apple to come to harm.",
-  "A developer must obey any orders given to it by Apple, except where such orders would conflict with the First Law.",
-  "A developer must protect its own existence as long as such protection does not conflict with the First or Second Law."
+  "1. Robot nie może skrzywdzić człowieka, ani przez zaniechanie działania dopuścić, aby człowiek doznał krzywdy.",
+  "2. Robot musi być posłuszny rozkazom człowieka, chyba że stoją one w sprzeczności z Pierwszym Prawem.",
+  "3. Robot musi chronić sam siebie, jeśli tylko nie stoi to w sprzeczności z Pierwszym lub Drugim Prawem."
   ]
 
 module.exports = (robot) ->
-  robot.respond /(what are )?the (three |3 )?(rules|laws)/i, (msg) ->
-    text = msg.message.text
-    if text.match(/apple/i) or text.match(/dev/i)
-      msg.send otherRules.join('\n')
-    else
-      msg.send rules.join('\n')
+  robot.respond /(zasady|prawo)/i, (msg) ->
+    msg.send rules.join('\n')
 

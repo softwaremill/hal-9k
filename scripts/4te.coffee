@@ -2,7 +2,7 @@
 #   Genrates 4th question
 #
 # Commands:
-#   Hubot generates random 4th question
+#   hubot 4te - Generuje 4te pytanie z listy
 
 questions = [
   "Najlepsze 4te pytanie do tej pory?",

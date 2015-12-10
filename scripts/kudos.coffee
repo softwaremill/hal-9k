@@ -2,7 +2,7 @@
 #   To add and show kudos
 #
 # Commands:
-#   hubot kudos show <username> - pokazuje kudosy danego usera
+#   hubot kudos help - pokazuje pomoc dla modułu kudos
 #
 
 users = require './common/users'
@@ -58,7 +58,7 @@ module.exports = (robot) ->
   robot.respond /kudos help/i, (res) ->
     kudosAppLogin = process.env.HUBOT_KUDOS_APP_LOGIN
     kudosAppPassword = process.env.HUBOT_KUDOS_APP_PASSWORD
-    res.reply("""
+    res.send """
       kudos help - wyświetla tę pomoc
       kudos show <nazwa> - pokazuje kudosy dla użytkownika <nazwa>
       kudos pokaż dla <nazwa> - j.w.
@@ -69,4 +69,4 @@ module.exports = (robot) ->
       Kudosy są dostępne na stronie http://kudos.softwaremill.com
       Login: #{kudosAppLogin}
       Hasło: #{kudosAppPassword}
-    """)
+    """

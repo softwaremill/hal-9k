@@ -2,7 +2,7 @@
 #   Introduce himself
 #
 # Commands:
-#   about|o sobie|introduce yourself - short info about myself
+#   hubot about|o sobie|introduce yourself - krótko o samym sobie
 
 module.exports = (robot) ->
 

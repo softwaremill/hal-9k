@@ -9,15 +9,14 @@
 
 module.exports = (robot) ->
   robot.respond /PING$/i, (msg) ->
-    msg.send "pong!\nPlay again?"
+    msg.send "pong!\nGramy dalej?"
 
   robot.respond /ECHO (.*)$/i, (msg) ->
     msg.send msg.match[1]
 
   robot.respond /TIME$/i, (msg) ->
-    msg.send "Server time is: #{new Date()}"
+    msg.send "Czas u mnie #{new Date()}"
 
   robot.respond /DIE$/i, (msg) ->
-    msg.send "Goodbye, cruel world."
+    msg.send "Umieram ..."
     process.exit 0
-

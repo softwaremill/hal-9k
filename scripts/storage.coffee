@@ -2,18 +2,17 @@
 #   Inspect the data in redis easily
 #
 # Commands:
-#   hubot show users - Display all users that hubot knows about
-#   hubot show storage - Display the contents that are persisted in the brain
-
+#   hubot mózg help|pomoc|? - Pomoc do modułu mózg
+#
 
 Util = require "util"
 
 module.exports = (robot) ->
-  robot.respond /show storage$/i, (msg) ->
+  robot.respond /pokaż mózg$/i, (msg) ->
     output = Util.inspect(robot.brain.data, false, 4)
     msg.send output
 
-  robot.respond /show users$/i, (msg) ->
+  robot.respond /pokaż szkodników$/i, (msg) ->
     response = ""
 
     for own key, user of robot.brain.data.users
@@ -22,4 +21,8 @@ module.exports = (robot) ->
       response += "\n"
 
     msg.send response
+
+  robot.respond /(help|pomoc|\?)/i, (msg) ->
+    msg.send "pokaż mózg - wyświetla zawartość mózgu"
+    msg.send "pokaż szkodników|użytkwoników - wyświetla wiedzę o użytkownikach"
 
