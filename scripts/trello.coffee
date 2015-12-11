@@ -89,19 +89,19 @@ module.exports = (robot) ->
 
     createCard msg, list_name, card_name
 
-  robot.respond /trello (list|listuj|pokaż) ["'](.+)["']/i, (msg) ->
+  robot.respond /trello (list|listuj|pokaż|poka) ["'](.+)["']/i, (msg) ->
     showCards msg, msg.match[2]
 
   robot.respond /trello (move|przesun) (\w+) ["'](.+)["']/i, (msg) ->
     moveCard msg, msg.match[1], msg.match[2]
 
-  robot.respond /trello (listuj wszystko|pokaż wszystko|list lists)/i, (msg) ->
+  robot.respond /trello (listuj wszystko|pokaż wszystko|list lists|poka wsio)/i, (msg) ->
     msg.reply "Oto wszystkie listy:"
     Object.keys(lists).forEach (key) ->
       msg.send " - " + key
 
   robot.respond /trello (help|pomoc|\?)/i, (msg) ->
     msg.send " * trello new|nowa '<ListName>' <TaskName>"
-    msg.send " * trello list|listuj|pokaż '<ListName>'"
+    msg.send " * trello list|listuj|pokaż|poka '<ListName>'"
     msg.send " * trello move|przesun <card.shortlink> '<ListName>'"
-    msg.send " * trello list lists|listuj wszystko|pokaż wszystko"
+    msg.send " * trello list lists|listuj wszystko|pokaż wszystko|poka wsio"
