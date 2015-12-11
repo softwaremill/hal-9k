@@ -48,6 +48,8 @@ findCard = (query, robot, successCallback, errorCallback) ->
     query: query
 
   extractCard = (json) ->
+    robot.logger.info "Found #{json}"
+
     switch json.cards.filter( (card) ->
       not card.closed
     ).length
