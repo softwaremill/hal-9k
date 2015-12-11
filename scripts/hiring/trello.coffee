@@ -48,7 +48,9 @@ findCard = (query, robot, successCallback, errorCallback) ->
     query: query
 
   extractCard = (json) ->
-    switch json.cards.length
+    switch json.cards.filter( (card) ->
+      card.closed == false
+    ).length
       when 0 then errorCallback "nie znalazłem kartki dla \"#{query}\""
       when 1 then successCallback fillListName(json.cards[0])
       else errorCallback "znalazłem więcej niż jedną kartkę dla \"#{query}\""
