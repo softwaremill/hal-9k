@@ -2,11 +2,8 @@
 #   Drover - utility to setup up reminder in cron based format.
 #
 # Commands:
-#   hubot cron list - lists all the defined reminders
-#   hubot cron "<message>" at "<cron expression>" on "<channel name with #> - adds new reminder for given cron expression and channel
-#   hubot cron "<message>" at "<cron expression>" - adds new reminder for given cron expression for defaul channel (#!_wazne_)
-#   hubot cron delete <number> - deletes reminder for given index (to check index type "hubot cron list")
-#   hubot cron show   <number> - prints full job definition for given index (to check index type "hubot cron list")
+#   hubot cron help|pomoc|? - wyświetla pomoć dla modułu cron
+#
 
 CronJob = require('cron').CronJob
 
@@ -122,9 +119,9 @@ module.exports = (robot) ->
       msg.reply "Jobs loading in progress..."
       return
     jobs = jobManager.jobs
-    msg.reply "#{i} : #{jobs[i]}" for job, i in jobs
-    msg.reply "You can remove cron job with: cron delete (number)."
-    msg.reply "For more details go to https://kiwi.softwaremill.com/display/ORG/Automatyczne+przypomnienia+z+Januszem"
+    msg.send "#{i} : #{jobs[i]}" for job, i in jobs
+    msg.send "You can remove cron job with: cron delete (number)."
+    msg.send "For more details go to https://kiwi.softwaremill.com/display/ORG/Automatyczne+przypomnienia+z+Januszem"
 
   robot.respond /cron delete all/i, (msg) ->
     jobManager.removeAll()
@@ -145,8 +142,15 @@ module.exports = (robot) ->
       return
     job = jobManager.get(jobIndex)
     if(job?)
-      msg.reply "Job: #{job.getDefinition()}"
+      msg.send "Job: #{job.getDefinition()}"
     else
-      msg.reply "No job with index #{jobIndex}"
-    
-      
+      msg.send "No job with index #{jobIndex}"
+
+  robot.respond /cron (help|pomoc|\?)$/i, (msg) ->
+    msg.send """
+      cron list - lists all the defined reminders
+      cron "<message>" at "<cron expression>" on "<channel name with #> - adds new reminder for given cron expression and channel
+      cron "<message>" at "<cron expression>" - adds new reminder for given cron expression for defaul channel (#!_wazne_)
+      cron delete <number> - deletes reminder for given index (to check index type "hubot cron list")
+      cron show   <number> - prints full job definition for given index (to check index type "hubot cron list")
+    """
