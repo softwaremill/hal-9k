@@ -10,7 +10,7 @@
 #
 # Commands:
 #   hubot aliens <text> - gość z Ancient Aliens History Channel
-#   hubot brace yourselves <text> - Brace Yourselves X is Coming (Imminent Ned, Game of Thrones)
+#   hubot brace yourselves|yourself <text> - Brace Yourselves X is Coming (Imminent Ned, Game of Thrones)
 #
 # Author:
 #   dylanwenzlau
