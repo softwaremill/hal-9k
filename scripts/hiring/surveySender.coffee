@@ -31,7 +31,7 @@ module.exports.sendSurvey = (query, robot, msg) ->
       date = new Date
       date.setDate(date.getDate + 3)
       schedule.scheduleJob date, ->
-        msg.messageRoom HIRING_ROOM_NAME, "@channel Sprawdźcie czy #{emailAddress} - #{nameAndFirstName.firstName} wypełnij już ankietę!"
+        robot.messageRoom HIRING_ROOM_NAME, "@channel Sprawdźcie czy #{emailAddress} - #{nameAndFirstName.firstName} wypełnij już ankietę!"
 
       msg.send "Dodałem przypomnienie na dzień #{date} aby sprawdzić wynik ankiety"
 
