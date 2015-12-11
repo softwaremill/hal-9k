@@ -51,7 +51,7 @@ showCards = (msg, list_name) ->
   if id
     trello.get "/1/lists/#{id}", {cards: "open"}, (err, data) ->
       msg.reply "Jakiś błąd przy listowaniu :(" if err
-      msg.reply "Oto kartki z #{data.name}:" unless err and data.cards.length == 0
+      msg.send "Oto kartki z #{data.name}:" unless err and data.cards.length == 0
       msg.send "* [#{card.shortLink}] #{card.name} - #{card.shortUrl}" for card in data.cards unless err and data.cards.length == 0
       msg.reply "Nie ma żadnych kartek na #{data.name}" if data.cards.length == 0 and !err
 
