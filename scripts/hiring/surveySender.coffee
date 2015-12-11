@@ -12,7 +12,7 @@ module.exports.sendSurvey = (query, robot, msg) ->
     return error(msg)("Nie umiem wyciągnąć nazwy kandydata i imienia do szablonu z \"#{query}\"")
 
   onSuccess = (address) ->
-    -> msg.reply("Wysłałem ankietę do #{address}")
+    -> msg.send "Wysłałem ankietę do #{address}"
 
   onError = (err) ->
     error(msg)("nie udało się wysłać ankiety (#{err})")
@@ -29,7 +29,7 @@ module.exports.sendSurvey = (query, robot, msg) ->
       email.sendSurvey(emailAddress, nameAndFirstName.firstName,  moveCard(card, emailAddress), onError)
 
       date = new Date
-      date.setDate date.getDate + 3
+      date.setDate(date.getDate + 3)
       schedule.scheduleJob date, ->
         msg.messageRoom HIRING_ROOM_NAME, "@channel Sprawdźcie czy #{emailAddress} - #{nameAndFirstName.firstName} wypełnij już ankietę!"
 
