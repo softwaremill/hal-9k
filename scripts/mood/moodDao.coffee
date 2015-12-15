@@ -13,6 +13,7 @@ module.exports.addMood = (robot, messageResponse, mood, description) ->
 
   successHandler = (successBody) ->
     jsonBody = JSON.parse(successBody)
+    robot.logger.info(jsonBody)
     messageResponse.reply("Trzymaj się, do jutra!")
 
   backend.post("/rest/mood", data, robot, successHandler, errorHandler(messageResponse))
