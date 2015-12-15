@@ -1,7 +1,7 @@
 # Description:
 #   Echos all the traffic to the log. Use only when debugging and switch off when done!
 
-enabled = true
+enabled = false
 
 module.exports = (robot) ->
 
