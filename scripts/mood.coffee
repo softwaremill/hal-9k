@@ -8,9 +8,12 @@ moodDao = require './mood/moodDao'
 
 module.exports = (robot) ->
   recordMood = (res) ->
-    mood = res.match[1]
-    moodDescription = res.match[2]
-    moodDao.addMood(robot, res, mood, moodDescription)
+    mood = parseInt(res.match[1])
+    if mood < 1 or mood > 5
+      remindMoodQuestion(res)
+    else
+      moodDescription = res.match[2]
+      moodDao.addMood(robot, res, mood, moodDescription)
 
   remindMoodQuestion = (res) ->
     res.reply "Hej jak Ci minął dzień? Napisz `/me out [nastrój 1-5] [opcjonalnie pare słów co się działo]`"
