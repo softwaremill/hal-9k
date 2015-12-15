@@ -16,7 +16,14 @@ module.exports.addMood = (robot, messageResponse, mood, description) ->
 
   successHandler = (successBody) ->
     jsonBody = JSON.parse(successBody)
-    robot.logger.info(jsonBody)
-    messageResponse.reply("Trzymaj się, do jutra!")
+    if (jsonBody.message == "ok")
+      if (new Date().getDay() == 5)
+        messageResponse.reply("Miłego weekendu! Do poniedziałku.")
+      else
+        messageResponse.reply("Trzymaj się, do jutra!")
+    else
+      robot.logger.info("Bad response from janusz mood storage!")
+      robot.logger.info(jsonBody)
+      messageResponse.reply("Coś poszło nie tak :( Sprawdź logi.")
 
   backend.post("/rest/mood", data, robot, successHandler, errorHandler(messageResponse))
