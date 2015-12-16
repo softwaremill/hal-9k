@@ -9,8 +9,8 @@ module.exports.create = (query, robot, msg) ->
     return error(msg)("Nie umiem wyciągnąć nazwy kandydata z \"#{query}\"")
 
   createWikiPage = (card) ->
-    unless trello.isPreScreening(card) || trello.isGotSurvey(card) || trello.isTaskInProgress(card)
-      return error(msg)('Stronę na kiwi tworzę tylko dla osób w statusie "Dostał ankietę", "Pre-screening" lub "Robi zadanie"')
+    unless trello.canCreateWiki(card)
+      return msg.reply "Nie utworzę strony na Wiki bo kartka jest na liście #{card.listName}!"
 
     emailAddress = trello.extractEmailAddress(card)
     candidateName = trello.extractFullName(card)

@@ -10,36 +10,51 @@ lists =
   new:
     id: '51acaaefbeac745c31005967'
     name: 'Nowe'
+    wiki: false
   gotOnHold:
     id: '550bf67451ab199493bdd811'
     name:'Dostał(a) maila z "on-hold"'
+    wiki: false
   welcomed:
     id: '5666fb69903929453a8622c9'
     name: 'Powitany(a)'
+    wiki: false
   gotSurvey:
     id: '51ade0b03e79ff244a001071'
     name: 'Dostał(a) ankietę'
+    wiki: false
+  surveyFilled:
+    id: '566ade4a5f912f913d5618bc'
+    name: 'Wypełnił(a) ankiete'
+    wiki: true
   preScreening:
     id: '51f63c8487eaf62c15003a51'
     name: 'Pre-screening call'
+    wiki: true
   taskInProgress:
     id: '51f63c74faa4a1497b00446b'
     name: 'Robi zadanie'
+    wiki: true
   codeReview:
     id: '51f63cb51e9bf75b7b00386e'
     name: 'Code review'
+    wiki: true
   technicalCall:
     id: '5478db810b6b5ab72c591a59'
     name: 'Rozmowa techniczna'
+    wiki: true
   lunch:
     id: '5478db8c51399a1f75cc45b2'
     name: 'Lunch'
+    wiki: true
   withDoubts:
     id: '51acaaefbeac745c31005969'
     name: 'Z wątpliwościami'
+    wiki: false
   rejected:
     id: '51acaaefbeac745c31005968'
     name: 'Odrzucone'
+    wiki: false
 
 findCard = (query, robot, successCallback, errorCallback) ->
   searchParams =
@@ -107,6 +122,9 @@ isPreScreening = (card) -> isCardInList(card, lists.preScreening)
 isTaskInProgress = (card) -> isCardInList(card, lists.taskInProgress)
 
 isCardInList  = (card, list) -> card.idList is list.id
+
+canCreateWiki = (card) ->
+  findListById(card.idList)?.wiki
 
 query = (url, queryParams, robot) -> robot.http(url).query(_.assign(KEY_AND_TOKEN, queryParams))
 
