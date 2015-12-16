@@ -57,6 +57,7 @@ showCards = (msg, list_name) ->
 
 moveCard = (msg, card_id, list_name) ->
   ensureConfig msg.send
+  msg.send "Próbuje przeusnąć kartkę z id #{card_id} na listę #{list_name}"
   id = lists[list_name.toLowerCase()].id
   msg.reply "Nie ma takiej listy #{list_name}." unless id
   if id
@@ -92,8 +93,8 @@ module.exports = (robot) ->
   robot.respond /trello (list|listuj|pokaż|poka) ["'](.+)["']/i, (msg) ->
     showCards msg, msg.match[2]
 
-  robot.respond /trello (move|przesun) (\w+) ["'](.+)["']/i, (msg) ->
-    moveCard msg, msg.match[1], msg.match[2]
+  robot.respond /trello (move|przesuń) (\w+) ["'](.+)["']/i, (msg) ->
+    moveCard msg, msg.match[2], msg.match[3]
 
   robot.respond /trello (listuj wszystko|pokaż wszystko|list lists|poka wsio)/i, (msg) ->
     msg.reply "Oto wszystkie listy:"
@@ -103,5 +104,5 @@ module.exports = (robot) ->
   robot.respond /trello (help|pomoc|\?)/i, (msg) ->
     msg.send " * trello new|nowa '<ListName>' <TaskName>"
     msg.send " * trello list|listuj|pokaż|poka '<ListName>'"
-    msg.send " * trello move|przesun <card.shortlink> '<ListName>'"
+    msg.send " * trello move|przesuń <card.shortlink> '<ListName>'"
     msg.send " * trello list lists|listuj wszystko|pokaż wszystko|poka wsio"
