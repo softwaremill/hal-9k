@@ -17,13 +17,15 @@ taskSender = require './hiring/taskSender'
 wikiCreator = require './hiring/wikiCreator'
 
 HIRING_ROOM_NAME = process.env.HUBOT_HIRING_ROOM_NAME
+DEV_MODE = process.env.HUBOT_DEV_MODE
+
+isProperRoom = (roomName) ->
+  roomName == HIRING_ROOM_NAME || DEV_MODE
 
 module.exports = (robot) ->
   robot.respond /hr (help|status|welcome|onhold|ankieta|wiki|kiwi|zadanie|review)\s?((.*\s*)+)/i, (msg) ->
     action = msg.match[1]
-    if msg.message.room isnt HIRING_ROOM_NAME
-      error(msg)("akcja \"hr #{action}\" działa tylko na kanale ##{HIRING_ROOM_NAME}")
-    else
+    if isProperRoom msg.message.room
       query = msg.match[2]
       if action is 'help'
         showUsage msg
@@ -39,7 +41,9 @@ module.exports = (robot) ->
           when 'kiwi' then wikiCreator.create(query, robot, msg)
           when 'review' then msg.reply("review #{query}")
       else
-        error(msg)("potrzebuję imienia i/lub nazwiska kandydata")
+        msg.reply "Potrzebuję imienia i/lub nazwiska kandydata!"
+    else
+      msg.reply "Akcja \"hr #{action}\" działa tylko na kanale ##{HIRING_ROOM_NAME}"
 
 showUsage = (msg) ->
   msg.send """
