@@ -159,3 +159,4 @@ module.exports =
   isPreScreening: isPreScreening
   isGotSurvey: isGotSurvey
   isTaskInProgress: isTaskInProgress
+  canCreateWiki: canCreateWiki
