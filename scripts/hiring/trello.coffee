@@ -89,8 +89,19 @@ getCardAttachmentUrls = (robot, card, successCallback, errorCallback) ->
   get("https://api.trello.com/1/cards/#{card.id}/attachments", {}, robot, successCallback, errorCallback)
 
 extractEmailAddress = (card) ->
-  matches = card.name.match(/#(.*)#/)
-  matches[1] if matches?
+  matches = card.name.match /#(.*)#(.*)#/i
+  if matches
+    email = matches[1].replace "#", ""
+    if email.length > 0 and email.match /(.*)@(.*)/i
+      email
+    else
+      email = matches[2].replace "#", ""
+      if email.length > 0 and email.match /(.*)@(.*)/i
+        email
+      else
+        undefined
+  else
+    undefined
 
 extractFullName = (card) ->
   matches = card.name.match(/^(.*?) #/)
