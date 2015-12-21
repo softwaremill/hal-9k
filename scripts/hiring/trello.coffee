@@ -101,7 +101,15 @@ extractEmailAddress = (card) ->
       else
         undefined
   else
-    undefined
+    matches = card.name.match /#(.*)#/i
+    if matches
+      email = matches[1].replace "#", ""
+      if email.length > 0 and email.match /(.*)@(.*)/i
+        email
+      else
+        undefined
+    else
+      undefined
 
 extractFullName = (card) ->
   matches = card.name.match(/^(.*?) #/)
