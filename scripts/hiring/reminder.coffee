@@ -16,12 +16,24 @@ class Reminder
   runNow: (robot) =>
     robot.messageRoom @roomName, @message
 
-module.exports = (robot) ->
+# it's a bug in Hubot https://github.com/github/hubot/issues/880
+isFirstTime = true
+
+module.exports.init = (robot) ->
   robot.brain.on 'loaded', ->
-    reminders = robot.brain.get REMINDER_STORE_NAME
+    if not isFirstTime
+      return
+
+    isFirstTime = false
+
+    robot.logger.info "Reading reminders from #{REMINDER_STORE_NAME}"
+
+    reminders = robot.brain.get REMINDER_STORE_NAME or []
     rebooted = []
 
-    for reminder in reminders
+    robot.logger.info "Existing reminders:\n#{reminders}"
+
+    for reminder in reminders?
       if reminder.isExpired
         reminder.runNow robot
       else
@@ -36,6 +48,6 @@ module.exports.me = (robot, roomName, days, message) ->
 
   robot.messageRoom roomName, "Dodałem przypomnienie za #{reminder.scheduleDate}!"
 
-  reminders = robot.brain.get REMINDER_STORE_NAME
+  reminders = robot.brain.get REMINDER_STORE_NAME or []
   reminders.push reminder
   robot.brain.set REMINDER_STORE_NAME, reminders

@@ -15,6 +15,7 @@ welcomeMessageSender = require './hiring/welcomeMessageSender'
 onHoldMessageSender = require './hiring/onHoldMessageSender'
 taskSender = require './hiring/taskSender'
 wikiCreator = require './hiring/wikiCreator'
+remind = require './hiring/reminder'
 
 HIRING_ROOM_NAME = process.env.HUBOT_HIRING_ROOM_NAME
 DEV_MODE = process.env.HUBOT_DEV_MODE
@@ -23,6 +24,8 @@ isProperRoom = (roomName) ->
   roomName == HIRING_ROOM_NAME || DEV_MODE
 
 module.exports = (robot) ->
+  remind.init robot
+
   robot.respond /hr (help|status|welcome|onhold|ankieta|wiki|kiwi|zadanie|review)\s?((.*\s*)+)/i, (msg) ->
     action = msg.match[1]
     if isProperRoom msg.message.room
