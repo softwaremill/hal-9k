@@ -9,6 +9,11 @@ HIRING_ROOM_NAME = process.env.HUBOT_HIRING_ROOM_NAME
 module.exports.sendSurvey = (query, robot, msg) ->
 
   matches = msg.match[2].match /^(.*) (.*|.*)$/i
+
+  if not matches
+    msg.reply "Hej, nie mogę wykryć typu ankiety!"
+    return
+
   suffix = matches[1]
   name = matches[2]
 
