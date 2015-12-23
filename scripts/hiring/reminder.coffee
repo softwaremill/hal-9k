@@ -12,10 +12,12 @@ class Reminder
   isExpired: =>
     @scheduleDate.getTime() < new Date().getTime()
 
-  run: (robot) =>
+  schedule: (robot, done) =>
+    robot.logger.info "Scheduling job at #{@scheduleDate}"
+
     schedule.scheduleJob @scheduleDate, =>
       robot.messageRoom @roomName, @message
-      @remove robot
+      done()
 
   runNow: (robot) =>
     robot.messageRoom @roomName, @message
@@ -50,14 +52,15 @@ module.exports.init = (robot) ->
       if reminder.isExpired
         reminder.runNow robot
       else
-        reminder.run robot
+        reminder.schedule robot
         rebooted.push reminder
 
     robot.brain.set REMINDER_STORE_NAME, rebooted
 
 module.exports.me = (robot, roomName, days, message) ->
   reminder = new Reminder days, roomName, message
-  reminder.run robot
+  reminder.schedule robot, ->
+    reminder.remove robot
 
   robot.messageRoom roomName, "Dodałem przypomnienie na dzień #{reminder.scheduleDate}!"
 
