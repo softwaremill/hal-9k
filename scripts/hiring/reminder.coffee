@@ -31,10 +31,11 @@ class ReminderRoller
     done()
 
   remove: (robot) ->
-    reminders = robot.brain.get REMINDER_STORE_NAME or []
+    reminders = robot.brain.get(REMINDER_STORE_NAME) || []
     cleared = []
-    for reminder in reminders?
-      if reminder.id != @id
+
+    for reminder in reminders
+      if reminder?.id != @id
         cleared.push reminder
 
     robot.brain.set REMINDER_STORE_NAME, cleared
@@ -51,13 +52,13 @@ module.exports.init = (robot) ->
 
     robot.logger.info "Reading reminders from #{REMINDER_STORE_NAME}"
 
-    reminders = robot.brain.get REMINDER_STORE_NAME or []
+    reminders = robot.brain.get(REMINDER_STORE_NAME) || []
     rebooted = []
 
     robot.logger.info "Existing reminders:"
     robot.logger.info JSON.stringify reminders
 
-    for reminder in reminders?
+    for reminder in reminders
       if reminder
         if reminder.isExpired
           robot.logger.info "Reminder #{reminder.id} expired, run it now!"
