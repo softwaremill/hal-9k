@@ -32,5 +32,5 @@ module.exports = (robot) ->
 
   robot.respond /pokaż co masz w (.*)$/, (msg) ->
     store = robot.brain.get msg.match[1]
-    msg.send "To jest zawartość #{msg.match[1]}"
-    msg.send store
+    msg.send "To jest zawartość #{msg.match[1]}:"
+    msg.send JSON.stringify store
