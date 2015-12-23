@@ -29,7 +29,7 @@ module.exports = (robot) ->
     msg.send 'pokaż mózg - wyświetla zawartość mózgu'
     msg.send 'pokaż szkodników|użytkowników - wyświetla wiedzę o użytkownikach'
     msg.send 'pokaż co masz w <nazwa> - wyświetla zawartość <nazwa>'
-    msg send 'usuń wszystko z <nazwa> - usuwa całą zawartość <nazwa>'
+    msg.send 'usuń wszystko z <nazwa> - usuwa całą zawartość <nazwa>'
 
   robot.respond /pokaż co masz w (.*)$/, (msg) ->
     store = robot.brain.get msg.match[1]
