@@ -67,10 +67,6 @@ module.exports.init = (robot) ->
       else
         robot.logger.info "Re-scheduling reminder #{reminder.id}"
 
-        testDate = new Date()
-        testDate.setMinutes testDate.getMinutes() + 1
-        reminder.scheduleDate = testDate
-
         roller = new ReminderRoller reminder
         roller.schedule robot, ->
           robot.logger.info "Removing reminder #{reminder.id}"
