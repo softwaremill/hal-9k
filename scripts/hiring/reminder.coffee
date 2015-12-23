@@ -34,7 +34,7 @@ module.exports.me = (robot, roomName, days, message) ->
   reminder = new Reminder days, roomName, message
   reminder.run robot
 
-  robot.messageRoom roomName, "Dodałem przypomnienie na dzień #{date}!"
+  robot.messageRoom roomName, "Dodałem przypomnienie za #{reminder.scheduleDate}!"
 
   reminders = robot.brain.get REMINDER_STORE_NAME
   reminders.push reminder
