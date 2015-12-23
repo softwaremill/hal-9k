@@ -4,7 +4,8 @@ REMINDER_STORE_NAME = '__reminder_store'
 
 class Reminder
   constructor: (@days, @roomName, @message) ->
-    @scheduleDate = new Date().getDate() + @days
+    @scheduleDate = new Date()
+    @scheduleDate.setDate @scheduleDate.getDate() + @days
 
   isExpired: =>
     @scheduleDate.getTime() < new Date().getTime()
