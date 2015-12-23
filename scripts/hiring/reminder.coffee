@@ -58,21 +58,22 @@ module.exports.init = (robot) ->
     robot.logger.info JSON.stringify reminders
 
     for reminder in reminders?
-      if reminder.isExpired
-        robot.logger.info "Reminder #{reminder.id} expired, run it now!"
+      if reminder
+        if reminder.isExpired
+          robot.logger.info "Reminder #{reminder.id} expired, run it now!"
 
-        roller = new ReminderRoller reminder
-        roller.run robot, ->
+          roller = new ReminderRoller reminder
+          roller.run robot, ->
 
-      else
-        robot.logger.info "Re-scheduling reminder #{reminder.id}"
+        else
+          robot.logger.info "Re-scheduling reminder #{reminder.id}"
 
-        roller = new ReminderRoller reminder
-        roller.schedule robot, ->
-          robot.logger.info "Removing reminder #{reminder.id}"
-          roller.remove robot
+          roller = new ReminderRoller reminder
+          roller.schedule robot, ->
+            robot.logger.info "Removing reminder #{reminder.id}"
+            roller.remove robot
 
-    rebooted.push reminder
+        rebooted.push reminder
 
     robot.brain.set REMINDER_STORE_NAME, rebooted
 
