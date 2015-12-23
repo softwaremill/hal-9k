@@ -7,15 +7,27 @@ class Reminder
     @scheduleDate = new Date()
     @scheduleDate.setDate @scheduleDate.getDate() + @days
 
+    @id = Math.round @scheduleDate.getTime() * Math.random()
+
   isExpired: =>
     @scheduleDate.getTime() < new Date().getTime()
 
   run: (robot) =>
     schedule.scheduleJob @scheduleDate, =>
       robot.messageRoom @roomName, @message
+      @remove robot
 
   runNow: (robot) =>
     robot.messageRoom @roomName, @message
+
+  remove: (robot) ->
+    reminders = robot.brain.get REMINDER_STORE_NAME or []
+    cleared = []
+    for reminder in reminders?
+      if reminder.id != @id
+        cleared.push reminder
+
+    robot.brain.set REMINDER_STORE_NAME, cleared
 
 # it's a bug in Hubot https://github.com/github/hubot/issues/880
 firstTime = true
