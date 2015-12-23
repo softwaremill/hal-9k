@@ -2,7 +2,7 @@ error = require './error'
 trello = require './trello'
 email = require './email'
 queryParser = require './queryParser'
-schedule = require 'node-schedule'
+remind = require './reminder'
 
 HIRING_ROOM_NAME = process.env.HUBOT_HIRING_ROOM_NAME
 
@@ -28,13 +28,10 @@ module.exports.sendSurvey = (query, robot, msg) ->
     if emailAddress?
       email.sendSurvey(emailAddress, nameAndFirstName.firstName,  moveCard(card, emailAddress), onError)
 
-      date = new Date
-      date.setDate date.getDate() + 3
-
-      schedule.scheduleJob date, ->
-        robot.messageRoom HIRING_ROOM_NAME, "@channel Sprawdźcie czy #{emailAddress} wypełnij już ankietę!"
-
-      msg.send "Dodałem przypomnienie na dzień #{date} aby sprawdzić wynik ankiety"
+      remind.me robot,
+        HIRING_ROOM_NAME,
+        1,
+        "@channel Sprawdźcie czy #{emailAddress} wypełnij już ankietę!"
 
     else
       error(msg)("nie znalazłem adresu e-mail dla \"#{nameAndFirstName.name}\"")
