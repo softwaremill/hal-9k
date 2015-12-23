@@ -7,26 +7,33 @@ remind = require './reminder'
 HIRING_ROOM_NAME = process.env.HUBOT_HIRING_ROOM_NAME
 
 module.exports.sendSurvey = (query, robot, msg) ->
-  nameAndFirstName = queryParser.extractNameAndWelcomeName(query)
+
+  matches = msg.match[2].match /^(.*) (.*|.*)$/i
+  suffix = matches[1]
+  name = matches[2]
+
+  robot.logger.info "Sending survey to #{name} of type #{suffix}"
+
+  nameAndFirstName = queryParser.extractNameAndWelcomeName name
   unless nameAndFirstName?
-    return error(msg)("Nie umiem wyciągnąć nazwy kandydata i imienia do szablonu z \"#{query}\"")
+    return msg.reply "Nie umiem wyciągnąć nazwy kandydata i imienia do szablonu z \"#{name}\""
 
   onSuccess = (address) ->
     -> msg.send "Wysłałem ankietę do #{address}"
 
   onError = (err) ->
-    error(msg)("nie udało się wysłać ankiety (#{err})")
+    msg.reply "nie udało się wysłać ankiety: #{err}"
 
   moveCard = (card, address) ->
     -> trello.moveToGotSurvey(card, robot, onSuccess(address), onError)
 
   processCard = (card) ->
     unless trello.isWelcomed(card)
-      return error(msg)('ankiety wysyłam tylko do kartek z listy "Powitany(a)"')
+      return msg.reply 'ankiety wysyłam tylko do kartek z listy "Powitany(a)"'
 
     emailAddress = trello.extractEmailAddress(card)
     if emailAddress?
-      email.sendSurvey(emailAddress, nameAndFirstName.firstName,  moveCard(card, emailAddress), onError)
+      email.sendSurvey(emailAddress, suffix, nameAndFirstName.firstName,  moveCard(card, emailAddress), onError)
 
       remind.me robot,
         HIRING_ROOM_NAME,

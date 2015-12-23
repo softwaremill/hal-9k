@@ -54,7 +54,7 @@ showUsage = (msg) ->
     hr status <nazwa> - pokazuje status kandydata pasującego do <nazwa>
     hr welcome <name | firstName> - wysyła powitalnego maila do kandudata <name> używając <firstName> w szablonie wiadomości
     hr onhold <name | firstName> - wysyła maila z info o wstrzymaniu rekrutacji do kandudata <name> używając <firstName> w szablonie wiadomości
-    hr ankieta <nazwa | firstName>  - wysyła ankietę do kandydata pasującego do <nazwa> używając <firstName> w szablonie wiadomości
+    hr ankieta dev|grafik <nazwa | firstName>  - wysyła ankietę danego typu do kandydata pasującego do <nazwa> używając <firstName> w szablonie wiadomości
     hr wiki|kiwi <nazwa> - tworzy stronę na Kiwi o kandydacie pasującym do <nazwa>
     hr zadanie <nazwa | login_na_bitbucket> - tworzy repozytorium z dostępem dla <login_na_bitbucket>, wysyła informację do kandydata pasującego do <nazwa>
   """
