@@ -16,16 +16,6 @@ class Reminder
   runNow: (robot) =>
     robot.messageRoom @roomName, @message
 
-module.exports.me = (robot, roomName, days, message) ->
-  reminder = new Reminder days, roomName, message
-  reminder.run robot
-
-  robot.messageRoom roomName, "Dodałem przypomnienie na dzień #{date}!"
-
-  reminders = robot.brain.get REMINDER_STORE_NAME
-  reminders.push reminder
-  robot.brain.set REMINDER_STORE_NAME, reminders
-
 module.exports = (robot) ->
   robot.brain.on 'loaded', ->
     reminders = robot.brain.get REMINDER_STORE_NAME
@@ -39,3 +29,13 @@ module.exports = (robot) ->
         rebooted.push reminder
 
     robot.brain.set REMINDER_STORE_NAME, rebooted
+
+module.exports.me = (robot, roomName, days, message) ->
+  reminder = new Reminder days, roomName, message
+  reminder.run robot
+
+  robot.messageRoom roomName, "Dodałem przypomnienie na dzień #{date}!"
+
+  reminders = robot.brain.get REMINDER_STORE_NAME
+  reminders.push reminder
+  robot.brain.set REMINDER_STORE_NAME, reminders
