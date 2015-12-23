@@ -4,10 +4,10 @@ REMINDER_STORE_NAME = '__reminder_store'
 
 class Reminder
   constructor: (@days, @roomName, @message) ->
-    @scheduleDate = new Date().getDate + @days
+    @scheduleDate = new Date().getDate() + @days
 
   isExpired: =>
-    @date.getTime < new Date().getTime
+    @scheduleDate.getTime() < new Date().getTime()
 
   run: (robot) =>
     schedule.scheduleJob @scheduleDate, =>
@@ -17,14 +17,14 @@ class Reminder
     robot.messageRoom @roomName, @message
 
 # it's a bug in Hubot https://github.com/github/hubot/issues/880
-isFirstTime = true
+firstTime = true
 
 module.exports.init = (robot) ->
   robot.brain.on 'loaded', ->
-    if not isFirstTime
+    if not firstTime
       return
 
-    isFirstTime = false
+    firstTime = false
 
     robot.logger.info "Reading reminders from #{REMINDER_STORE_NAME}"
 
@@ -46,7 +46,7 @@ module.exports.me = (robot, roomName, days, message) ->
   reminder = new Reminder days, roomName, message
   reminder.run robot
 
-  robot.messageRoom roomName, "Dodałem przypomnienie za #{reminder.scheduleDate}!"
+  robot.messageRoom roomName, "Dodałem przypomnienie na dzień #{reminder.scheduleDate}!"
 
   reminders = robot.brain.get REMINDER_STORE_NAME or []
   reminders.push reminder
