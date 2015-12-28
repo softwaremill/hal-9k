@@ -42,7 +42,7 @@ class ReminderRoller
     done()
 
   remove: (robot) ->
-    reminders = robot.brain.get(REMINDER_STORE_NAME) || []
+    reminders = robot.brain.get(REMINDER_STORE_NAME) or []
     cleared = []
 
     for reminder in reminders
@@ -63,7 +63,7 @@ module.exports.init = (robot) ->
 
     robot.logger.info "Reading reminders from #{REMINDER_STORE_NAME}"
 
-    reminders = robot.brain.get(REMINDER_STORE_NAME) || []
+    reminders = robot.brain.get(REMINDER_STORE_NAME) or []
     rebooted = []
 
     robot.logger.info "Existing reminders:"
@@ -98,6 +98,6 @@ module.exports.me = (robot, roomName, days, message) ->
 
   robot.messageRoom roomName, "Dodałem przypomnienie na dzień #{reminder.scheduleDate}!"
 
-  reminders = robot.brain.get REMINDER_STORE_NAME or []
+  reminders = robot.brain.get(REMINDER_STORE_NAME) or []
   reminders.push reminder
   robot.brain.set REMINDER_STORE_NAME, reminders
