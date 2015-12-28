@@ -2,6 +2,17 @@ schedule = require 'node-schedule'
 
 REMINDER_STORE_NAME = '__reminder_store'
 
+restoreReminder = (json) =>
+  reminder = new Reminder
+
+  reminder.id = json.id
+  reminder.scheduleDate = new Date(json.scheduleDate)
+  reminder.days = json.days
+  reminder.roomName = json.roomName
+  reminder.message = json.message
+
+  reminder
+
 class Reminder
   constructor: (@days, @roomName, @message) ->
     @scheduleDate = new Date()
@@ -17,7 +28,7 @@ class ReminderRoller
   constructor: (reminder) ->
     @id = reminder.id
     @roomName = reminder.roomName
-    @message = reminder.messge
+    @message = reminder.message
     @scheduleDate = reminder.scheduleDate
 
   schedule: (robot, done) =>
@@ -63,13 +74,13 @@ module.exports.init = (robot) ->
         if reminder.isExpired
           robot.logger.info "Reminder #{reminder.id} expired, run it now!"
 
-          roller = new ReminderRoller reminder
+          roller = new ReminderRoller restoreReminder(reminder)
           roller.run robot, ->
 
         else
           robot.logger.info "Re-scheduling reminder #{reminder.id}"
 
-          roller = new ReminderRoller reminder
+          roller = new ReminderRoller restoreReminder(reminder)
           roller.schedule robot, ->
             robot.logger.info "Removing reminder #{reminder.id}"
             roller.remove robot
