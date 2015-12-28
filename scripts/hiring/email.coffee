@@ -20,14 +20,12 @@ sendOnHoldMessage = (to, name, successCallback, errorCallback) ->
   send(to, 'Witaj, dziękujemy za CV :)', body, successCallback, errorCallback)
 
 send = (to, subject, body, successCallback, errorCallback) ->
-  console.log("Wysyłam maila: #{to} | #{subject}")
-  data = {
+  data =
     to: to,
     from: "Urocza Pani Halinka od HR–ów w SoftwareMill <pani.halinka.od.hr@softwaremill.com>",
     cc: 'czlowieki@softwaremill.com',
     subject: "#{SUBJECT_PREFIX} #{subject}",
     text: body
-  };
 
   mailgun.messages().send(data, (error, body) ->
     if error?
