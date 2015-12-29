@@ -10,7 +10,7 @@ module.exports.sendTask = (query, robot, msg) ->
     return msg.reply "Nie umiem wyciągnąć nazwy kandydata i loginu na Bitbucket z \"#{query}\""
 
   onSuccess = (address) ->
-    msg.reply "Wysłałem zadanie do #{address}"
+    -> msg.reply "Wysłałem zadanie do #{address}"
 
   onError = (err) ->
     robot.logger.error err
