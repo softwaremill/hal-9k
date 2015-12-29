@@ -69,7 +69,7 @@ extractRepositoryName = (query) ->
       .toLowerCase()
       .replace '#', ''
       .trim()
-      .replace /\s+/, '_'
+      .replace ' ', '_'
       .replace 'ą', 'a'
       .replace 'ć', 'c'
       .replace 'ę', 'e'
