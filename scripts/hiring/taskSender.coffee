@@ -30,7 +30,7 @@ module.exports.sendTask = (query, robot, msg) ->
     if emailAddress?
       repositoryName = bitbucket.extractRepositoryName(card.name)
 
-      robot.logger.info "Extracted repository name #{repositoryName}"
+      robot.logger.info "Extracted repository name [#{repositoryName}]"
 
       if repositoryName?
         bitbucket.createRepositoryAndGrantAccess(repositoryName, nameAndLogin.firstName, robot, sendEmail(emailAddress, card), onError)

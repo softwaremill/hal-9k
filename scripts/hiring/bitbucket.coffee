@@ -64,6 +64,9 @@ httpRequest = (f, successCallback, errorCallback) ->
 extractRepositoryName = (query) ->
   matches = query.match(/(.*)#.*#/)
   if matches? and matches[1].length > 0
+
+    console.log "[#{matches[1]}]"
+
     matches[1].trim().toLowerCase()
       .replace(/\s+/, '_')
       .replace('ą', 'a')
