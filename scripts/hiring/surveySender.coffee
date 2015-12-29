@@ -42,8 +42,8 @@ module.exports.sendSurvey = (query, robot, msg) ->
 
       remind.me robot,
         HIRING_ROOM_NAME,
-        1,
-        "@channel Sprawdźcie czy #{emailAddress} wypełnij już ankietę!"
+        3,
+        "@channel Sprawdźcie czy #{nameAndFirstName.firstName} (#{emailAddress}) wypełnij już ankietę!"
 
     else
       error(msg)("nie znalazłem adresu e-mail dla \"#{nameAndFirstName.name}\"")
