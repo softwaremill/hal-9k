@@ -36,4 +36,7 @@ module.exports.sendTask = (query, robot, msg) ->
     else
       msg.reply "Nie znalazłem adresu e-mail w \"#{card.name}\""
 
-  trello.findCard(nameAndLogin.name, robot, processCard, error(msg))
+  onSendError = (err) ->
+    msg.reply err
+
+  trello.findCard(nameAndLogin.name, robot, processCard, onSendError)
