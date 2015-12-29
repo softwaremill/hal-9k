@@ -67,18 +67,18 @@ extractRepositoryName = (query) ->
 
     matches[1]
       .toLowerCase()
-      .replace '#', ''
+      .replace('#', '')
       .trim()
-      .replace ' ', '_'
-      .replace 'ą', 'a'
-      .replace 'ć', 'c'
-      .replace 'ę', 'e'
-      .replace 'ł', 'l'
-      .replace 'ń', 'n'
-      .replace 'ó', 'o'
-      .replace 'ś', 's'
-      .replace 'ż', 'z'
-      .replace 'ź', 'z'
+      .replace(' ', '_')
+      .replace('ą', 'a')
+      .replace('ć', 'c')
+      .replace('ę', 'e')
+      .replace('ł', 'l')
+      .replace('ń', 'n')
+      .replace('ó', 'o')
+      .replace('ś', 's')
+      .replace('ż', 'z')
+      .replace('ź', 'z')
 
 authenticated = (url, robot) ->
   robot.http("https://api.bitbucket.org/#{url}").auth(USERNAME, PASSWORD)
