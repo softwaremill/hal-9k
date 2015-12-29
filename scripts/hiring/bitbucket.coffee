@@ -65,18 +65,20 @@ extractRepositoryName = (query) ->
   matches = query.match(/(.*)#.*#/)
   if matches? and matches[1].length > 0
 
-    matches[1].toLowerCase()
-      .replace(/\s+/, '_')
-      .replace('ą', 'a')
-      .replace('ć', 'c')
-      .replace('ę', 'e')
-      .replace('ł', 'l')
-      .replace('ń', 'n')
-      .replace('ó', 'o')
-      .replace('ś', 's')
-      .replace('ż', 'z')
-      .replace('ź', 'z')
+    matches[1]
+      .toLowerCase()
+      .replace /\s+/, '_'
+      .replace 'ą', 'a'
+      .replace 'ć', 'c'
+      .replace 'ę', 'e'
+      .replace 'ł', 'l'
+      .replace 'ń', 'n'
+      .replace 'ó', 'o'
+      .replace 'ś', 's'
+      .replace 'ż', 'z'
+      .replace 'ź', 'z'
       .replace '#', ''
+      .replace ' ', ''
       .trim()
 
 authenticated = (url, robot) ->
