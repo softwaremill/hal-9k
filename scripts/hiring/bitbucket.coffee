@@ -65,9 +65,7 @@ extractRepositoryName = (query) ->
   matches = query.match(/(.*)#.*#/)
   if matches? and matches[1].length > 0
 
-    console.log "[#{matches[1]}]"
-
-    matches[1].trim().toLowerCase()
+    matches[1].toLowerCase()
       .replace(/\s+/, '_')
       .replace('ą', 'a')
       .replace('ć', 'c')
@@ -79,6 +77,7 @@ extractRepositoryName = (query) ->
       .replace('ż', 'z')
       .replace('ź', 'z')
       .replace '#', ''
+      .trim()
 
 authenticated = (url, robot) ->
   robot.http("https://api.bitbucket.org/#{url}").auth(USERNAME, PASSWORD)
