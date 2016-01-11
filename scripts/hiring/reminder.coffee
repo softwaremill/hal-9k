@@ -1,23 +1,13 @@
-schedule = require 'node-schedule'
-
 REMINDER_STORE_NAME = '__reminder_store'
 
 restoreReminder = (json) =>
-  reminder = new Reminder
-
+  reminder = new Reminder new Date(json.scheduleDate), json.roomName, json.message
   reminder.id = json.id
-  reminder.scheduleDate = new Date(json.scheduleDate)
-  reminder.days = json.days
-  reminder.roomName = json.roomName
-  reminder.message = json.message
 
   reminder
 
 class Reminder
-  constructor: (@days, @roomName, @message) ->
-    @scheduleDate = new Date()
-    @scheduleDate.setDate @scheduleDate.getDate() + @days
-
+  constructor: (@scheduleDate, @roomName, @message) ->
     @id = Math.round @scheduleDate.getTime() * Math.random()
 
   isExpired: =>
@@ -34,8 +24,17 @@ class ReminderRoller
   schedule: (robot, done) =>
     robot.logger.info "Scheduling job at #{@scheduleDate}"
 
-    schedule.scheduleJob @scheduleDate, =>
-      @run robot, done
+    setTimeout =>
+        @run robot, done
+      ,
+      @calcTimeout()
+
+  calcTimeout: ->
+    timeout = @scheduleDate.getTime() - new Date().getTime()
+    if timeout < 0
+      timeout = 2
+
+    timeout
 
   run: (robot, done) =>
     robot.messageRoom @roomName, @message
@@ -90,7 +89,12 @@ module.exports.init = (robot) ->
     robot.brain.set REMINDER_STORE_NAME, rebooted
 
 module.exports.me = (robot, roomName, days, message) ->
-  reminder = new Reminder days, roomName, message
+
+  scheduleDate = new Date()
+  scheduleDate.setDate @scheduleDate.getDate() + @days
+
+  reminder = new Reminder scheduleDate, roomName, message
+
   roller = new ReminderRoller reminder
   roller.schedule robot, ->
     robot.logger.info "Removing reminder #{reminder.id}"
