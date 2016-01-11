@@ -33,9 +33,9 @@ class ReminderRoller
   calcTimeout: ->
     timeout = @scheduleDate.getTime() - new Date().getTime()
     if timeout <= 0
-      timeout = 2
+      timeout = 2000
 
-    timeout
+    Math.round timeout/1000
 
   run: (robot, done) =>
     robot.messageRoom @roomName, @message
