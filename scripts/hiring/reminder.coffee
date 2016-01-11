@@ -23,19 +23,21 @@ class ReminderRoller
     @scheduleDate = reminder.scheduleDate
 
   schedule: (robot, done) =>
-    robot.logger.info "Scheduling job at #{@scheduleDate}"
+    timeout = @calcTimeout()
+
+    robot.logger.info "Scheduling job at #{@scheduleDate} - #{timeout}"
 
     setTimeout =>
         @run robot, done
       ,
-      @calcTimeout()
+      timeout
 
   calcTimeout: ->
     timeout = @scheduleDate.getTime() - new Date().getTime()
     if timeout <= 0
       timeout = 2000
 
-    Math.round timeout/1000
+    timeout
 
   run: (robot, done) =>
     robot.messageRoom @roomName, @message
@@ -94,7 +96,7 @@ module.exports.init = (robot) ->
 module.exports.me = (robot, roomName, days, message) ->
 
   scheduleDate = new Date()
-  scheduleDate.setDate @scheduleDate.getDate() + @days
+  scheduleDate.setDate scheduleDate.getDate() + days
 
   reminder = new Reminder scheduleDate, roomName, message
 
