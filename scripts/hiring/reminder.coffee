@@ -1,7 +1,8 @@
 REMINDER_STORE_NAME = '__reminder_store'
 
 restoreReminder = (json) =>
-  reminder = new Reminder new Date(json.scheduleDate), json.roomName, json.message
+  scheduleDate = new Date(json.scheduleDate)
+  reminder = new Reminder scheduleDate, json.roomName, json.message
   reminder.id = json.id
 
   reminder
@@ -31,7 +32,7 @@ class ReminderRoller
 
   calcTimeout: ->
     timeout = @scheduleDate.getTime() - new Date().getTime()
-    if timeout < 0
+    if timeout <= 0
       timeout = 2
 
     timeout
@@ -85,6 +86,8 @@ module.exports.init = (robot) ->
             roller.remove robot
 
         rebooted.push reminder
+
+    robot.logger.info "Storing rebooted reminders: #{rebooted}"
 
     robot.brain.set REMINDER_STORE_NAME, rebooted
 
