@@ -46,7 +46,7 @@ class ReminderRoller
     cleared = []
 
     for reminder in reminders
-      if reminder?.id != @id
+      if reminder.id != @id
         robot.logger.info "Preserving reminder with id #{reminder.id} as it is different than this id #{@id}"
         cleared.push reminder
 
@@ -70,23 +70,23 @@ module.exports.init = (robot) ->
     robot.logger.info "Existing reminders:"
     robot.logger.info JSON.stringify reminders
 
-    for reminder in reminders
-      if reminder
-        if reminder.isExpired
-          robot.logger.info "Reminder #{reminder.id} expired, run it now!"
+    for json in reminders
+      reminder = restoreReminder json
+      if reminder.isExpired()
+        robot.logger.info "Reminder #{reminder.id} expired, run it now!"
 
-          roller = new ReminderRoller restoreReminder(reminder)
-          roller.run robot, ->
+        roller = new ReminderRoller reminder
+        roller.run robot, ->
 
-        else
-          robot.logger.info "Re-scheduling reminder #{reminder.id}"
+      else
+        robot.logger.info "Re-scheduling reminder #{reminder.id}"
 
-          roller = new ReminderRoller restoreReminder(reminder)
-          roller.schedule robot, ->
-            robot.logger.info "Removing reminder #{reminder.id}"
-            roller.remove robot
+        roller = new ReminderRoller reminder
+        roller.schedule robot, ->
+          robot.logger.info "Removing reminder #{reminder.id}"
+          roller.remove robot
 
-          rebooted.push reminder
+        rebooted.push reminder
 
     robot.logger.info "Storing rebooted reminders: #{rebooted.length}"
 
