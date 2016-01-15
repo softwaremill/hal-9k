@@ -2,14 +2,12 @@ REMINDER_STORE_NAME = '__reminder_store'
 
 restoreReminder = (json) =>
   scheduleDate = new Date(json.scheduleDate)
-  reminder = new Reminder scheduleDate, json.roomName, json.message
-  reminder.id = json.id
+  reminder = new Reminder json.id, scheduleDate, json.roomName, json.message
 
   reminder
 
 class Reminder
-  constructor: (@scheduleDate, @roomName, @message) ->
-    @id = Math.round @scheduleDate.getTime() * Math.random()
+  constructor: (@id, @scheduleDate, @roomName, @message) ->
 
   isExpired: =>
     @scheduleDate.getTime() <= new Date().getTime()
@@ -98,8 +96,9 @@ module.exports.me = (robot, roomName, days, message) ->
 
   scheduleDate = new Date()
   scheduleDate.setDate scheduleDate.getDate() + days
+  id = Math.round scheduleDate.getTime() * Math.random()
 
-  reminder = new Reminder scheduleDate, roomName, message
+  reminder = new Reminder id, scheduleDate, roomName, message
 
   roller = new ReminderRoller reminder
   roller.schedule robot, ->
