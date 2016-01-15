@@ -49,6 +49,7 @@ class ReminderRoller
 
     for reminder in reminders
       if reminder?.id != @id
+        robot.logger.info "Preserving reminder with id #{reminder.id} as it is different than this id #{@id}"
         cleared.push reminder
 
     robot.brain.set REMINDER_STORE_NAME, cleared
@@ -87,9 +88,9 @@ module.exports.init = (robot) ->
             robot.logger.info "Removing reminder #{reminder.id}"
             roller.remove robot
 
-        rebooted.push reminder
+          rebooted.push reminder
 
-    robot.logger.info "Storing rebooted reminders: #{rebooted}"
+    robot.logger.info "Storing rebooted reminders: #{rebooted.length}"
 
     robot.brain.set REMINDER_STORE_NAME, rebooted
 
