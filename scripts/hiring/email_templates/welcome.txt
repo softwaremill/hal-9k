@@ -1,12 +1,18 @@
 Witaj #name#
 
-Dzięki za przysłanie swojego CV. Jak tylko pojawiło się na naszej skrzynce, w firmie wybuchła niekłamana i spontaniczna radość. Jeden z naszych developerów przerwał nawet lot szybowcem (https://goo.gl/YrCiu3), by jak najszybciej się z nim zapoznać.
+Dzięki za przysłanie swojego CV. Jak tylko pojawiło się w naszej skrzynce, w firmie wybuchła niekłamana i spontaniczna radość.
+Jeden z naszych developerów przerwał nawet lot szybowcem - https://goo.gl/YrCiu3 - by jak najszybciej się z nim zapoznać.
+Teraz nasi najlepsi ludzie pracują nad tym, aby dokładnie przeanalizować Twoją kandydaturę.
 
-Teraz nasi najlepsi ludzie pracują nad tym, aby dokładnie przeanalizować Twoją kandydaturę i jak tylko stwierdzą, że spełniasz nasze wymagania niezwłocznie do Ciebie zadzwonimy. Ale tak naprawdę, a nie jak niektórzy - https://www.youtube.com/watch?v=CK8GDsW4t00.
+Jeżeli stwierdzą, że spełniasz nasze (nie bójmy się tego powiedzieć - wyśrubowane) wymagania, ktoś z naszej ekipy skontaktuje się z Tobą w ciągu najbliższego tygodnia.
 
-A w oczekiwaniu na ten moment, zachęcamy do zapoznania się z naszym profilem FB (https://www.facebook.com/SoftwareMill), gdzie dowiesz się więcej o SML oraz znajdziesz relacje z naszych tylko i wyłącznie kulturalnych imprez integracyjnych.
+Tymczasem zachęcamy do zapoznania się z naszym profilem FB - https://www.fb.com/SoftwareMill - gdzie dowiesz się więcej o SML
+oraz znajdziesz relacje z naszych tylko i wyłącznie kulturalnych imprez integracyjnych.
 
---
+Jeśli chcesz dowiedzieć się więcej co robimy, jaką mamy strukturę i na co zwracamy uwagę - zajrzyj na naszego bloga: https://softwaremill.com/blog
+
+
 Pozdrawiam
-Urocza Pani Halinka od HR–ów
+--
+Urocza Pani Halinka
 http://SoftwareMill.com
