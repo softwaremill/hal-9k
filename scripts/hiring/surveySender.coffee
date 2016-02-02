@@ -8,18 +8,10 @@ HIRING_ROOM_NAME = process.env.HUBOT_HIRING_ROOM_NAME
 
 module.exports.sendSurvey = (query, robot, msg) ->
 
-  matches = msg.match[2].match /^(dev|grafik)(.*|.*)$/i
+  robot.logger.info "Sending survey to #{query}"
 
-  if not matches
-    msg.reply "Hej, nie mogę wykryć typu ankiety!"
-    return
+  nameAndFirstName = queryParser.extractNameAndWelcomeName query
 
-  suffix = matches[1]?.trim()
-  name = matches[2]?.trim()
-
-  robot.logger.info "Sending survey to #{name} of type #{suffix}"
-
-  nameAndFirstName = queryParser.extractNameAndWelcomeName name
   unless nameAndFirstName?
     return msg.reply "Nie umiem wyciągnąć nazwy kandydata i imienia do szablonu z \"#{name}\""
 
@@ -38,7 +30,7 @@ module.exports.sendSurvey = (query, robot, msg) ->
 
     emailAddress = trello.extractEmailAddress(card)
     if emailAddress?
-      email.sendSurvey(emailAddress, suffix, nameAndFirstName.firstName,  moveCard(card, emailAddress), onError)
+      email.sendSurvey(emailAddress, nameAndFirstName.firstName,  moveCard(card, emailAddress), onError)
 
       remind.me robot,
         HIRING_ROOM_NAME,
