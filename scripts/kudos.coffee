@@ -43,7 +43,14 @@ module.exports = (robot) ->
     if (user == undefined)
       res.reply "Nie znam żadnego #{kudosReceiver}."
     else
-      kudos.addKudos(robot, res, user.id, kudosDesc)
+      successHandler = (successBody) ->
+        jsonBody = JSON.parse(successBody)
+        res.reply("Ok, kudos dodany. ID=#{jsonBody.id}")
+
+      errorHandler =
+        (err, errCode) -> res.reply("Error #{errCode}")
+
+      kudos.addKudos(robot, successHandler, errorHandler, res.message.user.id, user.id, kudosDesc)
 
   robot.respond /kudos add @?(\w*) (.*)/i, addKudos
   robot.respond /kudos dodaj dla @?(\w*) (.*)/i, addKudos
@@ -51,7 +58,15 @@ module.exports = (robot) ->
   addPlusOne = (res) ->
     kudosId = res.match[1]
     kudosDesc = res.match[2]
-    kudos.addPlusOne(robot, res, kudosId, kudosDesc)
+
+    successHandler = (successBody) ->
+      jsonBody = JSON.parse(successBody)
+      res.reply(if jsonBody.message? then jsonBody.message else successBody)
+
+    errorHandler =
+      (err, errCode) -> res.reply("Error #{errCode}")
+
+    kudos.addPlusOne(robot, successHandler, errorHandler, res.message.user.id, kudosId, kudosDesc)
 
   robot.respond /kudos \+1 @?([0-9]+)\s?((.*\s*)+)/i, addPlusOne
 

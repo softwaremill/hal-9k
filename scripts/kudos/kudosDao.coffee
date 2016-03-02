@@ -1,34 +1,23 @@
 backend = require '../common/backend'
 
-errorHandler = (messageResponse) ->
-  (err, errCode) -> messageResponse.reply("Error #{errCode}")
-
 #  onSuccess is a function: (successBody) -> do_smth
 #  onError is a functin: (error, errorCode) -> do_smth
 module.exports.getKudos = (robot, userId, onSuccess, onError) ->
   backend.get("/rest/kudos/#{userId}", robot, onSuccess, onError)
 
-module.exports.addKudos = (robot, messageResponse, kudosReceiverId, description) ->
+module.exports.addKudos = (robot, successHandler, errorHandler, kudoer, kudosReceiverId, description) ->
   data = {
     userName: kudosReceiverId,
     description: description,
-    kudoer: messageResponse.message.user.id
+    kudoer: kudoer
   }
 
-  successHandler = (successBody) ->
-    jsonBody = JSON.parse(successBody)
-    messageResponse.reply(if jsonBody.message? then jsonBody.message else successBody)
+  backend.post("/rest/kudos", data, robot, successHandler, errorHandler)
 
-  backend.post("/rest/kudos", data, robot, successHandler, errorHandler(messageResponse))
-
-module.exports.addPlusOne = (robot, messageResponse, kudoId, description) ->
+module.exports.addPlusOne = (robot, successHandler, errorHandler, kudoer, kudoId, description) ->
   data = {
     description: description,
-    userName: messageResponse.message.user.id
+    userName: kudoer
   }
 
-  successHandler = (successBody) ->
-    jsonBody = JSON.parse(successBody)
-    messageResponse.reply(if jsonBody.message? then jsonBody.message else successBody)
-
-  backend.post("/rest/kudos/#{kudoId}/plusOnes", data, robot, successHandler, errorHandler(messageResponse))
+  backend.post("/rest/kudos/#{kudoId}/plusOnes", data, robot, successHandler, errorHandler)
