@@ -24,6 +24,7 @@
     "flip": "~0.1.1",
     "hubot": "^2.19.0",
     "hubot-google-images": "^0.2.5",
+    "hubot-heroku-keepalive": "^1.0.2",
     "hubot-scripts": ">= 2.5.0 < 3.0.0",
     "hubot-slack": "^3.2.1",
     "lodash": "~3.1.0",
