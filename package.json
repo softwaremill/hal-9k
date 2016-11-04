@@ -1,14 +1,14 @@
 {
-  "name": "hosted-hubot",
-  "version": "2.7.1",
-  "author": "GitHub Inc.",
+  "name": "janusz-the-bot",
+  "version": "2.1",
+  "author": "SoftwareMill",
   "keywords": [
     "github",
     "hubot",
-    "campfire",
+    "slack",
     "bot"
   ],
-  "description": "A simple helpful robot for your Company",
+  "description": "Janusz The Bot",
   "licenses": [
     {
       "type": "MIT",
@@ -17,14 +17,13 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/github/hubot.git"
+    "url": "https://github.com/softwaremill/janusz-the-bot.git"
   },
   "dependencies": {
     "cron": "1.0.0",
     "flip": "~0.1.1",
     "hubot": "^2.19.0",
     "hubot-google-images": "^0.2.5",
-    "hubot-heroku-keepalive": "^1.0.2",
     "hubot-scripts": ">= 2.5.0 < 3.0.0",
     "hubot-slack": "^3.2.1",
     "lodash": "~3.1.0",
@@ -34,7 +33,6 @@
     "time": "0.11.2"
   },
   "engines": {
-    "node": "0.12.6",
-    "npm": ">= 1.1.x"
+    "node": "5.4.0"
   }
 }
