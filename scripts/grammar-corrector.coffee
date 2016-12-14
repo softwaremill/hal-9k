@@ -1,6 +1,12 @@
 # Description:
 #   Grammar Corrector for Polish language. It listens on every channel to slap those making mistakes
 #
+# Commands:
+#   hubot ort help - pokazuje pomoc dla modułu ort
+#   hubot ort nie <błędne wyrażenie> tylko <poprawne wyrażenie> - dodaje regułę poprawiającą <błędne wyrażenie> na <poprawne wyrażenie>
+#   hubot ort usun <błędne wyrażenie> - usuwa regułę poprawiającą <błędne wyrażenie>
+#   hubot ort delete <błędne wyrażenie> - j.w.
+#
 
 GRAMMAR_STATS_URL = process.env.HUBOT_GRAMMAR_STATS_APP_URL
 TOKEN = process.env.HUBOT_GRAMMAR_STATS_APP_AUTH_TOKEN
