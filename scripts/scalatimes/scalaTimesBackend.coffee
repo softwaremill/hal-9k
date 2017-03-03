@@ -1,8 +1,7 @@
 URL = process.env.HUBOT_SCALA_TIMES_APP_URL
 
 module.exports.post = (endpoint, data, robot, successCallback, errorCallback) ->
-  p = prepareRequest(endpoint, robot)
-  httpRequest(p.post(JSON.stringify(data)), successCallback, errorCallback)
+  httpRequest(prepareRequest(endpoint, robot).post(JSON.stringify(data)), successCallback, errorCallback)
 
 module.exports.put = (endpoint, data, robot, successCallback, errorCallback) ->
   httpRequest(prepareRequest(endpoint, robot).put(JSON.stringify(data)), successCallback, errorCallback)
