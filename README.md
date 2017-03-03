@@ -57,6 +57,8 @@ Several environmental variables are used for configuration of different generic 
     - `HUBOT_HIRING_ROOM_NAME`
     - `MAILGUN_DOMAIN`
     - `MAILGUN_APIKEY`
+  - ScalaTimes
+    - `HUBOT_SCALA_TIMES_APP_URL`
 
 ### Scripting
 
