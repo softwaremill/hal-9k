@@ -13,6 +13,10 @@ usage =
         hubot scalatimes|st ls - wyświetla aktualny numer
         hubot scalatimes|st add [reading|code|event] @link - dodaje link do kategorii READING|RELEASES|EVENTS (domyślnie READING)
       """
+commandCategoryMap =
+  "reading" : "READING"
+  "code":"RELEASES"
+  "event": "EVENTS"
 
 module.exports = (robot) ->
   linkAddShortRegex = /(scalatimes|st)\sadd\s(\S+)$/i
@@ -29,7 +33,7 @@ module.exports = (robot) ->
     command = msg.match[0]
     msg.reply(usage) unless (
         (command.match linkAddRegex)? or
-        (command.match linkAddShortRegex)?
+        (command.match linkAddShortRegex)? or
         (command.match listIssueRegex)?
     )
 
@@ -48,10 +52,6 @@ listIssue = (msg, robot) ->
   dao.getCategories(robot, onSuccess, onError)
 
 addLink = (msg,robot,link,categoryCmd="reading") ->
-  commandCategoryMap = []
-  commandCategoryMap["reading"] = "READING"
-  commandCategoryMap["code"] = "RELEASES"
-  commandCategoryMap["event"] = "EVENTS"
   categoryName = commandCategoryMap[categoryCmd]
 
   onSuccess = () ->
