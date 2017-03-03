@@ -14,9 +14,9 @@ usage =
         hubot scalatimes|st add [reading|code|event] @link - dodaje link do kategorii READING|RELEASES|EVENTS (domyślnie READING)
       """
 commandCategoryMap =
-  "reading" : "READING"
-  "code":"RELEASES"
-  "event": "EVENTS"
+  "reading" : "Reading"
+  "code": "Releases"
+  "event": "Events"
 
 module.exports = (robot) ->
   linkAddShortRegex = /(scalatimes|st)\sadd\s(\S+)$/i
@@ -56,6 +56,7 @@ addLink = (msg,robot,link,categoryCmd="reading") ->
 
   onSuccess = () ->
     msg.reply("Dodano link")
+
   onError = (err) ->
     msg.reply("Błąd w trakcie dodawania linka: #{err}")
 
