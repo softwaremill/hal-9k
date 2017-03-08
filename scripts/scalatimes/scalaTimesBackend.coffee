@@ -24,10 +24,9 @@ prepareRequest = (endpoint, robot) ->
     robot.logger.warning "HUBOT_SCALA_TIMES_APP_URL env variable not set. Won't be able to send data to scalatimes backend"
   unless JWT_SECRET?
     robot.logger.warning "HUBOT_SCALA_TIMES_APP_JWT_SECRET env variable not set. Won't be able to send data to backend"
-  if URL? and JWT_SECRET?
-    robot.http("#{URL}#{endpoint}")
-    .header('Content-Type', 'application/json')
-    .header('Authorization', "Bearer #{generateToken()}")
+  robot.http("#{URL}#{endpoint}")
+  .header('Content-Type', 'application/json')
+  .header('Authorization', "Bearer #{generateToken()}")
 
 
 generateToken = () ->
