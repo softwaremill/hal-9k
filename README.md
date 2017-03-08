@@ -59,6 +59,7 @@ Several environmental variables are used for configuration of different generic 
     - `MAILGUN_APIKEY`
   - ScalaTimes
     - `HUBOT_SCALA_TIMES_APP_URL`
+    - `HUBOT_SCALA_TIMES_APP_JWT_SECRET`
 
 ### Scripting
 

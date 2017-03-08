@@ -1,4 +1,7 @@
+KJUR = require 'jsrsasign'
+
 URL = process.env.HUBOT_SCALA_TIMES_APP_URL
+JWT_SECRET = process.env.HUBOT_SCALA_TIMES_APP_JWT_SECRET
 
 module.exports.post = (endpoint, data, robot, successCallback, errorCallback) ->
   httpRequest(prepareRequest(endpoint, robot).post(JSON.stringify(data)), successCallback, errorCallback)
@@ -19,5 +22,20 @@ httpRequest = (f, successCallback, errorCallback) ->
 prepareRequest = (endpoint, robot) ->
   unless URL?
     robot.logger.warning "HUBOT_SCALA_TIMES_APP_URL env variable not set. Won't be able to send data to scalatimes backend"
-  robot.http("#{URL}#{endpoint}")
-  .header('Content-Type', 'application/json')
+  unless JWT_SECRET?
+    robot.logger.warning "HUBOT_SCALA_TIMES_APP_JWT_SECRET env variable not set. Won't be able to send data to backend"
+  if URL? and JWT_SECRET?
+    robot.http("#{URL}#{endpoint}")
+    .header('Content-Type', 'application/json')
+    .header('Authorization', "Bearer #{generateToken()}")
+
+
+generateToken = () ->
+  header = {alg: 'HS256', typ: 'JWT'};
+  payload = {
+    iss : "scalatimes"
+    iat : KJUR.jws.IntDate.get('now')
+  };
+  sHeader = JSON.stringify(header);
+  sPayload = JSON.stringify(payload);
+  KJUR.jws.JWS.sign("HS256", sHeader, sPayload, JWT_SECRET);
