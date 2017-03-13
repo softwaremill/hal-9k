@@ -30,10 +30,11 @@ prepareRequest = (endpoint, robot) ->
 
 
 generateToken = () ->
-  header = {alg: 'HS256', typ: 'JWT'}
+  alg = 'HS256'
+  header = {alg: alg, typ: 'JWT'}
   payload =
-    iss : "scalatimes"
-    iat : KJUR.jws.IntDate.get('now')
+  iss : "scalatimes"
+  iat : KJUR.jws.IntDate.get('now')
   sHeader = JSON.stringify(header)
   sPayload = JSON.stringify(payload)
-  KJUR.jws.JWS.sign("HS256", sHeader, sPayload, JWT_SECRET)
+  KJUR.jws.JWS.sign(alg, sHeader, sPayload, JWT_SECRET)
