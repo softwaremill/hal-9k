@@ -34,6 +34,6 @@ generateToken = () ->
   payload =
     iss : "scalatimes"
     iat : KJUR.jws.IntDate.get('now')
-  sHeader = JSON.stringify(header);
-  sPayload = JSON.stringify(payload);
-  KJUR.jws.JWS.sign("HS256", sHeader, sPayload, JWT_SECRET);
+  sHeader = JSON.stringify(header)
+  sPayload = JSON.stringify(payload)
+  KJUR.jws.JWS.sign("HS256", sHeader, sPayload, JWT_SECRET)
