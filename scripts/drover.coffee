@@ -2,13 +2,13 @@
 #   Drover - utility to setup up reminder in cron based format.
 #
 # Commands:
-#   hubot cron help|pomoc|? - wyświetla pomoć dla modułu cron
+#   hubot cron help|pomoc|? - shows help message
 #
 
 CronJob = require('cron').CronJob
 
 timeZone = 'Europe/Amsterdam'
-defaultChannel = '#_wazne_'
+defaultChannel = '#_ważne_'
 
 CRON_JOBS_LIST = "CRON_JOBS_LIST"
 
@@ -150,7 +150,7 @@ module.exports = (robot) ->
     msg.send """
       cron list - lists all the defined reminders
       cron "<message>" at "<cron expression>" on "<channel name with #> - adds new reminder for given cron expression and channel
-      cron "<message>" at "<cron expression>" - adds new reminder for given cron expression for defaul channel (#!_wazne_)
-      cron delete <number> - deletes reminder for given index (to check index type "hubot cron list")
-      cron show   <number> - prints full job definition for given index (to check index type "hubot cron list")
+      cron "<message>" at "<cron expression>" - adds new reminder for given cron expression for default channel `#{defaultChannel}`
+      cron delete <number> - deletes reminder for given index (to check index type `hubot cron list`)
+      cron show   <number> - prints full job definition for given index (to check index use `hubot cron list`)
     """
