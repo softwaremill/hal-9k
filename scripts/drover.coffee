@@ -8,7 +8,7 @@
 CronJob = require('cron').CronJob
 
 timeZone = 'Europe/Amsterdam'
-defaultChannel = '#_ważne_'
+defaultChannel = '#_wazne_'
 
 CRON_JOBS_LIST = "CRON_JOBS_LIST"
 
