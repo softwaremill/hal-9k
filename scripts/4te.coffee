@@ -2,22 +2,23 @@
 #   Genrates 4th question
 #
 # Commands:
-#   hubot 4te - Generuje 4te pytanie z listy
+#   hubot 4te add
+#   hubot 4te dodaj
 
-questions = [
-  "Najlepsze 4te pytanie do tej pory?",
-  "Kogo uważasz za najbardziej hipsterskiego?",
-  "Twoje Boje: z jaką pokusą często walczysz?",
-  "Co lubisz w Polsce?",
-  "Jak spędziłeś weekend?",
-  "To Se Ne Vrati: Za czym, co już nie wróci, tęsknisz?",
-  "Jakie (jeżeli wogóle) paliłeś pierwsze papierosy?",
-  "Za jakim ciałem tęsknisz? (interpretacja dowolna)",
-  "Grajki. Na jakich instrumentach graliście lub gracie?",
-  "Jaka nowa technologia/aplikacja sprawiła, że złapałeś/łaś się za głowę?"
-]
+czwarte = require './4te/4teDao'
+
 module.exports = (robot) ->
+  add4te = (res) ->
+    _4teQuestion = res.match[1]
 
-  robot.respond /4te\?$/i, (msg) ->
-    q = msg.random questions
-    msg.send "#4te: " + q
+    successHandler = (successBody) ->
+      jsonBody = JSON.parse(successBody)
+      res.reply("Ok, 4te dodane. ID=#{jsonBody.id}")
+
+    errorHandler =
+      (err, errCode) -> res.reply("Error #{errCode}")
+
+    czwarte.add4te(robot, successHandler, errorHandler, res.message.user.id, _4teQuestion)
+
+  robot.respond /4te add (.*)/i, add4te
+  robot.respond /4te dodaj (.*)/i, add4te
