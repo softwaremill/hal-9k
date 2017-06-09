@@ -15,7 +15,7 @@ module.exports.get = (endpoint, robot, successCallback, errorCallback) ->
 httpRequest = (f, successCallback, errorCallback) ->
   f (err, res, body) ->
     if err? or res.statusCode != 200
-      errorCallback(err ? res.statusCode)
+      errorCallback(err ? ("Status code: " + res.statusCode + "; error: " + res.data))
     else
       successCallback(body,res.statusCode)
 
