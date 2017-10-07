@@ -25,14 +25,14 @@
     "flip": "~0.1.1",
     "hubot": "^2.19.0",
     "hubot-google-images": "^0.2.5",
-    "hubot-scripts": ">= 2.5.0 < 3.0.0",
+    "hubot-scripts": "^2.17.2",
     "hubot-slack": "^3.4.2",
+    "jsrsasign": "7.1.0",
     "lodash": "~3.1.0",
     "mailgun-js": "0.7.4",
     "moment": "2.9.0",
     "node-trello": "^0.1.5",
-    "time": "0.11.4",
-    "jsrsasign" : "7.1.0"
+    "time": "0.11.4"
   },
   "engines": {
     "node": "6.11.1"
