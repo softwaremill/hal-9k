@@ -14,7 +14,7 @@ httpRequest = (f, successCallback, errorCallback) ->
       successCallback(body)
 
 prepareRequest = (endpoint, robot) ->
-  robot.http("#{URL}")
+  robot.http(endpoint)
     .header('Content-Type', 'application/json')
 
 #  onSuccess is a function: (successBody) -> do_smth
@@ -28,4 +28,4 @@ module.exports.add = (robot, successHandler, errorHandler, author, question) ->
     autor: author
   }
 
-  post("/rest/kudos", data, robot, successHandler, errorHandler)
+  post(URL, data, robot, successHandler, errorHandler)
