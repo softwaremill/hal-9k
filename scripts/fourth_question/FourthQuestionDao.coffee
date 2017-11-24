@@ -1,4 +1,4 @@
-URL = "https://7tw7f9h5e0.execute-api.eu-central-1.amazonaws.com/beta/czwarte"
+URL = process.env.FOURTH_QUESTION_LAMBDA_URL
 
 post = (endpoint, data, robot, successCallback, errorCallback) ->
   httpRequest(prepareRequest(endpoint, robot).post(JSON.stringify(data)), successCallback, errorCallback)
