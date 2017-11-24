@@ -1,4 +1,4 @@
-URL = "https://7tw7f9h5e0.execute-api.eu-central-1.amazonaws.com/beta/fourthQuestion"
+URL = "https://7tw7f9h5e0.execute-api.eu-central-1.amazonaws.com/beta/czwarte"
 
 post = (endpoint, data, robot, successCallback, errorCallback) ->
   httpRequest(prepareRequest(endpoint, robot).post(JSON.stringify(data)), successCallback, errorCallback)
