@@ -21,7 +21,7 @@ module.exports = (robot) ->
     errorHandler =
       (err, errCode) -> res.reply("Error #{errCode}")
 
-    fourthQuestion.add(robot, successHandler, errorHandler, res.message.user.id, _4thQuestion)
+    fourthQuestion.add(robot, successHandler, errorHandler, res.message.user.name, _4thQuestion)
 
 
   get4thQ = (res) ->
