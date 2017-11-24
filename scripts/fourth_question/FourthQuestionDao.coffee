@@ -1,4 +1,4 @@
-URL = "https://7tw7f9h5e0.execute-api.eu-central-1.amazonaws.com/beta/czwarte"
+URL = "https://7tw7f9h5e0.execute-api.eu-central-1.amazonaws.com/beta/fourthQuestion"
 
 post = (endpoint, data, robot, successCallback, errorCallback) ->
   httpRequest(prepareRequest(endpoint, robot).post(JSON.stringify(data)), successCallback, errorCallback)
@@ -19,10 +19,10 @@ prepareRequest = (endpoint, robot) ->
 
 #  onSuccess is a function: (successBody) -> do_smth
 #  onError is a function: (error, errorCode) -> do_smth
-module.exports.get4te = (robot, userId, onSuccess, onError) ->
+module.exports.get = (robot, userId, onSuccess, onError) ->
   get("#{URL}", robot, onSuccess, onError)
 
-module.exports.add4te = (robot, successHandler, errorHandler, author, question) ->
+module.exports.add = (robot, successHandler, errorHandler, author, question) ->
   data = {
     czwarte: question,
     autor: author
