@@ -24,8 +24,8 @@ module.exports.get = (robot, userId, onSuccess, onError) ->
 
 module.exports.add = (robot, successHandler, errorHandler, author, question) ->
   data = {
-    czwarte: question,
-    autor: author
+    question: question,
+    author: author
   }
 
   post(URL, data, robot, successHandler, errorHandler)
