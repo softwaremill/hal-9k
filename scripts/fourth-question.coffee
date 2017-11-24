@@ -43,7 +43,7 @@ module.exports = (robot) ->
   robot.respond /dodaj czwarte (.*)/i, add4thQ
   robot.respond /dodaj 4te (.*)/i, add4thQ
 
-  robot.respond /daj 4te/i, get4thQ
-  robot.respond /daj czwarte/i, get4thQ
-  robot.respond /dej 4te/i, get4thQ
-  robot.respond /dej czwarte/i, get4thQ
+  robot.hear /daj 4te/i, get4thQ
+  robot.hear /daj czwarte/i, get4thQ
+  robot.hear /dej 4te/i, get4thQ
+  robot.hear /dej czwarte/i, get4thQ
