@@ -14,8 +14,8 @@ module.exports = (robot) ->
     _4thQuestion = res.match[1]
 
     successHandler = (successBody) ->
+      console.log("Response : #{successBody}")
       jsonBody = JSON.parse(successBody)
-      console.log("Response : #{jsonBody}")
       res.reply("Ok, czwarte pytanie dodane. ID=#{jsonBody.id}")
 
     errorHandler =
