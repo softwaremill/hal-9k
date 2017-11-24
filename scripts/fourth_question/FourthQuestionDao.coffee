@@ -19,7 +19,7 @@ prepareRequest = (endpoint, robot) ->
 
 #  onSuccess is a function: (successBody) -> do_smth
 #  onError is a function: (error, errorCode) -> do_smth
-module.exports.get = (robot, userId, onSuccess, onError) ->
+module.exports.get = (robot, onSuccess, onError) ->
   get("#{URL}", robot, onSuccess, onError)
 
 module.exports.add = (robot, successHandler, errorHandler, author, question) ->
