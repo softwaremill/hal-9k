@@ -16,7 +16,7 @@ module.exports = (robot) ->
     successHandler = (successBody) ->
       console.log("Response : #{successBody}")
       jsonBody = JSON.parse(successBody)
-      res.reply("Ok, czwarte pytanie dodane. Jesteś #{jsonBody.message} w kolejce :)")
+      res.reply(jsonBody.message)
 
     errorHandler =
       (err, errCode) -> res.reply("Error #{errCode}")
@@ -47,3 +47,5 @@ module.exports = (robot) ->
   robot.respond /daj czwarte/i, get4thQ
   robot.respond /dej 4te/i, get4thQ
   robot.respond /dej czwarte/i, get4thQ
+  robot.respond /jakie czwarte/i, get4thQ
+  robot.respond /jakie 4te/i, get4thQ
