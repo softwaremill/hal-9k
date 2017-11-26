@@ -1,11 +1,13 @@
 # Description:
-#   Genrates 4th question
+#   Zapisuje albo zwraca czwarte pytanie
 #
 # Commands:
-#   hubot czwarte dodaj
-#   hubot czwarte add
-#   hubot 4te add
-#   hubot 4te dodaj
+#   hubot dodaj czwarte - zapisuje czwarte pytanie w kolejce. e.g. janusz dodaj czwarte Jakie opony na zimę?
+#   hubot add 4te - zapisuje czwarte pytanie w kolejce
+#   hubot dodaj czwarte - zapisuje czwarte pytanie w kolejce
+#   hubot jakie czwarte - zwraca czwarte pytanie na dzisiaj
+#   hubot daj czwarte - zwraca czwarte pytanie na dzisiaj
+#   hubot dej 4te - zwraca czwarte pytanie na dzisiaj
 
 fourthQuestion = require './fourth_question/FourthQuestionDao'
 
