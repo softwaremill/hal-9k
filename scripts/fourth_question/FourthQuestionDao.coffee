@@ -25,7 +25,7 @@ module.exports.get = (robot, onSuccess, onError) ->
 module.exports.add = (robot, successHandler, errorHandler, author, question) ->
   data = {
     question: question,
-    author: author
+    author: "@" + author
   }
 
   post(URL, data, robot, successHandler, errorHandler)
