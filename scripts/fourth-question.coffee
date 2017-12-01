@@ -39,11 +39,13 @@ module.exports = (robot) ->
     fourthQuestion.get(robot, successHandler, errorHandler)
 
   robot.respond /4te add (.*)/i, add4thQ
+  robot.respond /add 4te (.*)/i, add4thQ
   robot.respond /czwarte add (.*)/i, add4thQ
+  robot.respond /add czwarte (.*)/i, add4thQ
   robot.respond /4te dodaj (.*)/i, add4thQ
+  robot.respond /dodaj 4te (.*)/i, add4thQ
   robot.respond /czwarte dodaj (.*)/i, add4thQ
   robot.respond /dodaj czwarte (.*)/i, add4thQ
-  robot.respond /dodaj 4te (.*)/i, add4thQ
 
   robot.respond /daj 4te/i, get4thQ
   robot.respond /daj czwarte/i, get4thQ
