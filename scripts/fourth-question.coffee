@@ -23,7 +23,7 @@ module.exports = (robot) ->
     errorHandler =
       (err, errCode) -> res.reply("Error #{errCode}")
 
-    res.reply("Przyjąłem...")
+    res.reply("Przyjąłem, ładowacze klas ruszają do pracy...")
     fourthQuestion.add(robot, successHandler, errorHandler, res.message.user.name, _4thQuestion)
 
 
@@ -37,7 +37,7 @@ module.exports = (robot) ->
     errorHandler =
       (err, errCode) -> res.reply("Error #{errCode}")
 
-    res.reply("Szukam, szukam :)")
+    res.reply("No już, szukam, szukam. Po co pogania :)")
     fourthQuestion.get(robot, successHandler, errorHandler)
 
   robot.respond /4te add (.*)/i, add4thQ
