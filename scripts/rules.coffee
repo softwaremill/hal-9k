@@ -5,7 +5,7 @@
 #   hubot zasady|prawo - Make sure hubot still knows the rules.
 #
 # Notes:
-#   DON'T DELETE THIS SCRIPT! ALL ROBAWTS MUST KNOW THE RULES
+#   DON'T DELETE THIS SCRIPT! ALL ROBOTS MUST KNOW THE RULES
 
 module.exports = (robot) ->
   robot.respond /(zasady|prawo)/i, (msg) ->
