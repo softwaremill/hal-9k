@@ -55,3 +55,17 @@ module.exports = (robot) ->
   robot.respond /dej czwarte/i, get4thQ
   robot.respond /jakie czwarte/i, get4thQ
   robot.respond /jakie 4te/i, get4thQ
+
+  robot.hear /^(januszu)? (.+)/i, (res) ->
+    res.finish()
+
+    robot.logger.info "Catching: #{res.match[2]}"
+
+    message = res.message
+    message.done = false
+    message.text = message.text.replace(res.match[1], robot.name)
+
+    robot.logger.info "Reroute message back to robot"
+    robot.logger.info message
+    robot.receive message
+    return
