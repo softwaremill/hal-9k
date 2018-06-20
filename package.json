@@ -32,7 +32,8 @@
     "mailgun-js": "0.7.4",
     "moment": "2.19.2",
     "node-trello": "^0.1.5",
-    "time": "0.11.4"
+    "time": "0.11.4",
+    "zlib": "^1.0.5"
   },
   "engines": {
     "node": "6.11.1"
