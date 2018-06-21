@@ -27,7 +27,7 @@ addSums = (data) ->
   
   Object.keys(withSums).forEach (user) ->
     withSums[user].sum = 0
-    Object.keys(stats[user]).forEach (score) ->
+    Object.keys(withSums[user]).forEach (score) ->
       withSums[user].sum += withSums[user][score] * weights[score] if !!weights[score]
 
   withSums
