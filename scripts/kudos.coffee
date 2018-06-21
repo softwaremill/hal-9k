@@ -39,7 +39,7 @@ module.exports = (robot) ->
     kudosReceiver = res.match[1]
     kudosDesc = res.match[2]
 
-    res.reply("Świetny pomysł! Kudos dla #{kudosReceiver)}!")
+    res.reply("Świetny pomysł! Kudos dla #{kudosReceiver}!")
     user = users.getUser(robot, kudosReceiver)
     res.reply("Dodaję kudosa dla #{JSON.stringify(user)}")
     if (user == undefined)
