@@ -44,12 +44,14 @@ module.exports = (robot) ->
       res.reply "Nie znam żadnego #{kudosReceiver}."
     else
       successHandler = (successBody) ->
+        res.reply("Dostałem info, ze #{successBody}")
         jsonBody = JSON.parse(successBody)
         res.reply("Ok, kudos dodany. ID=#{jsonBody.id}")
 
       errorHandler =
         (err, errCode) -> res.reply("Error #{errCode}")
 
+      res.reply("Świetny pomysł! Dodaję kudosa dla #{user.real_name}")
       kudos.addKudos(robot, successHandler, errorHandler, res.message.user.id, user.id, kudosDesc)
 
   robot.respond /kudos add @?(\w*) (.*)/i, addKudos
