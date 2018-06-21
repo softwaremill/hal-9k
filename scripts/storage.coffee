@@ -22,6 +22,16 @@ module.exports = (robot) ->
 
     msg.send response
 
+  robot.respond /pokaż porządnie (szkodników|użytkowników)$/i, (msg) ->
+    response = ""
+
+    for own key, user of robot.brain.data.users
+      response += "#{user.id} #{user.real_name} #{user.name} #{user.slack.profile.display_name} #{user.slack.deleted}"
+      response += " <#{user.email_address}>" if user.email_address
+      response += "\n"
+
+    msg.send response
+
   robot.respond /mózg$/i, (msg) ->
     msg.send "Mam :)"
 
