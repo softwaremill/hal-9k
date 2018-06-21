@@ -22,11 +22,11 @@ module.exports = (robot) ->
 
     msg.send response
 
-  robot.respond /pokaż porządnie (szkodników|użytkowników)$/i, (msg) ->
+  robot.respond /pokaż debug$/i, (msg) ->
     response = ""
 
     for own key, user of robot.brain.data.users
-      response += "#{user.id} #{user.real_name} #{user.name} #{user.slack.profile.display_name} #{user.slack.deleted}"
+      response += "#{user?.id} #{user?.real_name} #{user?.name} #{user?.slack?.profile?.display_name} #{user?.slack?.deleted}"
       response += " <#{user.email_address}>" if user.email_address
       response += "\n"
 
@@ -36,7 +36,7 @@ module.exports = (robot) ->
     msg.send "Mam :)"
 
   robot.respond /pokaż (help|pomoc|\?)$/i, (msg) ->
-    msg.send 'pokaż mózg - wyświetla zawartość mózgu'
+    msg.send 'pokaż mózg - wyświetla całą zawartość mózgu'
     msg.send 'pokaż szkodników|użytkowników - wyświetla wiedzę o użytkownikach'
     msg.send 'pokaż co masz w <nazwa> - wyświetla zawartość <nazwa>'
     msg.send 'usuń wszystko z <nazwa> - usuwa całą zawartość <nazwa>'
