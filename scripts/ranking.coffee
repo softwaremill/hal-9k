@@ -78,12 +78,15 @@ module.exports = (robot) ->
       month = (date.getMonth() + 1).toString();
 
       yearRanking = prepareMessage(yearStats(data, year))
-      msg.send "W tym roku:\nLp. Kto - Suma (Blogi / Konferencyjki / Meetupy)"
-      msg.send yearRanking
-
       monthRanking = prepareMessage(monthStats(data, year, month))
-      msg.send "W tym miesiącu:\nLp. Kto - Suma (Blogi / Konferencyjki / Meetupy)"
-      msg.send monthRanking
+
+      msg.send "W tym roku:\n" +
+      yearRanking +
+      "\n" +
+      "W tym miesiącu:\n" +
+      monthRanking +
+      "\n" +
+      "* Lp. Kto - Suma (Blogi / Konferencyjki / Meetupy)\n"
 
     msg.http("https://softwaremill.com/ranking.json")
       .get( (err, req)->
