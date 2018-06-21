@@ -39,16 +39,11 @@ module.exports = (robot) ->
     kudosReceiver = res.match[1]
     kudosDesc = res.match[2]
 
-    res.reply("Świetny pomysł! Kudos dla #{kudosReceiver}!")
     user = users.getUser(robot, kudosReceiver)
-    res.reply("Dodaję kudosa dla #{JSON.stringify(user)}")
     if (user == undefined)
       res.reply "Nie znam żadnego #{kudosReceiver}."
     else
-      res.reply("Naprawdę extra!")
-      
       successHandler = (successBody) ->
-        res.reply("Dostałem info, ze #{successBody}")
         jsonBody = JSON.parse(successBody)
         res.reply("Ok, kudos dodany. ID=#{jsonBody.id}")
 
