@@ -28,7 +28,7 @@ module.exports = (robot) ->
     for own key, user of robot.brain.data.users
       displayName = user.slack?.profile?.display_name || user.name
       active = user.slack?.deleted != true
-      response += "#{displayName} - #{active} - #{user.real_name}"
+      response += "#{displayName} - #{active} - #{user.name.toLowerCase()}"
       response += "\n"
 
     msg.send response
