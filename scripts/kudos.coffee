@@ -19,7 +19,7 @@ module.exports = (robot) ->
   showKudos = (res) ->
     kudosUser = res.match[1]
 
-    user = users.getUser(robot, kudosUser)
+    user = users.getUserByDisplayName(robot, kudosUser)
     if (user == undefined)
       res.reply "Nie znam żadnego #{kudosUser}."
     else
@@ -39,7 +39,7 @@ module.exports = (robot) ->
     kudosReceiver = res.match[1]
     kudosDesc = res.match[2]
 
-    user = users.getUser(robot, kudosReceiver)
+    user = users.getUserByDisplayName(robot, kudosReceiver)
     if (user == undefined)
       res.reply "Nie znam żadnego #{kudosReceiver}."
     else
