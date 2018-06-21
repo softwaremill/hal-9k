@@ -39,10 +39,14 @@ module.exports = (robot) ->
     kudosReceiver = res.match[1]
     kudosDesc = res.match[2]
 
+    res.reply("Świetny pomysł! #{JSON.stringify(kudosReceiver)}!")
     user = users.getUser(robot, kudosReceiver)
+    res.reply("Dodaję kudosa dla #{JSON.stringify(user)}")
     if (user == undefined)
       res.reply "Nie znam żadnego #{kudosReceiver}."
     else
+      res.reply("Naprawdę extra!")
+      
       successHandler = (successBody) ->
         res.reply("Dostałem info, ze #{successBody}")
         jsonBody = JSON.parse(successBody)
@@ -51,7 +55,6 @@ module.exports = (robot) ->
       errorHandler =
         (err, errCode) -> res.reply("Error #{errCode}")
 
-      res.reply("Świetny pomysł! Dodaję kudosa dla #{user.real_name}")
       kudos.addKudos(robot, successHandler, errorHandler, res.message.user.id, user.id, kudosDesc)
 
   robot.respond /kudos add @?(\w*) (.*)/i, addKudos
