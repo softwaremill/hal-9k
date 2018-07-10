@@ -11,6 +11,7 @@ kudos = require './kudos/kudosDao'
  
 module.exports = (robot) ->
   client = new RTMClient(process.env.HUBOT_SLACK_TOKEN)
+  client.start()
   robot.logger.info('reactions listener started')
 
   rawMessageListener = (event) ->
