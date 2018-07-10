@@ -7,15 +7,14 @@
 
 users = require './common/users'
 kudos = require './kudos/kudosDao'
-{WebClient} = require "@slack/client"
+{RTMClient} = require "@slack/client"
  
 module.exports = (robot) ->
-  web = new WebClient(process.env.HUBOT_SLACK_TOKEN)
+  client = new RTMClient(process.env.HUBOT_SLACK_TOKEN)
   robot.logger.info('reactions listener started')
 
-  rawMessageListener = (msg) ->
-    if msg.type == "reaction_removed" or msg.type == "reaction_added"
-      robot.logger.info('reactions: ', JSON.stringify(msg))
+  rawMessageListener = (event) ->
+    robot.logger.info('reactions: ', JSON.stringify(event))
 
-  web.on 'raw_message', rawMessageListener
+  client.on 'reaction_added', rawMessageListener
 
