@@ -33,9 +33,9 @@ module.exports = (robot) ->
           robot.logger.err(err)
           res.send('error: ', err)
         else
-          data = JSON.parse
+          data = JSON.parse body
           
-          if data.messages[0]
+          if data.messages
             messageText = data.messages[0].text
             textMatch = messageText.match(/kudos (add|dodaj) @?(\S*) (.*)/i)
 
