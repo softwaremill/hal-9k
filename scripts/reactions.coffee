@@ -43,7 +43,7 @@ module.exports = (robot) ->
               kudosReceiver = textMatch[2]
               kudosDesc = textMatch[3]
 
-              user = user.getUser(robot, kudosReceiver)
+              user = users.getUser(robot, kudosReceiver)
               if user == undefined
                 robot.logger.err("user #{kudosReceiver} not found")
               else
