@@ -30,7 +30,6 @@ module.exports = (robot) ->
       .get() (err, res, body) ->
         if err
           robot.logger.err(err)
-          res.send('error: ', err)
         else
           data = JSON.parse body
           
@@ -56,10 +55,10 @@ module.exports = (robot) ->
                       robot,
                       (body) ->
                         jsonBody = JSON.parse(body)
-                        res.reply(if jsonBody.message? then jsonBody.message else successBody)
+                        robot.logger.info(if jsonBbody.message? then jsonBbody.message else successBody)
                       ,
                       (err, errCode) ->
-                        res.reply("Error #{errCode}")
+                        robot.logger.info("Error #{errCode}")
                       ,
                       user.id,
                       plusedKudo.id,
