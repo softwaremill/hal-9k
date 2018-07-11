@@ -17,7 +17,6 @@ module.exports = (robot) ->
   robot.logger.info('reactions listener started')
 
   prepareFindMessageRequest = (event) ->
-    reactingUser = event.user
     channel = event.item.channel
     messageId = event.item.ts
 
@@ -25,7 +24,7 @@ module.exports = (robot) ->
     .header('Content-Type', 'application/json')
     .header('Authorization', "Bearer #{slackToken}")
 
-  handlePlusedKudos = (kudosReceiver, kudosDesc) ->
+  handlePlusedKudos = (kudosReceiver, kudosDesc, reactingUser) ->
     # user = users.getUser(robot, kudosReceiver)
     user = users.getAllUsers(robot).find((u) -> u.id == kudosReceiver || u.name == kudosReceiver)
     robot.logger.error("user #{kudosReceiver}")
@@ -47,7 +46,7 @@ module.exports = (robot) ->
             (err, errCode) ->
               robot.logger.info("Error #{errCode}")
             ,
-            user.id,
+            reactingUser,
             plusedKudo.id,
             plusedKudo.description
           )
@@ -63,6 +62,8 @@ module.exports = (robot) ->
 
 
   handlePlusOneReaction = (event) ->
+    reactingUser = event.user
+
     prepareFindMessageRequest(event)
     .get() (err, res, body) ->
       if err
@@ -77,7 +78,7 @@ module.exports = (robot) ->
           if textMatch
             kudosReceiver = textMatch[2].replace(/(<|>|@)/g, '')
             kudosDesc = textMatch[3]
-            handlePlusedKudos(kudosReceiver, kudosDesc)
+            handlePlusedKudos(kudosReceiver, kudosDesc, reactingUser)
 
         else
           robot.logger.error('No messages found')
