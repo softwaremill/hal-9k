@@ -39,7 +39,7 @@ module.exports = (robot) ->
             textMatch = messageText.match(/kudos (add|dodaj) @?(\S*) (.*)/i)
 
             if textMatch
-              kudosReceiver = textMatch[2]
+              kudosReceiver = textMatch[2].replace(/(<|>|@)/g, '')
               kudosDesc = textMatch[3]
 
               robot.logger.error("text match: #{textMatch}, message text: #{messageText}")
