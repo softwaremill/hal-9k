@@ -30,7 +30,8 @@ module.exports = (robot) ->
     
 
     if user == undefined
-      robot.logger.error("user list: #{JSON.stringify users.getAllUsers(robot)}")
+      allUsers = users.getAllUsers(robot).map(u -> { name: u.name, id: u.id })
+      robot.logger.error("user list: #{JSON.stringify allUsers}")
       robot.logger.error("user #{kudosReceiver} not found")
     else
       successHandler = (successBody) ->
