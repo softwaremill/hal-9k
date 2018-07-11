@@ -55,6 +55,7 @@ module.exports = (robot) ->
                     kudos.addPlusOne(
                       robot,
                       (body) ->
+                        jsonBody = JSON.parse(body)
                         res.reply(if jsonBody.message? then jsonBody.message else successBody)
                       ,
                       (err, errCode) ->
