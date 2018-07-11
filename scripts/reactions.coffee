@@ -45,7 +45,7 @@ module.exports = (robot) ->
 
               user = users.getUser(robot, kudosReceiver)
               if user == undefined
-                robot.logger.err("user #{kudosReceiver} not found")
+                robot.logger.error("user #{kudosReceiver} not found")
               else
                 successHandler = (successBody) ->
                   userKudos = JSON.parse(successBody)
@@ -66,17 +66,17 @@ module.exports = (robot) ->
                     )
 
                   else
-                    robot.logger.err("kudo #{kudosDesc} not found in #{successBody}")
+                    robot.logger.error("kudo #{kudosDesc} not found in #{successBody}")
 
                 errorHandler = (err) ->
-                  robot.logger.err("err while retreiving user kudos #{kudosReceiver}")
+                  robot.logger.error("err while retreiving user kudos #{kudosReceiver}")
 
 
                 kudos.getKudos(robot, user.id, successHandler, errorHandler)
 
 
           else
-            robot.logger.err('No messages found')
+            robot.logger.error('No messages found')
 
 
 
