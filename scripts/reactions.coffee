@@ -26,12 +26,11 @@ module.exports = (robot) ->
     .header('Authorization', "Bearer #{slackToken}")
 
   handlePlusedKudos = (kudosReceiver, kudosDesc) ->
-    user = users.getUser(robot, kudosReceiver)
-    
+    # user = users.getUser(robot, kudosReceiver)
+    user = users.getAllUsers(robot).find((u) -> u.id == kudosReceiver || u.name == kudosReceiver)
+    robot.logger.error("user #{kudosReceiver}")
 
     if user == undefined
-      allUsers = users.getAllUsers(robot).map((u) -> { name: u.name, id: u.id })
-      robot.logger.error("user list: #{JSON.stringify allUsers}")
       robot.logger.error("user #{kudosReceiver} not found")
     else
       successHandler = (successBody) ->
