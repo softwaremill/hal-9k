@@ -27,7 +27,10 @@ module.exports = (robot) ->
 
   handlePlusedKudos = (kudosReceiver, kudosDesc) ->
     user = users.getUser(robot, kudosReceiver)
+    
+
     if user == undefined
+      robot.logger.error("user list: #{JSON.stringify users.getAllUsers(robot)}")
       robot.logger.error("user #{kudosReceiver} not found")
     else
       successHandler = (successBody) ->
