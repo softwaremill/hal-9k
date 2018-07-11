@@ -11,7 +11,7 @@ kudos = require './kudos/kudosDao'
  
 module.exports = (robot) ->
   slackToken = process.env.HUBOT_SLACK_TOKEN
-  client = new RTMClient(slackTOken)
+  client = new RTMClient(slackToken)
   apiUrl = process.env.SLACK_API_URL
   client.start()
   robot.logger.info('reactions listener started')
