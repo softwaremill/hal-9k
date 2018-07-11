@@ -16,9 +16,8 @@ module.exports = (robot) ->
   client.start()
   robot.logger.info('reactions listener started')
 
-  reactionsListener = (event, sthElse) ->
+  reactionsListener = (event) ->
     robot.logger.info('reactions: ', JSON.stringify(event))
-    robot.logger.info('sthElse: ', JSON.stringify(sthElse))
 
     if (event.reaction == '+1')
       reactingUser = event.user
@@ -43,6 +42,7 @@ module.exports = (robot) ->
               kudosReceiver = textMatch[2]
               kudosDesc = textMatch[3]
 
+              robot.logger.error("text match: #{textMatch}, message text: #{messageText}")
               user = users.getUser(robot, kudosReceiver)
               if user == undefined
                 robot.logger.error("user #{kudosReceiver} not found")
