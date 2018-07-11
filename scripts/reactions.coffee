@@ -14,7 +14,6 @@ module.exports = (robot) ->
   client = new RTMClient(slackToken)
   apiUrl = process.env.SLACK_API_URL
   client.start()
-  robot.logger.info('reactions listener started')
 
   prepareFindMessageRequest = (event) ->
     channel = event.item.channel
@@ -25,7 +24,6 @@ module.exports = (robot) ->
     .header('Authorization', "Bearer #{slackToken}")
 
   handlePlusedKudos = (kudosReceiver, kudosDesc, reactingUser) ->
-    # user = users.getUser(robot, kudosReceiver)
     user = users.getAllUsers(robot).find((u) -> u.id == kudosReceiver || u.name == kudosReceiver)
     robot.logger.error("user #{kudosReceiver}")
 
@@ -85,8 +83,6 @@ module.exports = (robot) ->
 
 
   reactionsListener = (event) ->
-    robot.logger.info('reactions: ', JSON.stringify(event))
-
     if (event.reaction == '+1')
       handlePlusOneReaction(event)
 
