@@ -57,7 +57,7 @@ prepareMessage = (stats) ->
         lp = (key + 1) 
         lastSum = stats[user].sum
 
-      return msg if lp > 5 || stats[user].sum == 0
+      return msg if stats[user].sum == 0
 
       msg + lp + ". " +
       user + " - " + stats[user].sum + " (" +
