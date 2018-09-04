@@ -44,6 +44,18 @@ yearStats = (data, year) ->
 monthStats = (data, year, month) ->
   addSums(data[year][month])
 
+getLabel = (points) ->
+  if points >= 16
+    return "sum tak zwany olimpijczyk"
+  else if points >= 8
+    return "szczupak"
+  else if points >= 4
+    return "leszcz"
+  else if points >= 2
+    return "karaś"
+  else
+    return ""
+
 prepareMessage = (stats) ->
   sortedUsers = Object.keys(stats).sort (a, b) ->
     stats[b].sum - stats[a].sum
@@ -60,10 +72,10 @@ prepareMessage = (stats) ->
       return msg if stats[user].sum == 0
 
       msg + lp + ". " +
-      user + " - " + stats[user].sum + " (" +
+      user + " - " + getLabel(stats[user].sum) + "(" + stats[user].sum + ") [" +
       (stats[user]["blog-posts"] || 0) + " / " +
       (stats[user]["conference-presentations"] || 0) + " / " +
-      (stats[user]["meetup-presentations"] || 0) + ")\n"
+      (stats[user]["meetup-presentations"] || 0) + "]\n"
     ""
   )
 
@@ -86,7 +98,7 @@ module.exports = (robot) ->
       "W tym miesiącu:\n" +
       monthRanking +
       "\n" +
-      "* Lp. Kto - Suma (Blogi / Konferencyjki / Meetupy)\n"
+      "* Lp. Kto - (Suma) [Blogi / Konferencyjki / Meetupy]\n"
 
     msg.http("https://softwaremill.com/ranking.json")
       .get( (err, req)->
