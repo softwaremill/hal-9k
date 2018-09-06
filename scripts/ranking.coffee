@@ -96,11 +96,14 @@ module.exports = (robot) ->
 
   CronJob = require('cron').CronJob
   tz = 'Europe/Amsterdam'
-  new CronJob('0 0 9 * 1/1 1', showRanking("_wazne_"), null, true, tz)
-  new CronJob('0/15 * * * * *', showRanking("mainframe"), null, true, tz)
+  new CronJob('0 0 9 * 1/1 1', showRanking, null, true, tz)
+  new CronJob('0/15 * * * * *', showDebugRanking, null, true, tz)
 
-  showRanking = (room) ->
-    robot.emit 'ranking:show', room
+  showRanking = ->
+    robot.emit 'ranking:show', '_wazne_'
+
+  showDebugRanking = ->
+    robot.emit 'ranking:show', 'mainframe'
 
   robot.respond /RANKING$/i, (msg) ->
     robot.emit 'ranking:show', msg.message.room
