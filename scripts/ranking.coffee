@@ -60,26 +60,23 @@ prepareMessage = (stats) ->
   sortedUsers = Object.keys(stats).sort (a, b) ->
     stats[b].sum - stats[a].sum
 
-  lp = 1
+  lp = 0
   lastSum = 0;
 
   attachments = []
 
-  sortedUsers.reduce(
-    (msg, user, key) ->
-      if lastSum != stats[user].sum
-        lp = (key + 1) 
-        lastSum = stats[user].sum
+  for user in sortedUsers
+    if lastSum != stats[user].sum
+      lp++
+      lastSum = stats[user].sum
 
-      return attachments if stats[user].sum == 0
+    attachments.push
+      text: "#{lp}. *#{user}* #{getLabel(stats[user].sum)} (`#{stats[user].sum}`) [`#{(stats[user]['blog-posts'] || 0)}`/`#{(stats[user]['conference-presentations'] || 0)}`/`#{(stats[user]['meetup-presentations'] || 0)}]`",
+      mrkdwn_in: [
+        "text"
+      ]
 
-      attachments.push
-        text: "#{lp}. *#{user}* #{getLabel(stats[user].sum)} (`#{stats[user].sum}`) [`#{(stats[user]['blog-posts'] || 0)}`/`#{(stats[user]['conference-presentations'] || 0)}`/`#{(stats[user]['meetup-presentations'] || 0)}]`",
-        mrkdwn_in: [
-          "text"
-        ]
-      attachments
-  )
+  attachments
 
 module.exports = (robot) ->
   robot.respond /RANKING$/i, (msg) ->
