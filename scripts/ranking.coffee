@@ -5,6 +5,9 @@
 #   hubot ranking - shows ranking of SML team
 
 zlib = require('zlib');
+CronJob = require('cron').CronJob
+
+tz = 'Europe/Warsaw'
 
 weights =
   "blog-posts": 1
@@ -94,11 +97,6 @@ sectionHeader = (prefix) ->
 
 module.exports = (robot) ->
 
-  CronJob = require('cron').CronJob
-  tz = 'Europe/Warsaw'
-  new CronJob('0 0 9 28 * *', showRanking, null, true, tz)
-  new CronJob('*/15 * * * * *', showDebugRanking, null, true, tz)
-
   showRanking = ->
     robot.logger.info 'emitting ranking:show to #_wazne_'
     robot.emit 'ranking:show', '#_wazne_'
@@ -106,6 +104,9 @@ module.exports = (robot) ->
   showDebugRanking = ->
     robot.logger.info 'emitting ranking:show to #mainframe'
     robot.emit 'ranking:show', 'mainframe'
+
+  new CronJob('0 0 9 28 * *', showRanking, null, true, tz)
+  new CronJob('*/15 * * * * *', showDebugRanking, null, true, tz)
 
   robot.respond /RANKING$/i, (msg) ->
     robot.emit 'ranking:show', msg.message.room
