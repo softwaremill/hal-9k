@@ -93,9 +93,21 @@ sectionHeader = (prefix) =>
   "#{prefix} ranking <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603|króla wód> - (Suma) => [Blogi / Konferencyjki / Meetupy]:"
 
 module.exports = (robot) ->
+
+  CronJob = require('cron').CronJob
+  tz = 'Europe/Amsterdam'
+  new CronJob('0 0 9 * 1/1 1', showRanking("_wazne_"), null, true, tz)
+  new CronJob('0/15 * * * * *', showRanking("mainframe"), null, true, tz)
+
+  showRanking = (room) ->
+    robot.emit 'ranking:show', room
+
   robot.respond /RANKING$/i, (msg) ->
+    robot.emit 'ranking:show', msg.message.room
+
+  robot.on 'ranking:show', (room) ->
     onError = (err) ->
-      msg.reply("Błąd: #{err}")
+      robot.messageRoom room, "Nie mogę pobrać danych do rankingu: #{err}"
 
     onSuccess = (data) ->
       date = new Date()
@@ -116,7 +128,7 @@ module.exports = (robot) ->
         response = "Ups... nie ma rocznego rankingu!"
 
       robot.logger.info JSON.stringify(response)
-      msg.send response;
+      robot.messageRoom room, response
 
       if monthRanking.length > 0
         response =
@@ -128,7 +140,7 @@ module.exports = (robot) ->
         response = "Ups... nie ma miesięcznego rankingu!"
 
       robot.logger.info JSON.stringify(response)
-      msg.send response, ""
+      robot.messageRoom room, response
 
     msg.http("https://softwaremill.com/ranking.json")
       .get( (err, req)->
