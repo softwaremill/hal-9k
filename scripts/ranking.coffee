@@ -89,7 +89,7 @@ prepareMessage = (stats) ->
 
   attachments
 
-sectionHeader = (prefix) =>
+sectionHeader = (prefix) ->
   "#{prefix} ranking <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603|króla wód> - (Suma) => [Blogi / Konferencyjki / Meetupy]:"
 
 module.exports = (robot) ->
