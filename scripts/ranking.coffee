@@ -97,7 +97,7 @@ module.exports = (robot) ->
       response = undefined
       if yearRanking.length > 0
         response =
-          text: 'Roczny ranking <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603|króla wód> - Suma [Blogi / Konferencyjki / Meetupy]:'
+          text: 'Roczny ranking <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603|króla wód> - (Suma) [Blogi / Konferencyjki / Meetupy]:'
           attachments: yearRanking
           username: robot.name
           as_user: true
@@ -109,7 +109,7 @@ module.exports = (robot) ->
 
       if monthRanking.length > 0
         response =
-          text: 'Miesięczny ranking <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603|króla wód> - Suma [Blogi / Konferencyjki / Meetupy]:'
+          text: 'Miesięczny ranking <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603|króla wód> - (Suma) [Blogi / Konferencyjki / Meetupy]:'
           attachments: monthRanking
           username: robot.name
           as_user: true
