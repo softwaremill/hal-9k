@@ -106,7 +106,7 @@ module.exports = (robot) ->
     robot.emit 'ranking:show', 'mainframe'
 
   new CronJob('0 0 9 28 * *', showRanking, null, true, tz)
-  new CronJob('*/15 * * * * *', showDebugRanking, null, true, tz)
+  # new CronJob('*/15 * * * * *', showDebugRanking, null, true, tz)
 
   robot.respond /RANKING$/i, (msg) ->
     robot.emit 'ranking:show', msg.message.room
