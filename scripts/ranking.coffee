@@ -63,20 +63,25 @@ prepareMessage = (stats) ->
   lp = 1
   lastSum = 0;
 
+  attachments = []
+
   sortedUsers.reduce(
     (msg, user, key) ->
       if lastSum != stats[user].sum
         lp = (key + 1) 
         lastSum = stats[user].sum
 
-      return msg if stats[user].sum == 0
-
-      msg + lp + ". " +
-      user + " - " + getLabel(stats[user].sum) + " (" + stats[user].sum + ") [" +
-      (stats[user]["blog-posts"] || 0) + " / " +
-      (stats[user]["conference-presentations"] || 0) + " / " +
-      (stats[user]["meetup-presentations"] || 0) + "]\n"
-    ""
+      if stats[user].sum == 0
+        attachments
+      else
+        attachments.push
+          author_name: user
+          title: "#{getLabel(stats[user].sum)} (#{stats[user].sum})"
+          fields: [
+            { title: "Blogi", value: (stats[user]["blog-posts"] || 0), short: true },
+            { title: "Konferencyjki", value: (stats[user]["conference-presentations"] || 0), short: true },
+            { title: "Meetupy", value: (stats[user]["meetup-presentations"] || 0), short: true }
+          ]
   )
 
 module.exports = (robot) ->
@@ -92,13 +97,30 @@ module.exports = (robot) ->
       yearRanking = prepareMessage(yearStats(data, year))
       monthRanking = prepareMessage(monthStats(data, year, month))
 
-      msg.send "Najnowszy ranking króla wód (https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603).\nRoczny:\n" +
-      yearRanking +
-      "\n" +
-      "Miesięczny:\n" +
-      monthRanking +
-      "\n" +
-      "* Lp. Kto - (Suma) [Blogi / Konferencyjki / Meetupy]\n"
+      response = undefined
+      if yearRanking.length > 0
+        response =
+          text: 'Roczny ranking <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603|króla wód>:'
+          attachments: yearRanking
+          username: robot.name
+          as_user: true
+      else
+        response = "Ups... nie ma rocznego rankingu!"
+
+      robot.logger.info JSON.stringify(response)
+      msg.send response;
+
+      if monthRanking.length > 0
+        response =
+          text: 'Miesięczny ranking <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603|króla wód>:'
+          attachments: monthRanking
+          username: robot.name
+          as_user: true
+      else
+        response = "Ups... nie ma miesięcznego rankingu!"
+
+      robot.logger.info JSON.stringify(response)
+      msg.send response
 
     msg.http("https://softwaremill.com/ranking.json")
       .get( (err, req)->
