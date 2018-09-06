@@ -71,14 +71,14 @@ prepareMessage = (stats) ->
         lp = (key + 1) 
         lastSum = stats[user].sum
 
-      if stats[user].sum == 0
-        attachments
-      else
-        attachments.push
-          text: "#{lp}. *#{user}* #{getLabel(stats[user].sum)} `(#{stats[user].sum}) [#{(stats[user]['blog-posts'] || 0)}/#{(stats[user]['conference-presentations'] || 0)}/#{(stats[user]['meetup-presentations'] || 0)}]`",
-          mrkdwn_in: [
-            "text"
-          ]
+      return attachments if stats[user].sum == 0
+
+      attachments.push
+        text: "#{lp}. *#{user}* #{getLabel(stats[user].sum)} (`#{stats[user].sum}`) [`#{(stats[user]['blog-posts'] || 0)}`/`#{(stats[user]['conference-presentations'] || 0)}`/`#{(stats[user]['meetup-presentations'] || 0)}]`",
+        mrkdwn_in: [
+          "text"
+        ]
+      attachments
   )
 
 module.exports = (robot) ->
