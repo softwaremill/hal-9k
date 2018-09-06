@@ -95,7 +95,7 @@ sectionHeader = (prefix) =>
 module.exports = (robot) ->
 
   CronJob = require('cron').CronJob
-  tz = 'Europe/Amsterdam'
+  tz = 'Europe/Warsaw'
   new CronJob('0 0 9 28 * *', showRanking, null, true, tz)
   new CronJob('*/15 * * * * *', showDebugRanking, null, true, tz)
 
