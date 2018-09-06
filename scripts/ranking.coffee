@@ -62,13 +62,18 @@ prepareMessage = (stats) ->
 
   lp = 0
   lastSum = 0;
+  key = 0
 
   attachments = []
 
   for user in sortedUsers
+    key++
     if lastSum != stats[user].sum
-      lp++
+      lp = key
       lastSum = stats[user].sum
+
+    if stats[user].sum == 0
+      break
 
     attachments.push
       text: "#{lp}. *#{user}* #{getLabel(stats[user].sum)} (`#{stats[user].sum}`) [`#{(stats[user]['blog-posts'] || 0)}`/`#{(stats[user]['conference-presentations'] || 0)}`/`#{(stats[user]['meetup-presentations'] || 0)}]`",
