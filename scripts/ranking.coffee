@@ -75,13 +75,8 @@ prepareMessage = (stats) ->
         attachments
       else
         attachments.push
-          author_name: user
-          title: "#{getLabel(stats[user].sum)} (#{stats[user].sum})"
-          fields: [
-            { title: "Blogi", value: (stats[user]["blog-posts"] || 0), short: true },
-            { title: "Konferencyjki", value: (stats[user]["conference-presentations"] || 0), short: true },
-            { title: "Meetupy", value: (stats[user]["meetup-presentations"] || 0), short: true }
-          ]
+          author_name: "#{user} - #{getLabel(stats[user].sum)} (#{stats[user].sum})"
+          title: "[#{(stats[user]['blog-posts'] || 0)}/#{(stats[user]['conference-presentations'] || 0)}/#{(stats[user]['meetup-presentations'] || 0)}"
   )
 
 module.exports = (robot) ->
@@ -100,7 +95,7 @@ module.exports = (robot) ->
       response = undefined
       if yearRanking.length > 0
         response =
-          text: 'Roczny ranking <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603|króla wód>:'
+          text: 'Roczny ranking <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603|króla wód> - Suma [Blogi / Konferencyjki / Meetupy]:'
           attachments: yearRanking
           username: robot.name
           as_user: true
@@ -112,7 +107,7 @@ module.exports = (robot) ->
 
       if monthRanking.length > 0
         response =
-          text: 'Miesięczny ranking <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603|króla wód>:'
+          text: 'Miesięczny ranking <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603|króla wód> - Suma [Blogi / Konferencyjki / Meetupy]:'
           attachments: monthRanking
           username: robot.name
           as_user: true
