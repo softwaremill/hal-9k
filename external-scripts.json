@@ -1,3 +1,6 @@
 [
-  "hubot-google-images"
+  "hubot-redis-brain",
+  "hubot-google-images",
+  "hubot-shipit",
+  "hubot-flip"
 ]
