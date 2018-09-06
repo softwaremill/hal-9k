@@ -105,7 +105,7 @@ module.exports = (robot) ->
 
   showDebugRanking = ->
     robot.logger.info 'emitting ranking:show to #mainframe'
-    robot.emit 'ranking:show', '#mainframe'
+    robot.emit 'ranking:show', 'mainframe'
 
   robot.respond /RANKING$/i, (msg) ->
     robot.emit 'ranking:show', msg.message.room
