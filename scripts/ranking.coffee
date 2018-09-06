@@ -72,7 +72,7 @@ prepareMessage = (stats) ->
       return msg if stats[user].sum == 0
 
       msg + lp + ". " +
-      user + " - " + getLabel(stats[user].sum) + "(" + stats[user].sum + ") [" +
+      user + " - " + getLabel(stats[user].sum) + " (" + stats[user].sum + ") [" +
       (stats[user]["blog-posts"] || 0) + " / " +
       (stats[user]["conference-presentations"] || 0) + " / " +
       (stats[user]["meetup-presentations"] || 0) + "]\n"
