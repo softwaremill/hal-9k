@@ -46,13 +46,13 @@ monthStats = (data, year, month) ->
 
 getLabel = (points) ->
   if points >= 16
-    return "sum tak zwany olimpijczyk"
+    return "_sum tak zwany olimpijczyk_"
   else if points >= 8
-    return "szczupak"
+    return "_szczupak_"
   else if points >= 4
-    return "leszcz"
+    return "_leszcz_"
   else if points >= 2
-    return "karaś"
+    return "_karaś_"
   else
     return ""
 
@@ -75,7 +75,7 @@ prepareMessage = (stats) ->
         attachments
       else
         attachments.push
-          text: "*#{user}* _#{getLabel(stats[user].sum)}_ `(#{stats[user].sum}) [#{(stats[user]['blog-posts'] || 0)}/#{(stats[user]['conference-presentations'] || 0)}/#{(stats[user]['meetup-presentations'] || 0)}]`",
+          text: "#{lp}. *#{user}* #{getLabel(stats[user].sum)} `(#{stats[user].sum}) [#{(stats[user]['blog-posts'] || 0)}/#{(stats[user]['conference-presentations'] || 0)}/#{(stats[user]['meetup-presentations'] || 0)}]`",
           mrkdwn_in: [
             "text"
           ]
