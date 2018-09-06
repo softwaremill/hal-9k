@@ -75,8 +75,7 @@ prepareMessage = (stats) ->
         attachments
       else
         attachments.push
-          author_name: "#{user} - #{getLabel(stats[user].sum)} (#{stats[user].sum})"
-          title: "[#{(stats[user]['blog-posts'] || 0)}/#{(stats[user]['conference-presentations'] || 0)}/#{(stats[user]['meetup-presentations'] || 0)}"
+          text: "#{user} - #{getLabel(stats[user].sum)} (#{stats[user].sum}) [#{(stats[user]['blog-posts'] || 0)}/#{(stats[user]['conference-presentations'] || 0)}/#{(stats[user]['meetup-presentations'] || 0)}]"
   )
 
 module.exports = (robot) ->
