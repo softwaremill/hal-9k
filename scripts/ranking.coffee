@@ -92,10 +92,10 @@ module.exports = (robot) ->
       yearRanking = prepareMessage(yearStats(data, year))
       monthRanking = prepareMessage(monthStats(data, year, month))
 
-      msg.send "W tym roku:\n" +
+      msg.send "Najnowszy ranking króla wód (https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603).\nRoczny:\n" +
       yearRanking +
       "\n" +
-      "W tym miesiącu:\n" +
+      "Miesięczny:\n" +
       monthRanking +
       "\n" +
       "* Lp. Kto - (Suma) [Blogi / Konferencyjki / Meetupy]\n"
