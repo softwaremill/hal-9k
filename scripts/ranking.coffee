@@ -75,7 +75,10 @@ prepareMessage = (stats) ->
         attachments
       else
         attachments.push
-          text: "#{user} - #{getLabel(stats[user].sum)} (#{stats[user].sum}) [#{(stats[user]['blog-posts'] || 0)}/#{(stats[user]['conference-presentations'] || 0)}/#{(stats[user]['meetup-presentations'] || 0)}]"
+          text: "*#{user}* _#{getLabel(stats[user].sum)}_ `(#{stats[user].sum}) [#{(stats[user]['blog-posts'] || 0)}/#{(stats[user]['conference-presentations'] || 0)}/#{(stats[user]['meetup-presentations'] || 0)}]`",
+          mrkdwn_in: [
+            "text"
+          ]
   )
 
 module.exports = (robot) ->
