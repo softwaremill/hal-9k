@@ -75,13 +75,22 @@ prepareMessage = (stats) ->
     if stats[user].sum == 0
       break
 
+    label = getLabel(stats[user].sum)
+    sum = stats[user].sum
+    blogPosts = (stats[user]['blog-posts'] || 0)
+    presentations = (stats[user]['conference-presentations'] || 0)
+    meetups = (stats[user]['meetup-presentations'] || 0)
+
     attachments.push
-      text: "#{lp}. *#{user}* #{getLabel(stats[user].sum)} (`#{stats[user].sum}`) [`#{(stats[user]['blog-posts'] || 0)}`/`#{(stats[user]['conference-presentations'] || 0)}`/`#{(stats[user]['meetup-presentations'] || 0)}]`",
+      text: "#{lp}. *#{user}* #{label}: (`#{sum}`) => [`#{blogPosts}`/`#{presentations}`/`#{meetups}`]",
       mrkdwn_in: [
         "text"
       ]
 
   attachments
+
+sectionHeader = (prefix) =>
+  "#{prefix} ranking <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603|króla wód> - (Suma) => [Blogi / Konferencyjki / Meetupy]:"
 
 module.exports = (robot) ->
   robot.respond /RANKING$/i, (msg) ->
@@ -99,7 +108,7 @@ module.exports = (robot) ->
       response = undefined
       if yearRanking.length > 0
         response =
-          text: 'Roczny ranking <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603|króla wód> - (Suma) [Blogi / Konferencyjki / Meetupy]:'
+          text: sectionHeader('Roczny')
           attachments: yearRanking
           username: robot.name
           as_user: true
@@ -111,7 +120,7 @@ module.exports = (robot) ->
 
       if monthRanking.length > 0
         response =
-          text: 'Miesięczny ranking <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603|króla wód> - (Suma) [Blogi / Konferencyjki / Meetupy]:'
+          text: sectionHeader('Miesięczny')
           attachments: monthRanking
           username: robot.name
           as_user: true
