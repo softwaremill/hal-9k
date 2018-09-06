@@ -120,7 +120,7 @@ module.exports = (robot) ->
         response = "Ups... nie ma miesięcznego rankingu!"
 
       robot.logger.info JSON.stringify(response)
-      msg.send response
+      msg.send response, ""
 
     msg.http("https://softwaremill.com/ranking.json")
       .get( (err, req)->
