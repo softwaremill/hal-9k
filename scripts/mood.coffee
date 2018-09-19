@@ -18,5 +18,5 @@ module.exports = (robot) ->
   remindMoodQuestion = (res) ->
     res.reply "Hej jak Ci minął dzień? Napisz `/me out [nastrój 1-5] [opcjonalnie pare słów co się działo]`"
 
-  robot.hear /^out (\d+)\w?(.*)?/i, recordMood
-  robot.hear /^out(\s\D.*)?$/i, remindMoodQuestion
+  robot.hear /^(out|\/me out) (\d+)\w?(.*)?/i, recordMood
+  robot.hear /^(out|\/me out)(\s\D.*)?$/i, remindMoodQuestion
