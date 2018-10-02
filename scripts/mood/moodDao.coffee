@@ -24,6 +24,6 @@ module.exports.addMood = (robot, messageResponse, mood, description) ->
     else
       robot.logger.info("Bad response from janusz mood storage!")
       robot.logger.info(jsonBody)
-      messageResponse.reply("Coś poszło nie tak :( Sprawdź logi.")
+      messageResponse.reply("Coś znowu poszło nie tak. @grzesiek, raaaaatuj!")
 
   backend.post("/rest/mood", data, robot, successHandler, errorHandler(messageResponse))
