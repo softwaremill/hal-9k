@@ -30,7 +30,7 @@
     "hubot-redis-brain": "^1.0.0",
     "hubot-scripts": "^2.17.2",
     "hubot-shipit": "^0.2.1",
-    "hubot-slack": "electricwarr/hubot-slack",
+    "hubot-slack": "^4.5.5",
     "jsrsasign": "7.1.0",
     "lodash": "^4.17.10",
     "mailgun-js": "^0.18.1",
