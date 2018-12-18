@@ -148,7 +148,7 @@ module.exports = (robot) ->
       robot.logger.info JSON.stringify(response)
       robot.messageRoom room, response
 
-    robot.http("https://softwaremill.com/ranking.json")
+    robot.http("https://s3.eu-central-1.amazonaws.com/softwaremill-strona-2016/ranking.json")
       .get( (err, req)->
         data = ''
         req.addListener "response", (res) ->
