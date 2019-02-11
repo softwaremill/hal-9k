@@ -5,8 +5,13 @@
 #   when leaving the work Hubot will record the mood (1-5)
 
 moodDao = require './mood/moodDao'
+{ RTMClient } = require "@slack/client"
 
 module.exports = (robot) ->
+  slackToken = process.env.HUBOT_SLACK_TOKEN
+  client = new RTMClient(slackToken)
+  client.start()
+
   recordMood = (res) ->
     mood = parseInt(res.match[1])
     if mood < 1 or mood > 5
@@ -20,3 +25,11 @@ module.exports = (robot) ->
 
   robot.hear /^out (\d+)\w?(.*)?/i, recordMood
   robot.hear /^out(\s\D.*)?$/i, remindMoodQuestion
+
+  meMessageListener = (event) ->
+    if (event.text.match(/^out (\d+)\w?(.*)?/i))
+      recordMood(event)
+    else if (event.text.match(/^out(\s\D.*)?$/i))
+      remindMoodQuestion(event)
+
+  client.on 'me_message', meMessageListener
