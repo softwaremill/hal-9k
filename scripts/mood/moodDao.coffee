@@ -1,5 +1,5 @@
 backend = require '../common/backend'
-users = require './common/users'
+users = require '../common/users'
 
 errorHandler = (messageResponse) ->
   (err, errCode) -> messageResponse.reply("Error #{errCode}")
