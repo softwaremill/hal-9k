@@ -28,7 +28,12 @@ module.exports = (robot) ->
     res.reply COMMAND_USAGE_DESCRIPTION
 
   recordMoodFromEvent = (event, client) ->
-    client.sendMessage("This will be working very soon!", event.channel)
+    mood = parseInt(event.text.match(VALID_MOOD_COMMAND_REGEXP)[1])
+    if mood < 1 or mood > 5
+      remindMoodQuestionFromEvent(event, client)
+    else
+      moodDescription = event.text.match(VALID_MOOD_COMMAND_REGEXP)[2]
+      moodDao.addMoodFromEvent(client, event, robot, mood, moodDescription)
 
   remindMoodQuestionFromEvent = (event, client) ->
     client.sendMessage(COMMAND_USAGE_DESCRIPTION, event.channel)
