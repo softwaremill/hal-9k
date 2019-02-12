@@ -33,7 +33,7 @@ module.exports = (robot) ->
   remindMoodQuestionFromEvent = (event, client) ->
     client.sendMessage(COMMAND_USAGE_DESCRIPTION, event.channel)
 
-  robot.hear VALID_MOOD_COMMAND_REGEXP recordMood
+  robot.hear VALID_MOOD_COMMAND_REGEXP, recordMood
   robot.hear INVALID_MOOD_COMMAND_REGEXP, remindMoodQuestion
 
   meMessageListener = (event) ->
