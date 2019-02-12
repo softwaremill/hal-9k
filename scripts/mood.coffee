@@ -28,9 +28,9 @@ module.exports = (robot) ->
 
   meMessageListener = (event) ->
     robot.logger.info("event = " + JSON.stringify(event))
-    if (event.text.match(/^out (\d+)\w?(.*)?/i))
-      recordMood(event)
-    else if (event.text.match(/^out(\s\D.*)?$/i))
-      remindMoodQuestion(event)
+#    if (event.text.match(/^out (\d+)\w?(.*)?/i))
+#      recordMood(event)
+#    else if (event.text.match(/^out(\s\D.*)?$/i))
+#      remindMoodQuestion(event)
 
-  client.on 'me_message', meMessageListener
+  client.on 'message', meMessageListener
