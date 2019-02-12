@@ -27,6 +27,7 @@ module.exports = (robot) ->
   robot.hear /^out(\s\D.*)?$/i, remindMoodQuestion
 
   meMessageListener = (event) ->
+    robot.logger.info("event = " + JSON.stringify(event))
     if (event.text.match(/^out (\d+)\w?(.*)?/i))
       recordMood(event)
     else if (event.text.match(/^out(\s\D.*)?$/i))
