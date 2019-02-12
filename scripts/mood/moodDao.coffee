@@ -36,7 +36,7 @@ module.exports.addMoodFromEvent = (client, event, robot, mood, description) ->
   robot.logger.info("mood: #{mood}");
   robot.logger.info("description: #{description}");
   data = {
-    userName: ''
+    userName: null
     userId: event.user,
     mood: mood,
     description: description?.trim(),
