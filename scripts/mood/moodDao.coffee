@@ -1,4 +1,5 @@
 backend = require '../common/backend'
+users = require './common/users'
 
 errorHandler = (messageResponse) ->
   (err, errCode) -> messageResponse.reply("Error #{errCode}")
@@ -36,7 +37,7 @@ module.exports.addMoodFromEvent = (client, event, robot, mood, description) ->
   robot.logger.info("mood: #{mood}");
   robot.logger.info("description: #{description}");
   data = {
-    userName: null
+    userName: users.getUserBydId(robot, event.user).name
     userId: event.user,
     mood: mood,
     description: description?.trim(),
