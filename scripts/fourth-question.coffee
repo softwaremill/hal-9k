@@ -55,6 +55,9 @@ module.exports = (robot) ->
   robot.respond /dej czwarte/i, get4thQ
   robot.respond /jakie czwarte/i, get4thQ
   robot.respond /jakie 4te/i, get4thQ
+  robot.respond /to jakie dziś czwarte/i, get4thQ
+  robot.respond /jakie dziś czwarte/i, get4thQ
+  robot.respond /poproszę o czwarte pytanie/i, get4thQ
 
   robot.hear /^(januszu)? (.+)/i, (res) ->
     res.finish()
