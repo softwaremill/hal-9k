@@ -8,6 +8,9 @@
 #   hubot jakie czwarte - zwraca czwarte pytanie na dzisiaj
 #   hubot daj czwarte - zwraca czwarte pytanie na dzisiaj
 #   hubot dej 4te - zwraca czwarte pytanie na dzisiaj
+#   hubot to jakie dziś czwarte - zwraca czwarte pytanie na dzisiaj
+#   hubot jakie dziś czwarte - zwraca czwarte pytanie na dzisiaj
+#   hubot poproszę o czwarte pytanie - zwraca czwarte pytanie na dzisiaj
 
 fourthQuestion = require './fourth_question/FourthQuestionDao'
 
