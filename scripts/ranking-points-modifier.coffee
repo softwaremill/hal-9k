@@ -1,8 +1,8 @@
 # 
-#   Enter your ranking modificator points for current year here.
+#   Enter your ranking points modifier for current year here.
 #   
 
-pointsModificatorPerUser =
+pointsModifierPerUser =
   "lenart": 1*0.5
   "kubala": 2*0.5
   "baraniecki": 2*0.5
@@ -19,7 +19,7 @@ pointsModificatorPerUser =
   "matloka": -1
   "szymanski": -1
 
-module.exports = pointsModificatorPerUser
+module.exports = pointsModifierPerUser
   
 
 

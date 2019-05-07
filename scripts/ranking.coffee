@@ -6,7 +6,7 @@
 
 zlib = require('zlib');
 CronJob = require('cron').CronJob
-pointsModificator = require('./ranking-points-modificator.coffee')
+pointsModifier = require('./ranking-points-modifier.coffee')
 
 tz = 'Europe/Warsaw'
 
@@ -45,15 +45,15 @@ yearStats = (data, year) ->
     )
   )
 
-mergePointsModificatorWithYearStats = (yearStats) ->
-  withPointsModificator = Object.assign({}, yearStats)
-  Object.keys(pointsModificator).forEach (user) ->
-    if !(user of withPointsModificator)
-      withPointsModificator[user] = sum: 0
-    withPointsModificator[user]['modificator'] = pointsModificator[user] || 0
-    withPointsModificator[user].sum += pointsModificator[user]
+mergePointsModifierWithCurrentYearStats = (yearStats) ->
+  withPointsModifier = Object.assign({}, yearStats)
+  Object.keys(pointsModifier).forEach (user) ->
+    if !(user of withPointsModifier)
+      withPointsModifier[user] = sum: 0
+    withPointsModifier[user]['modifier'] = pointsModifier[user] || 0
+    withPointsModifier[user].sum += pointsModifier[user]
 
-  withPointsModificator
+  withPointsModifier
 
 monthStats = (data, year, month) ->
   addSums(data[year][month])
@@ -94,10 +94,10 @@ prepareMessage = (stats) ->
     blogPosts = (stats[user]['blog-posts'] || 0)
     presentations = (stats[user]['conference-presentations'] || 0)
     meetups = (stats[user]['meetup-presentations'] || 0)
-    modificator = (stats[user]['modificator'] || 0)
+    modifier = (stats[user]['modifier'] || 0)
 
     attachments.push
-      text: "#{lp}. *#{user}* #{label}: (`#{sum}`) => [`#{blogPosts}`/`#{presentations}`/`#{meetups}`/`#{modificator}`]",
+      text: "#{lp}. *#{user}* #{label}: (`#{sum}`) => [`#{blogPosts}`/`#{presentations}`/`#{meetups}`/`#{modifier}`]",
       mrkdwn_in: [
         "text"
       ]
@@ -132,8 +132,8 @@ module.exports = (robot) ->
       year = date.getFullYear().toString();
       month = (date.getMonth() + 1).toString();
 
-      yearStatsWithPointsModificator = mergePointsModificatorWithYearStats(yearStats(data, year))
-      yearRanking = prepareMessage(yearStatsWithPointsModificator)
+      yearStatsWithPointsModifier = mergePointsModifierWithCurrentYearStats(yearStats(data, year))
+      yearRanking = prepareMessage(yearStatsWithPointsModifier)
       monthRanking = prepareMessage(monthStats(data, year, month))
 
       response = undefined
