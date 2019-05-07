@@ -6,6 +6,7 @@
 
 zlib = require('zlib');
 CronJob = require('cron').CronJob
+pointsModifier = require('./ranking-points-modifier.coffee')
 
 tz = 'Europe/Warsaw'
 
@@ -43,6 +44,16 @@ yearStats = (data, year) ->
       {}
     )
   )
+
+mergePointsModifierWithCurrentYearStats = (yearStats) ->
+  withPointsModifier = Object.assign({}, yearStats)
+  Object.keys(pointsModifier).forEach (user) ->
+    if !(user of withPointsModifier)
+      withPointsModifier[user] = sum: 0
+    withPointsModifier[user]['modifier'] = pointsModifier[user] || 0
+    withPointsModifier[user].sum += pointsModifier[user]
+
+  withPointsModifier
 
 monthStats = (data, year, month) ->
   addSums(data[year][month])
@@ -83,9 +94,10 @@ prepareMessage = (stats) ->
     blogPosts = (stats[user]['blog-posts'] || 0)
     presentations = (stats[user]['conference-presentations'] || 0)
     meetups = (stats[user]['meetup-presentations'] || 0)
+    modifier = (stats[user]['modifier'] || 0)
 
     attachments.push
-      text: "#{lp}. *#{user}* #{label}: (`#{sum}`) => [`#{blogPosts}`/`#{presentations}`/`#{meetups}`]",
+      text: "#{lp}. *#{user}* #{label}: (`#{sum}`) => [`#{blogPosts}`/`#{presentations}`/`#{meetups}`/`#{modifier}`]",
       mrkdwn_in: [
         "text"
       ]
@@ -93,7 +105,7 @@ prepareMessage = (stats) ->
   attachments
 
 sectionHeader = (prefix) ->
-  "#{prefix} ranking <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603|króla wód> - (Suma) => [Blogi / Konferencyjki / Meetupy]:"
+  "#{prefix} ranking <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603|króla wód> - (Suma) => [Blogi / Konferencyjki / Meetupy / <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603&focusedCommentId=36929932#comment-36929932|Inne> ]:"
 
 module.exports = (robot) ->
 
@@ -120,7 +132,8 @@ module.exports = (robot) ->
       year = date.getFullYear().toString();
       month = (date.getMonth() + 1).toString();
 
-      yearRanking = prepareMessage(yearStats(data, year))
+      yearStatsWithPointsModifier = mergePointsModifierWithCurrentYearStats(yearStats(data, year))
+      yearRanking = prepareMessage(yearStatsWithPointsModifier)
       monthRanking = prepareMessage(monthStats(data, year, month))
 
       response = undefined
