@@ -6,7 +6,6 @@ pointsModifierPerUser =
   "lenart": 1*0.5
   "kubala": 2*0.5
   "baraniecki": 2*0.5
-  "ludwikowski": 3*0.5
   "opala": 1*0.5
   "wachal": 4*-1+1*0.5 #x*-1 za TMWL
   "somlarek": 3*0.5
