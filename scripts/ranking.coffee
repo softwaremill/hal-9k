@@ -6,6 +6,7 @@
 
 zlib = require('zlib');
 CronJob = require('cron').CronJob
+pointsModificator = require('./ranking-points-modificator.coffee')
 
 tz = 'Europe/Warsaw'
 
@@ -43,6 +44,16 @@ yearStats = (data, year) ->
       {}
     )
   )
+
+mergePointsModificatorWithYearStats = (yearStats) ->
+  withPointsModificator = Object.assign({}, yearStats)
+  Object.keys(pointsModificator).forEach (user) ->
+    if !(user of withPointsModificator)
+      withPointsModificator[user] = sum: 0
+    withPointsModificator[user]['modificator'] = pointsModificator[user] || 0
+    withPointsModificator[user].sum += pointsModificator[user]
+
+  withPointsModificator
 
 monthStats = (data, year, month) ->
   addSums(data[year][month])
@@ -83,9 +94,10 @@ prepareMessage = (stats) ->
     blogPosts = (stats[user]['blog-posts'] || 0)
     presentations = (stats[user]['conference-presentations'] || 0)
     meetups = (stats[user]['meetup-presentations'] || 0)
+    modificator = (stats[user]['modificator'] || 0)
 
     attachments.push
-      text: "#{lp}. *#{user}* #{label}: (`#{sum}`) => [`#{blogPosts}`/`#{presentations}`/`#{meetups}`]",
+      text: "#{lp}. *#{user}* #{label}: (`#{sum}`) => [`#{blogPosts}`/`#{presentations}`/`#{meetups}`/`#{modificator}`]",
       mrkdwn_in: [
         "text"
       ]
@@ -93,7 +105,7 @@ prepareMessage = (stats) ->
   attachments
 
 sectionHeader = (prefix) ->
-  "#{prefix} ranking <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603|króla wód> - (Suma) => [Blogi / Konferencyjki / Meetupy]:"
+  "#{prefix} ranking <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603|króla wód> - (Suma) => [Blogi / Konferencyjki / Meetupy / Inne ]:"
 
 module.exports = (robot) ->
 
@@ -120,7 +132,8 @@ module.exports = (robot) ->
       year = date.getFullYear().toString();
       month = (date.getMonth() + 1).toString();
 
-      yearRanking = prepareMessage(yearStats(data, year))
+      yearStatsWithPointsModificator = mergePointsModificatorWithYearStats(yearStats(data, year))
+      yearRanking = prepareMessage(yearStatsWithPointsModificator)
       monthRanking = prepareMessage(monthStats(data, year, month))
 
       response = undefined
