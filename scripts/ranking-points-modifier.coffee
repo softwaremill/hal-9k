@@ -12,7 +12,7 @@ pointsModifierPerUser =
   "murawski": 1*0.5
   "luczak": -1+1*0.5
   "stawicki": 1*0.5
-  "chmielarz": -2
+  "chmielarz": -2+1*0.5
   "dziurko": -1
   "stozek": -1
   "matloka": -1
