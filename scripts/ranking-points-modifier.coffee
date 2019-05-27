@@ -19,6 +19,7 @@ pointsModifierPerUser =
   "szymanski": -1
   "kunicki": 1*0.5
   "dzikowski": -1
+  "kocur": 1
 
 module.exports = pointsModifierPerUser
   
