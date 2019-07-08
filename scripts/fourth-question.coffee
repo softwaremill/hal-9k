@@ -14,6 +14,9 @@
 
 fourthQuestion = require './fourth_question/FourthQuestionDao'
 
+MONDAY = 1
+WEDNESDAY = 3
+
 module.exports = (robot) ->
   add4thQ = (res) ->
     _4thQuestion = res.match[1]
@@ -31,17 +34,23 @@ module.exports = (robot) ->
 
 
   get4thQ = (res) ->
+    now = new Date()
 
-    successHandler = (successBody) ->
-      console.log("Response : #{successBody}")
-      jsonBody = JSON.parse(successBody)
-      res.reply("Czwarte pytanie na dzisiaj: #{jsonBody.message}")
+    if now.getDay() == MONDAY
+      res.reply 'Hej, dzisiaj poniedziałek, pytanie standardowe jak Ci minął weekend?'
+    else if now.getDay() == WEDNESDAY
+      res.reply 'Dzisiaj środa, nie ma pytania, kontenplujemy ciszę ;-)'
+    else
+      successHandler = (successBody) ->
+        robot.logger.info("Response : #{successBody}")
+        jsonBody = JSON.parse(successBody)
+        res.reply("Czwarte pytanie na dzisiaj: #{jsonBody.message}")
 
-    errorHandler =
-      (err, errCode) -> res.reply("Error #{errCode}")
+      errorHandler =
+        (err, errCode) -> res.reply("Error #{errCode}")
 
-    res.reply("No już, szukam, szukam. Po co pogania :)")
-    fourthQuestion.get(robot, successHandler, errorHandler)
+      res.reply("Proszę o cierpliwość, szukam ...")
+      fourthQuestion.get(robot, successHandler, errorHandler)
 
   robot.respond /4te add (.*)/i, add4thQ
   robot.respond /add 4te (.*)/i, add4thQ
