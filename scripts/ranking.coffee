@@ -4,9 +4,12 @@
 # Commands:
 #   hubot ranking - shows ranking of SML team
 
+PTS_PER_HIRING_ITEM = 0.25
+
 zlib = require('zlib');
 CronJob = require('cron').CronJob
 pointsModifier = require('./ranking-points-modifier.coffee')
+hiringModifier = require('./ranking-hiring-activities.coffee')
 
 tz = 'Europe/Warsaw'
 
@@ -55,6 +58,17 @@ mergePointsModifierWithCurrentYearStats = (yearStats) ->
 
   withPointsModifier
 
+mergeHiringModifierWithCurrentYearStats = (yearStats) ->
+  withHiringModifier = Object.assign({}, yearStats)
+  Object.keys(hiringModifier).forEach (user) ->
+    if !(user of withHiringModifier)
+      withHiringModifier[user] = sum: 0
+    hiringPoints = (hiringModifier[user]['cr'] + hiringModifier[user]['tech']) * PTS_PER_HIRING_ITEM || 0
+    withHiringModifier[user]['hiring'] = hiringPoints
+    withHiringModifier[user].sum += hiringPoints
+
+  withHiringModifier
+
 monthStats = (data, year, month) ->
   addSums(data[year][month])
 
@@ -95,9 +109,10 @@ prepareMessage = (stats) ->
     presentations = (stats[user]['conference-presentations'] || 0)
     meetups = (stats[user]['meetup-presentations'] || 0)
     modifier = (stats[user]['modifier'] || 0)
+    hiring = (stats[user]['hiring'] || 0)
 
     attachments.push
-      text: "#{lp}. *#{user}* #{label}: (`#{sum}`) => [`#{blogPosts}`/`#{presentations}`/`#{meetups}`/`#{modifier}`]",
+      text: "#{lp}. *#{user}* #{label}: (`#{sum}`) => [`#{blogPosts}`/`#{presentations}`/`#{meetups}`/`#{modifier}`/`#{hiring}]",
       mrkdwn_in: [
         "text"
       ]
@@ -133,7 +148,8 @@ module.exports = (robot) ->
       month = (date.getMonth() + 1).toString();
 
       yearStatsWithPointsModifier = mergePointsModifierWithCurrentYearStats(yearStats(data, year))
-      yearRanking = prepareMessage(yearStatsWithPointsModifier)
+      yearStatsWithPointsAndHiringModifier = mergeHiringModifierWithCurrentYearStats(yearStatsWithPointsModifier)
+      yearRanking = prepareMessage(yearStatsWithPointsAndHiringModifier)
       monthRanking = prepareMessage(monthStats(data, year, month))
 
       response = undefined
