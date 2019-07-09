@@ -39,7 +39,7 @@ module.exports = (robot) ->
     if now.getDay() == MONDAY
       res.reply 'Hej, dzisiaj poniedziałek, pytanie standardowe jak Ci minął weekend?'
     else if now.getDay() == WEDNESDAY
-      res.reply 'Dzisiaj środa, nie ma pytania, kontenplujemy ciszę ;-)'
+      res.reply 'Dzisiaj środa, nie ma pytania, kontemplujemy ciszę ;-)'
     else
       successHandler = (successBody) ->
         robot.logger.info("Response : #{successBody}")
