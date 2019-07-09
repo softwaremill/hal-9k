@@ -112,7 +112,7 @@ prepareMessage = (stats) ->
     hiring = (stats[user]['hiring'] || 0)
 
     attachments.push
-      text: "#{lp}. *#{user}* #{label}: (`#{sum}`) => [`#{blogPosts}`/`#{presentations}`/`#{meetups}`/`#{modifier}`/`#{hiring}]",
+      text: "#{lp}. *#{user}* #{label}: (`#{sum}`) => [`#{blogPosts}`/`#{presentations}`/`#{meetups}`/`#{hiring}`/`#{modifier}`]",
       mrkdwn_in: [
         "text"
       ]
@@ -120,7 +120,7 @@ prepareMessage = (stats) ->
   attachments
 
 sectionHeader = (prefix) ->
-  "#{prefix} ranking <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603|króla wód> - (Suma) => [Blogi / Konferencyjki / Meetupy / <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603&focusedCommentId=36929932#comment-36929932|Inne> ]:"
+  "#{prefix} ranking <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603|króla wód> - (Suma) => [Blogi / Konferencyjki / Meetupy / Hiring / <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603&focusedCommentId=36929932#comment-36929932|Inne> ]:"
 
 module.exports = (robot) ->
 
