@@ -11,6 +11,14 @@ hiringActivitiesPerUser =
     "cr": 0
     "tech": 1
   }
+  "opala": {
+    "cr": 0
+    "tech": 1
+  }
+  "rafalko": {
+    "cr": 0
+    "tech": 1
+  }
 
 module.exports = hiringActivitiesPerUser
   
