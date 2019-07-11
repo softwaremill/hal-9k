@@ -37,4 +37,4 @@ module.exports = (robot) ->
     res.send "Ciekawe co powie Nerdal ... https://www.screencast.com/t/N4cbbaZlCvW"
 
   robot.respond /bluejeans|bj|(td|topdown) standup/i, (res) ->
-    res.respond 'https://bluejeans.com/4955736566'
+    res.send 'https://bluejeans.com/4955736566'
