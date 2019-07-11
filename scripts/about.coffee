@@ -33,10 +33,12 @@ module.exports = (robot) ->
   robot.hear /.*(ja pierdol)(e|ę).*(\s)(@?janusz).*/i, (msg) ->
     msg.send sorryMsg
 
-  robot.hear /.*(zatrudnia)(ć|c|my)\??(\s).*/i, (msg) ->
+  robot.hear /.*(zatrudnia)(ć|c|my)\??(\s?).*/i, (msg) ->
     msg.send "Ciekawe co powie Nerdal ... https://www.screencast.com/t/N4cbbaZlCvW"
 
   robot.respond /bluejeans|bj/i, (msg) ->
+    robot.log.info "Checking what room I'm in #{msg.message.room}"
     if msg.message.room == 'topdown' || msg.message.room == '#topdown'
       msg.respond 'https://bluejeans.com/4955736566'
+
     msg.finish()
