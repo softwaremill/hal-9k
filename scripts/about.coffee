@@ -36,12 +36,5 @@ module.exports = (robot) ->
   robot.hear /.*(zatrudnia)(ć|c|my)\??(\s?).*/i, (res) ->
     res.send "Ciekawe co powie Nerdal ... https://www.screencast.com/t/N4cbbaZlCvW"
 
-  robot.respond /bluejeans|bj/i, (res) ->
-    robot.logger.info JSON.stringify(robot.adapter.channelMapping)
-    robot.logger.info JSON.stringify(robot.adapter)
-
-    robot.logger.info "Checking what room I'm in #{JSON.stringify(res.message)}"
-    if res.message.room == 'topdown' || res.message.room == '#topdown'
-      res.respond 'https://bluejeans.com/4955736566'
-
-    res.finish()
+  robot.respond /bluejeans|bj|(td|topdown) standup/i, (res) ->
+    res.respond 'https://bluejeans.com/4955736566'
