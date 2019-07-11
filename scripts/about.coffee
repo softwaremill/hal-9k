@@ -37,7 +37,7 @@ module.exports = (robot) ->
     msg.send "Ciekawe co powie Nerdal ... https://www.screencast.com/t/N4cbbaZlCvW"
 
   robot.respond /bluejeans|bj/i, (msg) ->
-    robot.logger.info "Checking what room I'm in #{msg.message.room}"
+    robot.logger.info "Checking what room I'm in #{JSON.stringify(msg.message)}"
     if msg.message.room == 'topdown' || msg.message.room == '#topdown'
       msg.respond 'https://bluejeans.com/4955736566'
 
