@@ -18,7 +18,7 @@
 #   Airborn
 
 module.exports = (robot) ->
-  robot.respond /(dlaczego|jak|jaka|jaki|co|czemu)(\s)(.*)\?$/i, (msg) ->
+  robot.respond /(dlaczego|jak|jaka|jaki|co|czemu|wiki me|wiki)?(\s)(.*)\??$/i, (msg) ->
     msg
     .http("https://www.googleapis.com/customsearch/v1")
     .query
