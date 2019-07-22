@@ -36,7 +36,7 @@ hiringActivitiesPerUser =
     "tech": 1
   },
   "dziworski": {
-    "cr": 1
+    "cr": 2
     "tech": 0
   }
 
