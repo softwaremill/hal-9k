@@ -18,7 +18,7 @@ pointsModifierPerUser =
   "matloka": -1
   "szymanski": -1
   "kunicki": 1*0.5
-  "dzikowski": -1
+  "dzikowski": -1+2*0.5 # minus 2018, plus tłum., plus TMWL
   "kocur": 1+1 # co-author
   "kijanowski": 1 # co-author
 
