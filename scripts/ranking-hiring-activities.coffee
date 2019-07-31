@@ -54,6 +54,10 @@ hiringActivitiesPerUser =
   "majcher": {
     "cr": 0
     "tech": 1
+  },
+  "kondzielski": {
+    "cr": 1
+    "tech": 0
   }
 
 module.exports = hiringActivitiesPerUser
