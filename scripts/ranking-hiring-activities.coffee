@@ -44,7 +44,7 @@ hiringActivitiesPerUser =
     "tech": 0
   },
   "krawczyk": {
-    "cr": 0
+    "cr": 1
     "tech": 1
   },
   "szymaniuk-paryz": {
