@@ -5,7 +5,7 @@
 hiringActivitiesPerUser =
   "dziurko": {
     "cr": 0
-    "tech": 2
+    "tech": 3
   },
   "stozek": {
     "cr": 1
