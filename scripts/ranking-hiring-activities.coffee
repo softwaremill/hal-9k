@@ -28,7 +28,7 @@ hiringActivitiesPerUser =
     "tech": 0
   },
   "baraniecki" : {
-    "cr": 1
+    "cr": 2
     "tech": 0
   },
   "ludwikowski": {
@@ -44,7 +44,7 @@ hiringActivitiesPerUser =
     "tech": 0
   },
   "krawczyk": {
-    "cr": 1
+    "cr": 2
     "tech": 1
   },
   "szymaniuk-paryz": {
