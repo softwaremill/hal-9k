@@ -40,7 +40,7 @@ hiringActivitiesPerUser =
     "tech": 0
   },
   "rabiej": {
-    "cr": 1
+    "cr": 5
     "tech": 0
   },
   "krawczyk": {
