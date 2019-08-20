@@ -70,6 +70,10 @@ hiringActivitiesPerUser =
   "ledwon": {
     "cr": 1
     "tech": 0
+  },
+  "kubala": {
+    "cr": 1
+    "tech": 0
   }
 
 module.exports = hiringActivitiesPerUser
