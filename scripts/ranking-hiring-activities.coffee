@@ -56,7 +56,7 @@ hiringActivitiesPerUser =
     "tech": 1
   },
   "smolarek": {
-    "cr": 0
+    "cr": 1
     "tech": 1 + 1
   },
   "kondzielski": {
