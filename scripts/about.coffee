@@ -36,5 +36,5 @@ module.exports = (robot) ->
   robot.hear /.*(zatrudnia)(ć|c|my)\??(\s?).*/i, (res) ->
     res.send "Ciekawe co powie Nerdal ... https://www.screencast.com/t/N4cbbaZlCvW"
 
-  robot.respond /bluejeans|bj|(td|topdown) standup/i, (res) ->
-    res.send 'Spotkanie Topdown jest tutaj https://bluejeans.com/4955736566'
+  robot.respond /(td|topdown) (standup|meeting|zoom)/i, (res) ->
+    res.send 'Spotkanie jest tutaj https://zoom.us/j/2716999780'
