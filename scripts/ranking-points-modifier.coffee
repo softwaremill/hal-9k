@@ -22,6 +22,7 @@ pointsModifierPerUser =
   "kocur": 1+1 # co-author
   "kijanowski": 1 # co-author
   "majcher": 1*0.5 # TMWL July
+  "adamiak": 1*0.5 # TMWL
 
 module.exports = pointsModifierPerUser
   
