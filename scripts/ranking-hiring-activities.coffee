@@ -83,7 +83,6 @@ hiringActivitiesPerUser =
     "cr": 0
     "tech": 1
   },
-  {
   "zuchowski": {
     "cr": 0
     "tech": 1
