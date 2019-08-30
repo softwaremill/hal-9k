@@ -60,7 +60,7 @@ hiringActivitiesPerUser =
     "tech": 1 + 1 + 1
   },
   "kondzielski": {
-    "cr": 1
+    "cr": 3
     "tech": 0
   },
   "ciesielski": {
