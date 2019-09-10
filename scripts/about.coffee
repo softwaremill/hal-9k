@@ -40,4 +40,4 @@ module.exports = (robot) ->
     res.send 'Link do BJ https://bluejeans.com/4955736566'
 
   robot.respond /(td|topdown) (standup|meeting|zoom)/i, (res) ->
-    res.send 'Spotkanie jest tutaj https://bluejeans.com/4955736566'
+    res.send 'Spotkanie jest tutaj https://zoom.us/j/2716999780'
