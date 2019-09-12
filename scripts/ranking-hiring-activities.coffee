@@ -80,7 +80,7 @@ hiringActivitiesPerUser =
     "tech": 1 + 1
   },
   "kocur": {
-    "cr": 0
+    "cr": 1
     "tech": 1
   },
   "zuchowski": {
