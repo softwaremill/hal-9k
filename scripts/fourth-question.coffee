@@ -51,7 +51,7 @@ module.exports = (robot) ->
 
       res.reply("Proszę o cierpliwość, szukam ...")
       fourthQuestion.get(robot, successHandler, errorHandler)
-
+  
   robot.respond /4te add (.*)/i, add4thQ
   robot.respond /add 4te (.*)/i, add4thQ
   robot.respond /czwarte add (.*)/i, add4thQ
