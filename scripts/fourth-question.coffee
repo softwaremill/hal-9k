@@ -13,6 +13,7 @@
 #   hubot poproszę o czwarte pytanie - zwraca czwarte pytanie na dzisiaj
 
 fourthQuestion = require './fourth_question/FourthQuestionDao'
+fourthQuestionPg = require './fourth_question/FourthQuestionPgDao'
 
 MONDAY = 1
 WEDNESDAY = 3
@@ -51,6 +52,25 @@ module.exports = (robot) ->
 
       res.reply("Proszę o cierpliwość, szukam ...")
       fourthQuestion.get(robot, successHandler, errorHandler)
+  
+  get4thQpg = (res) ->
+    now = new Date()
+
+    if now.getDay() == MONDAY
+      res.reply 'Hej, dzisiaj poniedziałek, pytanie standardowe jak Ci minął weekend?'
+    else if now.getDay() == WEDNESDAY
+      res.reply 'Dzisiaj środa, nie ma pytania, kontemplujemy ciszę ;-)'
+    else
+      successHandler = (successBody) ->
+        robot.logger.info("Response : #{successBody}")
+        jsonBody = JSON.parse(successBody)
+        res.reply("Czwarte pytanie na dzisiaj: #{jsonBody.message}")
+
+      errorHandler =
+        (err, errCode) -> res.reply("Error #{errCode}")
+
+      res.reply("Proszę o cierpliwość, szukam ...")
+      fourthQuestionPg.get(robot, successHandler, errorHandler)
 
   robot.respond /4te add (.*)/i, add4thQ
   robot.respond /add 4te (.*)/i, add4thQ
@@ -70,6 +90,8 @@ module.exports = (robot) ->
   robot.respond /to jakie dziś czwarte/i, get4thQ
   robot.respond /jakie dziś czwarte/i, get4thQ
   robot.respond /poproszę o czwarte pytanie/i, get4thQ
+
+  robot.respond /dajpg 4te/i, get4thQpg
 
   robot.hear /^(januszu)? (.+)/i, (res) ->
     res.finish()
