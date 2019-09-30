@@ -12,15 +12,15 @@ hiringActivitiesPerUser =
     "tech": 1
   },
   "opala": {
-    "cr": 3
-    "tech": 2
+    "cr": 6
+    "tech": 3
   },
   "rafalko": {
     "cr": 3
     "tech": 1
   },
   "chmielarz": {
-    "cr": 4
+    "cr": 7
     "tech": 1
   },
   "pluszcz" : {
@@ -40,7 +40,7 @@ hiringActivitiesPerUser =
     "tech": 0
   },
   "rabiej": {
-    "cr": 5
+    "cr": 6
     "tech": 0
   },
   "krawczyk": {
@@ -60,7 +60,7 @@ hiringActivitiesPerUser =
     "tech": 1 + 1 + 1
   },
   "kondzielski": {
-    "cr": 1
+    "cr": 3
     "tech": 0
   },
   "ciesielski": {
@@ -80,12 +80,16 @@ hiringActivitiesPerUser =
     "tech": 1 + 1
   },
   "kocur": {
-    "cr": 0
+    "cr": 1
     "tech": 1
   },
   "zuchowski": {
     "cr": 0
     "tech": 1
+  },
+  "stawicki": {
+    "cr": 0
+    "tech": 1 + 1
   },
   "walerowicz": {
     "cr": 1
