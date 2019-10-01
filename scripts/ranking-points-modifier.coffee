@@ -19,11 +19,10 @@ pointsModifierPerUser =
   "szymanski": -1
   "kunicki": 1*0.5
   "dzikowski": -1+2*0.5 # minus 2018, plus tłum., plus TMWL
-  "kocur": 1+1 # co-author
+  "kocur": 1+1+1*0.5# 2xco-author, 1xTMWL
   "kijanowski": 1 # co-author
   "majcher": 1*0.5 # TMWL July
   "adamiak": 1*0.5 # TMWL
-  "kocur": 1*0.5 # tmwl Sep
 
 module.exports = pointsModifierPerUser
   
