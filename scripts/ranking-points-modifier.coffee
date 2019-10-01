@@ -8,7 +8,7 @@ pointsModifierPerUser =
   "baraniecki": 2*0.5
   "opala": 3*0.5 # march, april, june
   "wachal": 4*-1+1*0.5 #x*-1 za TMWL
-  "smolarek": 3*0.5
+  "smolarek": 5*0.5
   "murawski": 1*0.5
   "luczak": -1+1*0.5
   "stawicki": 1*0.5
