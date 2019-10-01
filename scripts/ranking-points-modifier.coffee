@@ -15,7 +15,7 @@ pointsModifierPerUser =
   "chmielarz": -2+1*0.5
   "dziurko": -1
   "stozek": -1
-  "matloka": -1
+  "matloka": -1 + 1*0.5 # minus 2018, plus TWML
   "szymanski": -1
   "kunicki": 1*0.5
   "dzikowski": -1+2*0.5 # minus 2018, plus tłum., plus TMWL
