@@ -17,7 +17,7 @@ pointsModifierPerUser =
   "stozek": -1
   "matloka": -1 + 1*0.5 # minus 2018, plus TWML
   "szymanski": -1
-  "kunicki": 1*0.5
+  "kunicki": 2*0.5
   "dzikowski": -1+2*0.5 # minus 2018, plus tłum., plus TMWL
   "kocur": 1+1+1*0.5# 2xco-author, 1xTMWL
   "kijanowski": 1 # co-author
