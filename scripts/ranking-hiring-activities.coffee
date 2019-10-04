@@ -95,7 +95,7 @@ hiringActivitiesPerUser =
     "cr": 1
     "tech": 0
   },
-  "bturos": {
+  "turos": {
     "cr": 1
     "tech": 0
   }
