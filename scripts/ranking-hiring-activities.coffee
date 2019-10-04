@@ -98,6 +98,10 @@ hiringActivitiesPerUser =
   "turos": {
     "cr": 1
     "tech": 0
+  },
+  "kunicki": {
+    "cr": 1,
+    "tech": 0
   }
 
 module.exports = hiringActivitiesPerUser
