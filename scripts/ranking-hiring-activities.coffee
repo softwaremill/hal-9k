@@ -12,7 +12,7 @@ hiringActivitiesPerUser =
     "tech": 1
   },
   "opala": {
-    "cr": 7
+    "cr": 8
     "tech": 3
   },
   "rafalko": {
