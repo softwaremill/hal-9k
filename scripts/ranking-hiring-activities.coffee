@@ -65,7 +65,7 @@ hiringActivitiesPerUser =
   },
   "ciesielski": {
     "cr": 1
-    "tech": 1
+    "tech": 1 + 1
   },
   "ledwon": {
     "cr": 1
@@ -85,7 +85,7 @@ hiringActivitiesPerUser =
   },
   "zuchowski": {
     "cr": 0
-    "tech": 1
+    "tech": 1 + 1
   },
   "stawicki": {
     "cr": 0
