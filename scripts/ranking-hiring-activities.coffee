@@ -17,11 +17,11 @@ hiringActivitiesPerUser =
   },
   "rafalko": {
     "cr": 3
-    "tech": 1
+    "tech": 2
   },
   "chmielarz": {
     "cr": 7
-    "tech": 1
+    "tech": 2
   },
   "pluszcz" : {
     "cr": 1
