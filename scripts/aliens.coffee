@@ -39,16 +39,8 @@ setupResponder = (robot, meme) ->
     generateMeme msg, meme.template_id, msg.match[1], msg.match[2]
 
 generateMeme = (msg, template_id, text0, text1) ->
-  username = process.env.IMGFLIP_API_USERNAME
-  password = process.env.IMGFLIP_API_PASSWORD
-
-  if (username or password) and not (username and password)
-    msg.reply 'Brak użytkownika i hasła aby używać imgflip :('
-    return
-
-  if not username
-    username = 'imgflip_hubot'
-    password = 'imgflip_hubot'
+  username = 'imgflip_hubot'
+  password = 'imgflip_hubot'
 
   msg.http('https://api.imgflip.com/caption_image')
   .query
