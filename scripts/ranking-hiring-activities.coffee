@@ -89,7 +89,7 @@ hiringActivitiesPerUser =
   },
   "stawicki": {
     "cr": 0
-    "tech": 1 + 1
+    "tech": 1 + 1 + 1
   },
   "walerowicz": {
     "cr": 1
