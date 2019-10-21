@@ -25,6 +25,7 @@ pointsModifierPerUser =
   "adamiak": 1*0.5 # TMWL
   "ludwikowski": 0.5 #Wywiad JJIT
   "koziarkiewicz": 0.5 #Wywiad Japonia  
+  "ciesielski": 0.5 + 0.5 #Wywiad JJIT + wywiad My Way To Scala
 
 module.exports = pointsModifierPerUser
   
