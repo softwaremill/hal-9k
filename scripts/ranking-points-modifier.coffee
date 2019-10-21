@@ -26,6 +26,7 @@ pointsModifierPerUser =
   "ludwikowski": 0.5 #Wywiad JJIT
   "koziarkiewicz": 0.5 #Wywiad Japonia  
   "ciesielski": 0.5 + 0.5 #Wywiad JJIT + wywiad My Way To Scala
+  "ostruszka": 0.5 #wywiad My Way To Scala
 
 module.exports = pointsModifierPerUser
   
