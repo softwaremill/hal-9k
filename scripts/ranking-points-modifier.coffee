@@ -23,6 +23,7 @@ pointsModifierPerUser =
   "kijanowski": 1 # co-author
   "majcher": 1*0.5 # TMWL July
   "adamiak": 1*0.5 # TMWL
+  "ludwikowski": 0.5 #Wywiad JJIT
 
 module.exports = pointsModifierPerUser
   
