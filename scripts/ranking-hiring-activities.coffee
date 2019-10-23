@@ -104,7 +104,7 @@ hiringActivitiesPerUser =
     "tech": 0
   },
   "grandys": {
-    "cr": 1,
+    "cr": 2,
     "tech": 0
   }
 
