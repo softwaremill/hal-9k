@@ -73,7 +73,7 @@ hiringActivitiesPerUser =
   },
   "kubala": {
     "cr": 1
-    "tech": 0
+    "tech": 1
   },
   "adamiak": {
     "cr": 0
