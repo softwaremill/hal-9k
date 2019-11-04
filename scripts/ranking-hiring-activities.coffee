@@ -96,7 +96,7 @@ hiringActivitiesPerUser =
     "tech": 0
   },
   "turos": {
-    "cr": 3
+    "cr": 4
     "tech": 0
   },
   "kunicki": {
