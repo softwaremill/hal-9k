@@ -108,7 +108,7 @@ hiringActivitiesPerUser =
     "tech": 0
   },
   "dobrzanski": {
-    "cr": 1 + 1,
+    "cr": 1 + 1 + 1,
     "tech": 0
   }
 
