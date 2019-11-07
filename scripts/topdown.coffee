@@ -11,4 +11,4 @@ module.exports = (robot) ->
     res.send 'Spotkanie na Zoomie jest tutaj https://zoom.us/j/2716999780'
 
   robot.respond /(td|topdown) standup/i, (res) ->
-    res.send 'Spotkanie jest tutaj na Hangout'
+    res.send 'Spotkanie na Hangoutcie jest tutaj https://meet.google.com/vpy-uebc-pex'
