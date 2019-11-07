@@ -35,9 +35,3 @@ module.exports = (robot) ->
 
   robot.hear /.*(zatrudnia)(ć|c|my)\??(\s?).*/i, (res) ->
     res.send "Ciekawe co powie Nerdal ... https://www.screencast.com/t/N4cbbaZlCvW"
-
-  robot.respond /bluejeans/i, (res) ->
-    res.send 'Link do BJ https://bluejeans.com/4955736566'
-
-  robot.respond /(td|topdown) (standup|meeting|zoom)/i, (res) ->
-    res.send 'Spotkanie jest tutaj https://zoom.us/j/2716999780'
