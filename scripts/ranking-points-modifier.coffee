@@ -29,6 +29,7 @@ pointsModifierPerUser =
   "ostruszka": 0.5 #wywiad My Way To Scala
   "kondzielski": 0.5 #wywiad oss tapir
   "rabiej": 0.5 #wywiad
+  "krawczyk": 0.1 #prescreening
 
 module.exports = pointsModifierPerUser
   
