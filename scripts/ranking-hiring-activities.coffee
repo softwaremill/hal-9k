@@ -52,7 +52,7 @@ hiringActivitiesPerUser =
     "tech": 0
   },
   "majcher": {
-    "cr": 0
+    "cr": 1
     "tech": 1
   },
   "smolarek": {
