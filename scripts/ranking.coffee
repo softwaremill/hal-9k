@@ -4,7 +4,8 @@
 # Commands:
 #   hubot ranking - shows ranking of SML team
 
-PTS_PER_HIRING_ITEM = 0.25
+PTS_PER_CR_OR_TC_ITEM = 0.25
+PTS_PER_PRE_SCREENING_ITEM = 0.1
 
 zlib = require('zlib');
 CronJob = require('cron').CronJob
@@ -63,7 +64,7 @@ mergeHiringModifierWithCurrentYearStats = (yearStats) ->
   Object.keys(hiringModifier).forEach (user) ->
     if !(user of withHiringModifier)
       withHiringModifier[user] = sum: 0
-    hiringPoints = (hiringModifier[user]['cr'] + hiringModifier[user]['tech']) * PTS_PER_HIRING_ITEM || 0
+    hiringPoints = ((hiringModifier[user]['cr'] + hiringModifier[user]['tech']) * PTS_PER_CR_OR_TC_ITEM + hiringModifier[user]['ps'] * PTS_PER_PRE_SCREENING_ITEM) || 0
     withHiringModifier[user]['hiring'] = hiringPoints
     withHiringModifier[user].sum += hiringPoints
 
