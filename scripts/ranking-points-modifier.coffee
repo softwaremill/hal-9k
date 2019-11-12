@@ -8,7 +8,7 @@ pointsModifierPerUser =
   "baraniecki": 4*0.5 + 0.5 + 0.5 + 1 # 4x TMWL + 0.5 za my way to scala + 0.5 za wywiad o remote work + + 1 za post z nerdalem (bootzooka)
   "opala": 4*0.5 # march, april, june, september
   "wachal": 4*-1+1*0.5+1 #x*-1 za TMWL, + post (qml co-author)
-  "smolarek": 6*0.5+0.5 #pierwsze za TMWL + post o Japan
+  "smolarek": 7*0.5+0.5 #pierwsze za TMWL + post o Japan
   "murawski": 1*0.5
   "luczak": -1+1*0.5
   "stawicki": 1*0.5
