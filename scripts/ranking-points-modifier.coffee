@@ -15,7 +15,7 @@ pointsModifierPerUser =
   "chmielarz": -2+1*0.5
   "dziurko": -1
   "stozek": -1+0.5 # -1 za 2018, +0.5 za my way to scala
-  "matloka": -1 + 2*0.5 # minus 2018, plus TWML 8, 9
+  "matloka": -1 + 3*0.5 # minus 2018, plus TWML 8, 9, 10
   "szymanski": -1
   "kunicki": 2*0.5
   "dzikowski": -1+2*0.5 # minus 2018, plus tłum., plus TMWL
