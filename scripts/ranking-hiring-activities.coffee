@@ -35,7 +35,7 @@ hiringActivitiesPerUser =
   },
   "baraniecki" : {
     "ps": 0
-    "cr": 4
+    "cr": 6
     "tech": 0
   },
   "ludwikowski": {
