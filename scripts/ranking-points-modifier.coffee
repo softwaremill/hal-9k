@@ -21,7 +21,7 @@ pointsModifierPerUser =
   "dzikowski": -1+2*0.5 # minus 2018, plus tłum., plus TMWL
   "kocur": 1+1+1*0.5# 2xco-author, 1xTMWL
   "kijanowski": 1 # co-author
-  "majcher": 1*0.5 # TMWL July
+  "majcher": 2*0.5 # TMWL July, TMWL October
   "adamiak": 1*0.5+1 # TMWL, post (qml co-author)
   "ludwikowski": 0.5 #Wywiad JJIT
   "koziarkiewicz": 0.5 #Wywiad Japonia  
