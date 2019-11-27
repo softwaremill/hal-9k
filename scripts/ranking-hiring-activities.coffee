@@ -85,8 +85,8 @@ hiringActivitiesPerUser =
   },
   "ledwon": {
     "ps": 0
-    "cr": 1
-    "tech": 0
+    "cr": 1 + 1 + 1 + 1
+    "tech": 1 + 1
   },
   "kubala": {
     "ps": 0
