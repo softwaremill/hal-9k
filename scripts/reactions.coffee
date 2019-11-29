@@ -61,8 +61,7 @@ module.exports = (robot) ->
   handlePlusOneReaction = (event) ->
     reactingUser = event.user
 
-    prepareFindMessageRequest(event)
-      .get() (err, res, body) ->
+    prepareFindMessageRequest(event).get() (err, res, body) ->
       if err
         robot.logger.error(err)
       else
@@ -99,8 +98,7 @@ module.exports = (robot) ->
     for k,v of event.item
       robot.logger.info("Property: " + k + " is " + v)
 
-    prepareFindMessageRequest(event)
-      .get() (err, res, body) ->
+    prepareFindMessageRequest(event).get() (err, res, body) ->
       if err
         robot.logger.error(err)
       else
@@ -122,7 +120,7 @@ module.exports = (robot) ->
   reactionsListener = (event) ->
     if (event.reaction == '+1')
       handlePlusOneReaction(event)
-    if (['one', 'two', 'three', 'four', 'five'].indexOf(event.reaction) isnt -1 )
+    if (['one', 'two', 'three', 'four', 'five'].indexOf(event.reaction) isnt -1)
       handleVotingReaction(event)
 
 
