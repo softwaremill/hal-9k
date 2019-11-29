@@ -80,9 +80,17 @@ module.exports = (robot) ->
         else
           robot.logger.error('No messages found')
 
+  emoticonToNumber = (emoticonText) ->
+    switch emoticonText
+      when 'one' then 1
+      when 'two' then 2
+      when 'three' then 3
+      when 'four' then 4
+      when 'five' then 5
 
   handleVotingReaction = (event) ->
     reactingUser = event.user
+    questionVoted = emoticonToNumber(event.reaction)
 
     robot.logger.info("Dupa debug: #{event}")
     for k,v of event
@@ -91,6 +99,24 @@ module.exports = (robot) ->
     for k,v of event.item
       robot.logger.info("Property: " + k + " is " + v)
 
+    prepareFindMessageRequest(event)
+      .get() (err, res, body) ->
+      if err
+        robot.logger.error(err)
+      else
+        data = JSON.parse body
+
+        if data.messages
+          messageText = data.messages[0].text
+          votedQuestionMatch = messageText.match(/^#{questionVoted}\..*\((.*)\)$/i)
+
+          if votedQuestionMatch
+            votedQuestionId = votedQuestionMatch[1]
+            robot.logger.info("Voted question #{votedQuestionId}")
+          else
+            robot.logger.error("Could not match voted question for emoticon #{event.reaction} in #{messageText}")
+        else
+          robot.logger.error('No messages found')
 
 
   reactionsListener = (event) ->
