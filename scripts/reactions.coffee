@@ -92,8 +92,7 @@ module.exports = (robot) ->
   handleVotingReaction = (event) ->
     reactingUser = event.user
     questionVoted = emoticonToNumber(event.reaction)
-
-    robot.logger.info(JSON.stringify(event))
+    robot.logger.info("Question voted: #{questionVoted}")
 
     prepareFindMessageRequest(event).get() (err, res, body) ->
       if err
@@ -103,21 +102,28 @@ module.exports = (robot) ->
 
         if data.messages
           messageText = data.messages[0].text
-          votedQuestionMatch = messageText.match(///^#{questionVoted}\..*\((.*)\)$///i)
 
-          robot.logger.info("Question voted: #{questionVoted}")
-          matchedDupaDebug = messageText.match(///[\s\S]*Pytanie #{questionVoted}.*///mg)
-          matchedDupaDebugStrict = messageText.match(///[\s\S]*Pytanie 4[\s\S]*///mg)
-          matchedDupaDebugStrictSimple = messageText.match(///[\s\S]*Pytanie///mg)
-          matchedDupaAll = messageText.match(///[\s\S]*///m)
-          robot.logger.info("Dupa debug matchera ze zmienną: #{JSON.stringify(matchedDupaDebug)}")
-          robot.logger.info("Dupa debug matchera strict: #{JSON.stringify(matchedDupaDebugStrict)}")
-          robot.logger.info("Dupa debug matchera all: #{JSON.stringify(matchedDupaAll)}")
-          robot.logger.info("Dupa debug matchera strict simple: #{JSON.stringify(matchedDupaDebugStrictSimple)}")
+          messageSplitted = messageText.split("\n")
+          voted = messageSplitted.map (line) ->
+            matcher = line.match(///^#{questionVoted}\..*\((.*)\)$///i)
+            if (matcher)
+              matcher[1] # return question id
+            else
+              null
 
-          if votedQuestionMatch
+          votedFiltered = voted.filter((value) -> value != null)
+
+          if (votedFiltered.length != 1)
+            robot.logger.error("Looks like there is more or less than 1 voted question: #{votedFiltered}")
+          else
+            votedQuestionId = votedFiltered[0]
+            robot.logger.info("Voted question ID: #{votedQuestionId}")
+
+
+          if votedQuestionId
             votedQuestionId = votedQuestionMatch[1]
             robot.logger.info("Voted question #{votedQuestionId}")
+            # Przesłać do backendu
           else
             robot.logger.error("Could not match voted question for emoticon #{event.reaction} in #{messageText}")
         else
