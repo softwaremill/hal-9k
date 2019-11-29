@@ -67,6 +67,8 @@ module.exports = (robot) ->
       else
         data = JSON.parse body
 
+        robot.logger.info("Dupa debug. data: #{JSON.stringify(data)}")
+
         if data.messages
           messageText = data.messages[0].text
           textMatch = messageText.match(/kudos (add|dodaj) @?(\S*) (.*)/i)
@@ -91,12 +93,7 @@ module.exports = (robot) ->
     reactingUser = event.user
     questionVoted = emoticonToNumber(event.reaction)
 
-    robot.logger.info("Dupa debug: #{event}")
-    for k,v of event
-      robot.logger.info("Property: " + k + " is " + v)
-    robot.logger.info("Properties of item:")
-    for k,v of event.item
-      robot.logger.info("Property: " + k + " is " + v)
+    robot.logger.info(JSON.stringify(event))
 
     prepareFindMessageRequest(event).get() (err, res, body) ->
       if err
@@ -106,7 +103,11 @@ module.exports = (robot) ->
 
         if data.messages
           messageText = data.messages[0].text
-          votedQuestionMatch = messageText.match(/^#{questionVoted}\..*\((.*)\)$/i)
+          votedQuestionMatch = messageText.match(///^#{questionVoted}\..*\((.*)\)$///i)
+
+          robot.logger.info("Question voted: #{questionVoted}")
+          matchedDupaDebug = messageText.match(///.*Pytanie #{questionVoted}.*///)
+          robot.logger.info("Dupa debug matchera: #{JSON.stringify(matchedDupaDebug)}")
 
           if votedQuestionMatch
             votedQuestionId = votedQuestionMatch[1]
