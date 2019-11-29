@@ -107,7 +107,9 @@ module.exports = (robot) ->
 
           robot.logger.info("Question voted: #{questionVoted}")
           matchedDupaDebug = messageText.match(///.*Pytanie #{questionVoted}.*///g)
-          robot.logger.info("Dupa debug matchera: #{JSON.stringify(matchedDupaDebug)}")
+          matchedDupaDebugStrict = messageText.match(///.*Pytanie 4.*///g)
+          robot.logger.info("Dupa debug matchera ze zmienną: #{JSON.stringify(matchedDupaDebug)}")
+          robot.logger.info("Dupa debug matchera strict: #{JSON.stringify(matchedDupaDebugStrict)}")
 
           if votedQuestionMatch
             votedQuestionId = votedQuestionMatch[1]
