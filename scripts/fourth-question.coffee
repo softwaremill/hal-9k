@@ -107,7 +107,7 @@ module.exports = (robot) ->
         robot.logger.info("Response : #{successBody}")
         jsonBody = JSON.parse(successBody)
         questionWithVotingText = "Czwarte pytanie na dzisiaj: #{jsonBody.currentQuestion}\n"
-        for candidate, i in jsonBody.candidates
+        for candidate, i in jsonBody.questionCandidates
           questionWithVotingText += "#{i}. #{candidate.question} (#{candidate.id})\n"
 
         res.reply(questionWithVotingText)
