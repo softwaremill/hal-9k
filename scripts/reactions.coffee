@@ -7,8 +7,8 @@
 
 users = require './common/users'
 kudos = require './kudos/kudosDao'
-{ RTMClient } = require "@slack/client"
- 
+{RTMClient} = require "@slack/client"
+
 module.exports = (robot) ->
   slackToken = process.env.HUBOT_SLACK_TOKEN
   client = new RTMClient(slackToken)
@@ -20,8 +20,8 @@ module.exports = (robot) ->
     messageId = event.item.ts
 
     return robot.http("#{apiUrl}/channels.history?channel=#{channel}&latest=#{messageId}&inclusive=true&count=1")
-    .header('Content-Type', 'application/json')
-    .header('Authorization', "Bearer #{slackToken}")
+      .header('Content-Type', 'application/json')
+      .header('Authorization', "Bearer #{slackToken}")
 
   handlePlusedKudos = (kudosReceiver, kudosDesc, reactingUser) ->
     user = users.getAllUsers(robot).find((u) -> u.id == kudosReceiver || u.name == kudosReceiver)
@@ -40,10 +40,10 @@ module.exports = (robot) ->
             (body) ->
               jsonBody = JSON.parse(body)
               robot.logger.info(if jsonBody.message? then jsonBody.message else body)
-            ,
+          ,
             (err, errCode) ->
               robot.logger.info("Error #{errCode}")
-            ,
+          ,
             reactingUser,
             plusedKudo.id,
             plusedKudo.description
@@ -58,17 +58,18 @@ module.exports = (robot) ->
       kudos.getKudos(robot, user.id, successHandler, errorHandler)
 
 
-
   handlePlusOneReaction = (event) ->
+    robot.logger.info(event)
+
     reactingUser = event.user
 
     prepareFindMessageRequest(event)
-    .get() (err, res, body) ->
+      .get() (err, res, body) ->
       if err
         robot.logger.err(err)
       else
         data = JSON.parse body
-        
+
         if data.messages
           messageText = data.messages[0].text
           textMatch = messageText.match(/kudos (add|dodaj) @?(\S*) (.*)/i)
@@ -85,9 +86,6 @@ module.exports = (robot) ->
   reactionsListener = (event) ->
     if (event.reaction == '+1')
       handlePlusOneReaction(event)
-
-
-
 
 
   client.on 'reaction_added', reactionsListener
