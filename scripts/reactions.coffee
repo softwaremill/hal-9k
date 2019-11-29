@@ -59,14 +59,12 @@ module.exports = (robot) ->
 
 
   handlePlusOneReaction = (event) ->
-    robot.logger.info(event)
-
     reactingUser = event.user
 
     prepareFindMessageRequest(event)
       .get() (err, res, body) ->
       if err
-        robot.logger.err(err)
+        robot.logger.error(err)
       else
         data = JSON.parse body
 
@@ -83,10 +81,23 @@ module.exports = (robot) ->
           robot.logger.error('No messages found')
 
 
-  reactionsListener = (event) ->
+  handleVotingReaction = (event) ->
+    reactingUser = event.user
+
     robot.logger.info("Dupa debug: #{event}")
+    for k,v of event
+      robot.logger.info("Property: " + k + " is " + v)
+    robot.logger.info("Properties of item:")
+    for k,v of event.item
+      robot.logger.info("Property: " + k + " is " + v)
+
+
+
+  reactionsListener = (event) ->
     if (event.reaction == '+1')
       handlePlusOneReaction(event)
+    if (['one', 'two', 'three', 'four', 'five'].indexOf(event.reaction) isnt -1 )
+      handleVotingReaction(event)
 
 
   client.on 'reaction_added', reactionsListener
