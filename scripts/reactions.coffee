@@ -106,7 +106,7 @@ module.exports = (robot) ->
           votedQuestionMatch = messageText.match(///^#{questionVoted}\..*\((.*)\)$///i)
 
           robot.logger.info("Question voted: #{questionVoted}")
-          matchedDupaDebug = messageText.match(///.*Pytanie #{questionVoted}.*///)
+          matchedDupaDebug = messageText.match(///.*Pytanie #{questionVoted}.*///g)
           robot.logger.info("Dupa debug matchera: #{JSON.stringify(matchedDupaDebug)}")
 
           if votedQuestionMatch
