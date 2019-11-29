@@ -108,8 +108,9 @@ module.exports = (robot) ->
         jsonBody = JSON.parse(successBody)
         questionWithVotingText = "Czwarte pytanie na dzisiaj: #{jsonBody.currentQuestion}\n"
         for candidate, i in jsonBody.questionCandidates
-          questionWithVotingText += "#{i}. #{candidate.question} (#{candidate.id})\n"
+          questionWithVotingText += "#{i+1}. #{candidate.question} (#{candidate.id})\n"
 
+        questionWithVotingText += "Zagłosuj przez dodanie :one: :two: :three: :four: lub :five:"
         res.reply(questionWithVotingText)
 
       errorHandler =

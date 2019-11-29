@@ -84,6 +84,7 @@ module.exports = (robot) ->
 
 
   reactionsListener = (event) ->
+    robot.logger.info("Dupa debug: #{event}")
     if (event.reaction == '+1')
       handlePlusOneReaction(event)
 
