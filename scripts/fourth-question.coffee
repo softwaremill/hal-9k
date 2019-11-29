@@ -69,6 +69,33 @@ module.exports = (robot) ->
     fourthQuestion.add5(robot, successHandler, errorHandler, res.message.user.name, _5thQuestion)
 
   get5thQ = (res) ->
+
+#    {
+#      "currentQuestion": "Pytanie na dzisiaj asdldaslkdsaklads",
+#      "candidates": [
+#        {
+#          "id": 11,
+#          "question: "Co lubisz 1?
+#        },
+#        {
+#          "id": 12,
+#          "question: "Co lubisz 2?
+#        },
+#        {
+#          "id": 13,
+#          "question: "Co lubisz?
+#        },
+#        {
+#          "id": 14,
+#          "question: "Co lubisz?
+#        },
+#        {
+#          "id": 110,
+#          "question: "Co lubisz?
+#        }
+#      ]
+#    }
+
     now = new Date()
 
     if now.getDay() == MONDAY
@@ -79,7 +106,11 @@ module.exports = (robot) ->
       successHandler = (successBody) ->
         robot.logger.info("Response : #{successBody}")
         jsonBody = JSON.parse(successBody)
-        res.reply("Czwarte pytanie na dzisiaj: #{jsonBody.message}")
+        questionWithVotingText = "Czwarte pytanie na dzisiaj: #{jsonBody.currentQuestion}\n"
+        for candidate, i in jsonBody.candidates
+          questionWithVotingText += "#{i}. #{candidate.question} (#{candidate.id})\n"
+
+        res.reply(questionWithVotingText)
 
       errorHandler =
         (err, errCode) -> res.reply("Error #{errCode}")
