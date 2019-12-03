@@ -27,7 +27,7 @@ pointsModifierPerUser =
   "koziarkiewicz": 0.5 #Wywiad Japonia  
   "ciesielski": 0.5 + 0.5 #Wywiad JJIT + wywiad My Way To Scala
   "ostruszka": 0.5 #wywiad My Way To Scala
-  "kondzielski": 0.5 #wywiad oss tapir
+  "kondzielski": 0.5 + 0.5 #wywiad oss tapir, wywiad oss diffx
   "rabiej": 0.5 #wywiad
 
 module.exports = pointsModifierPerUser
