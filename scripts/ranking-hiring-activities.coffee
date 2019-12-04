@@ -25,7 +25,7 @@ hiringActivitiesPerUser =
   },
   "chmielarz": {
     "ps": 0
-    "cr": 9
+    "cr": 10
     "tech": 2
   },
   "pluszcz" : {
@@ -136,6 +136,11 @@ hiringActivitiesPerUser =
   "dobrzanski": {
     "ps": 0
     "cr": 1 + 1 + 1 + 1
+    "tech": 0
+  },
+  "buda": {
+    "ps": 0
+    "cr": 1
     "tech": 0
   }
 
