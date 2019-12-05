@@ -65,7 +65,7 @@ hiringActivitiesPerUser =
   },
   "majcher": {
     "ps": 0
-    "cr": 1 + 1
+    "cr": 3
     "tech": 1
   },
   "smolarek": {
