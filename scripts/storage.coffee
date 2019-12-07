@@ -19,8 +19,8 @@ module.exports = (robot) ->
     msg.send output
 
   robot.router.get "/brain", (req, res) ->
-    data = Util.inspect(robot.brain.data, false, 4)
-    data.users = {}
+    data = robot.brain.data
+    data['users'] = {}
 
     res.set 'Content-Type', 'application/json'
     res.send JSON.stringify data
