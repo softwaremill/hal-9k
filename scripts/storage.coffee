@@ -9,8 +9,13 @@ Util = require "util"
 
 module.exports = (robot) ->
   robot.respond /pokaż mózg$/i, (msg) ->
-    output = Util.inspect(robot.brain.data, false, 4)
-    msg.send "```#{output}```"
+    data = Util.inspect(robot.brain.data, false, 4)
+
+    output =
+      text: data
+      markdown: true
+
+    msg.send output
 
   robot.respond /pokaż (szkodników|użytkowników)$/i, (msg) ->
     response = ""
