@@ -20,6 +20,7 @@ module.exports = (robot) ->
 
   robot.router.get "/brain", (req, res) ->
     data = Util.inspect(robot.brain.data, false, 4)
+    data.users = {}
 
     res.set 'Content-Type', 'application/json'
     res.send JSON.stringify data
