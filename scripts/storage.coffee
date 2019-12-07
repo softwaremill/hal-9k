@@ -12,7 +12,7 @@ module.exports = (robot) ->
     data = Util.inspect(robot.brain.data, false, 4)
 
     output =
-      text: data
+      text: "```\n#{data}\n```"
       markdown: true
 
     msg.send output
