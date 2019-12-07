@@ -13,10 +13,16 @@ module.exports = (robot) ->
 
     output =
       attachments: [
-        text: "```\n#{data}\n```"
+        text: data
       ]
 
     msg.send output
+
+  robot.router.get "/brain", (req, res) ->
+    data = Util.inspect(robot.brain.data, false, 4)
+
+    res.set 'Content-Type', 'application/json'
+    res.send JSON.stringify data
 
   robot.respond /pokaż (szkodników|użytkowników)$/i, (msg) ->
     response = ""
