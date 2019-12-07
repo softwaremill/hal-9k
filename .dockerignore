@@ -1,0 +1,7 @@
+# .dockerignore
+.git/
+.idea/
+node_modules/
+*.iml
+*.md
+

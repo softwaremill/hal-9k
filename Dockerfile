@@ -16,9 +16,8 @@ COPY scripts ./scripts
 COPY external-scripts.json ./
 COPY package-lock.json ./
 COPY package.json ./
+COPY bin ./bin
 
+EXPOSE 8080
 
-RUN npm install
-ENV PATH="/hubot/node_modules/.bin:/hubot/node_modules/hubot/node_modules/.bin:$PATH"
-
-ENTRYPOINT ["node_modules/.bin/hubot", "-a", "slack"]
+ENTRYPOINT ["bin/hubot", "-a", "slack"]

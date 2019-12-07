@@ -1,4 +1,9 @@
-.*
+.hubot_history
 node_modules
 dump.rdb
 *.iml
+.DS_Store*
+.idea
+
+*/*/Chart.lock
+helm/janusz-the-bot/charts
