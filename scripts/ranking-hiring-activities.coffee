@@ -111,7 +111,7 @@ hiringActivitiesPerUser =
   "stawicki": {
     "ps": 1
     "cr": 0
-    "tech": 1 + 1 + 1 + 1
+    "tech": 1 + 1 + 1 + 1 + 1
   },
   "walerowicz": {
     "ps": 0
