@@ -140,7 +140,7 @@ hiringActivitiesPerUser =
   },
   "buda": {
     "ps": 0
-    "cr": 2
+    "cr": 4
     "tech": 0
   },
   "koziarkiewicz": {
