@@ -10,7 +10,7 @@ pointsModifierPerUser =
   "wachal": 4*-1+1*0.5+1 #x*-1 za TMWL, + post (qml co-author)
   "smolarek": 7*0.5+0.5 #pierwsze za TMWL + post o Japan
   "murawski": 1*0.5
-  "luczak": -1+1*0.5
+  "luczak": -1+2*0.5 # minus 2018; 0,5 post (pw-sat 01.2019); TMWL 11
   "stawicki": 1*0.5
   "chmielarz": -2+1*0.5
   "dziurko": -1
