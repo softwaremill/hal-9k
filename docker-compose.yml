@@ -9,8 +9,16 @@ services:
       - 80:8080
     environment:
       - MYSQL_URL=mysql://root:password@mysql/janusz
+      - CLEARDB_DATABASE_URL=mysql://root:password@mysql/janusz
       - HUBOT_SLACK_TOKEN
       - HUBOT_SLACK_VERIFICATION_TOKEN
+      - HUBOT_TRELLO_BOARD
+      - HUBOT_TRELLO_KEY
+      - HUBOT_TRELLO_TOKEN
+      - TZ=Europe/Warsaw
+      - REST_API_SECRET
+      - HUBOT_GRAMMAR_STATS_APP_AUTH_TOKEN
+      - HUBOT_GRAMMAR_STATS_APP_URL
     networks:
       - default
     depends_on:
