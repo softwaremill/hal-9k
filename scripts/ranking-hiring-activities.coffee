@@ -155,7 +155,7 @@ hiringActivitiesPerUser =
   },
   "kaczmarek": {
     "ps": 0,
-    "cr": 1,
+    "cr": 2,
     "tech": 0
   }
 
