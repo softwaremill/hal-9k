@@ -101,7 +101,7 @@ hiringActivitiesPerUser =
   "kocur": {
     "ps": 0
     "cr": 1
-    "tech": 1
+    "tech": 1 + 1
   },
   "zuchowski": {
     "ps": 0
@@ -157,7 +157,12 @@ hiringActivitiesPerUser =
     "ps": 0,
     "cr": 2,
     "tech": 0
-  }
+  },
+  "kijanowski": {
+    "ps": 0
+    "cr": 0
+    "tech": 1
+  },
 
 module.exports = hiringActivitiesPerUser
   
