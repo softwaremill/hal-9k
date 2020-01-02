@@ -22,7 +22,7 @@ pointsModifierPerUser =
   "kocur": 1+1+1*0.5# 2xco-author, 1xTMWL
   "kijanowski": 1 # co-author
   "majcher": 2*0.5 # TMWL July, TMWL October
-  "adamiak": 1*0.5+1 # TMWL, post (qml co-author)
+  "adamiak": 1*0.5 # TMWL
   "ludwikowski": 0.5 #Wywiad JJIT
   "koziarkiewicz": 0.5 #Wywiad Japonia  
   "ciesielski": 0.5 + 0.5 #Wywiad JJIT + wywiad My Way To Scala
