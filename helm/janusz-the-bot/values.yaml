@@ -57,10 +57,58 @@ mysql:
   mysqlDatabase: janusz
   initializationFiles:
     janusz-db.sql: |-
-      CREATE DATABASE IF NOT EXISTS janusz DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+      SET NAMES 'utf8';
+      CREATE DATABASE `janusz`;
+      ALTER SCHEMA `janusz` DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_bin;
       USE janusz;
-      CREATE TABLE IF NOT EXISTS brain (id INT,data TEXT, PRIMARY KEY (id));
+      CREATE TABLE `brain`
+      (
+        `id`   int(11) NOT NULL,
+        `data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+        PRIMARY KEY (`id`)
+      ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
 slack:
-  token: 1234566789
-  verificationToken: 12345678899
+  token: 11111111111
+  exitOnDisconnect: true
+  apiUrl: "https://softwaremill.slack.com/api"
+
+backend:
+  fourthQuestionLambdaUrl: "https://amazonaws.com/FourthQuestionApiDeploy/fourth-question"
+  grammarStatsAppAuthToken: secret
+  grammarStatsAppUrl: "https://janusz-backend.sml.io"
+  kudosAppLogin: "SMLKudos"
+  kudosAppPassword: secret
+  restApiSecret: secret
+
+bitbucket:
+  username: "softwaremill"
+  password: secrret
+
+gogole:
+  apiKey: secret
+  cseId: secret
+  cseKey: secret
+  searchCx: secret
+  searchKey: secret
+
+scalaTimes:
+  jwtSecret: secret
+  appUrl: "https://scalatimes.tools.softwaremill.com"
+
+trello:
+  board: "51acaaefbeac745c31005966"
+  key: secret
+  token: secret
+
+imgflipApi:
+  username: "JanuszTheBot"
+  password: secret
+
+mailgun:
+  apikey: secret
+  domain: "sandboxe517492f75f54aab8ffac7c9afb4c3ab.mailgun.org"
+
+sendgrid:
+  username: "app22582599@heroku.com"
+  password: secret
