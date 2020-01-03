@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Chart.Name }}
+data:
+  HUBOT_SLACK_VERIFICATION_TOKEN: {{ .Values.slack.verificationToken }}
+  HUBOT_SLACK_TOKEN: {{ .Values.slack.token }}
+  MYSQL_URL: mysql://{{ .Values.mysql.mysqlUser }}:{{ .Values.mysql.mysqlPassword }}@{{ include "janusz-the-bot.fullname" . }}-mysql/{{ .Values.mysql.mysqlDatabase }}

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "janusz-the-bot.fullname" . }}-test-connection"
+  labels:
+{{ include "janusz-the-bot.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: curl
+      image: busybox
+      command: ['curl']
+      args:  ['-X POST', '{{ include "janusz-the-bot.fullname" . }}:{{ .Values.service.port }}/status', '-F "test=Ok"']
+  restartPolicy: Never
