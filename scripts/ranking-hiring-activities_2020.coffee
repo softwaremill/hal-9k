@@ -9,10 +9,15 @@ hiringActivitiesPerUser =
     "tech": 1
   },
   "grandys": {
-    "ps": 0
+    "ps": 0,
     "cr": 2,
     "tech": 0
   },
+  "kubala": {
+    "ps": 0,
+    "cr": 1,
+    "tech": 0
+  }
 
 module.exports = hiringActivitiesPerUser
   
