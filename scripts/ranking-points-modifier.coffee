@@ -4,7 +4,7 @@
 
 pointsModifierPerUser =
   "lenart": 1*0.5
-  "kubala": 2*0.5
+  "kubala": 3*0.5 # 0.5 TMWL + 0.5 wywiad o zdalnosci + 0.5 gosc webinaru o testowaniu
   "baraniecki": 4*0.5 + 0.5 + 0.5 + 1 # 4x TMWL + 0.5 za my way to scala + 0.5 za wywiad o remote work + + 1 za post z nerdalem (bootzooka)
   "opala": 4*0.5 # march, april, june, september
   "wachal": 4*-1+1*0.5+1 #x*-1 za TMWL, + post (qml co-author)
