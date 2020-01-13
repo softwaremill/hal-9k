@@ -16,7 +16,7 @@ hiringActivitiesPerUser =
   "kubala": {
     "ps": 0,
     "cr": 1,
-    "tech": 0
+    "tech": 1
   },
   "chmielarz": {
     "ps": 0
