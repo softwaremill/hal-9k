@@ -24,13 +24,11 @@ pointsModifierPerUser =
   "majcher": 2*0.5 # TMWL July, TMWL October
   "adamiak": 1*0.5 # TMWL
   "ludwikowski": 0.5 #Wywiad JJIT
-  "koziarkiewicz": 0.5 #Wywiad Japonia  
+  "koziarkiewicz": 2.5 #Wywiad Japonia + 2x blogpost napisane w grudniu
   "ciesielski": 0.5 + 0.5 #Wywiad JJIT + wywiad My Way To Scala
   "ostruszka": 0.5 #wywiad My Way To Scala
   "kondzielski": 0.5 + 0.5 #wywiad oss tapir, wywiad oss diffx
   "rabiej": 0.5 #wywiad
-  "koziarkiewicz": 2.0 #2x blogpost napisane w grudniu
-
 module.exports = pointsModifierPerUser
   
 
