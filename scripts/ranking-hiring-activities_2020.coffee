@@ -10,7 +10,7 @@ hiringActivitiesPerUser =
   },
   "grandys": {
     "ps": 0,
-    "cr": 4,
+    "cr": 5,
     "tech": 0
   },
   "kubala": {
