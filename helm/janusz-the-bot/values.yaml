@@ -1,0 +1,114 @@
+# Default values for janusz-the-bot.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: softwaremill/janusz-the-bot
+  tag: latest
+  pullPolicy: IfNotPresent
+  pullSecret: sml-docker-hub
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+  path: /
+  hosts:
+    - host: janusz-the-bot.sml.io
+      paths: [/status,/slack/actions]
+  tls: []
+    # - secretName: janusz-the-bot-tls
+    #  hosts:
+    #  - janusz-the-bot.sml.io
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+mysql:
+  mysqlRootPassword: pass
+  mysqlUser: janusz
+  mysqlPassword: jnausz
+  mysqlDatabase: janusz
+  initializationFiles:
+    janusz-db.sql: |-
+      SET NAMES 'utf8';
+      CREATE DATABASE `janusz`;
+      ALTER SCHEMA `janusz` DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_bin;
+      USE janusz;
+      CREATE TABLE `brain`
+      (
+        `id`   int(11) NOT NULL,
+        `data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+        PRIMARY KEY (`id`)
+      ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+
+slack:
+  token: 11111111111
+  exitOnDisconnect: true
+  apiUrl: "https://softwaremill.slack.com/api"
+
+backend:
+  fourthQuestionLambdaUrl: "https://amazonaws.com/FourthQuestionApiDeploy/fourth-question"
+  grammarStatsAppAuthToken: secret
+  grammarStatsAppUrl: "https://janusz-backend.sml.io"
+  kudosAppLogin: "SMLKudos"
+  kudosAppPassword: secret
+  restApiSecret: secret
+
+bitbucket:
+  username: "softwaremill"
+  password: secrret
+
+gogole:
+  apiKey: secret
+  cseId: secret
+  cseKey: secret
+  searchCx: secret
+  searchKey: secret
+
+scalaTimes:
+  jwtSecret: secret
+  appUrl: "https://scalatimes.tools.softwaremill.com"
+
+trello:
+  board: "51acaaefbeac745c31005966"
+  key: secret
+  token: secret
+
+imgflipApi:
+  username: "JanuszTheBot"
+  password: secret
+
+mailgun:
+  apikey: secret
+  domain: "sandboxe517492f75f54aab8ffac7c9afb4c3ab.mailgun.org"
+
+sendgrid:
+  username: "app22582599@heroku.com"
+  password: secret
