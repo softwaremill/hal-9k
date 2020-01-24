@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: {{ .Chart.Name }}
   labels:
-    {{- include "janusz-the-bot.labels" . | nindent 4 }}
+{{- include "janusz-the-bot.labels" . | nindent 4 }}
 data:
   HUBOT_SLACK_TOKEN: {{ .Values.slack.token }}
   MYSQL_URL: mysql://{{ .Values.mysql.mysqlUser }}:{{ .Values.mysql.mysqlPassword }}@{{ include "janusz-the-bot.fullname" . }}-mysql/{{ .Values.mysql.mysqlDatabase }}
