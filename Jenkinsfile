@@ -84,7 +84,7 @@ spec:
           sh "helm dependency update helm/janusz-the-bot/"
           sh """
              helm upgrade --install --atomic\
-               --set image.tag=$dockerTag\
+               --set image.tag=${dockerTag}\
                -f ${env.secrets}\
                janusz-the-bot ./helm/janusz-the-bot
              """
