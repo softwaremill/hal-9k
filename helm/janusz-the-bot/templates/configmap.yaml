@@ -21,7 +21,7 @@ data:
   HUBOT_KUDOS_APP_PASSWORD: {{ .Values.backend.kudosAppPassword }}
   HUBOT_SCALA_TIMES_APP_JWT_SECRET: {{ .Values.scalaTimes.jwtSecret }}
   HUBOT_SCALA_TIMES_APP_URL: {{ .Values.scalaTimes.appUrl }}
-  HUBOT_SLACK_EXIT_ON_DISCONNECT: {{ .Values.slack.exitOnDisconnect }}
+  HUBOT_SLACK_EXIT_ON_DISCONNECT: {{ .Values.slack.exitOnDisconnect | quote }}
   HUBOT_TRELLO_BOARD: {{ .Values.trello.board }}
   HUBOT_TRELLO_KEY: {{ .Values.trello.key }}
   HUBOT_TRELLO_TOKEN: {{ .Values.trello.token }}
