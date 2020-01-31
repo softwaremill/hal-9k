@@ -32,7 +32,7 @@ hiringActivitiesPerUser =
   "kocur": {
     "ps": 0,
     "cr": 1,
-    "tech": 0
+    "tech": 1
   },
   "krawczyk": {
     "ps": 0,
