@@ -8,7 +8,6 @@ image:
   repository: softwaremill/janusz-the-bot
   tag: latest
   pullPolicy: IfNotPresent
-  pullSecret: sml-docker-hub
 
 imagePullSecrets: []
 nameOverride: ""
@@ -22,7 +21,7 @@ ingress:
   enabled: true
   annotations:
     kubernetes.io/ingress.class: nginx
-    kubernetes.io/tls-acme: "true"
+    kubernetes.io/tls-acme: "false"
   path: /
   hosts:
     - host: janusz-the-bot.sml.io
