@@ -53,9 +53,11 @@ hiringActivitiesPerUser =
     "ps": 0,
     "cr": 2,
     "tech": 1,
+  },
+  "turos": {
+    "ps": 0,
+    "cr": 0,
+    "tech": 1
   }
 
 module.exports = hiringActivitiesPerUser
-  
-
-
