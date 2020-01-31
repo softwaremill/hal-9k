@@ -62,7 +62,7 @@ spec:
     container('node') {
       stage('Compile') {
         sh 'npm install --global coffeescript'
-        sh 'coffee -c -p scripts'
+        sh 'coffee -c -p scripts > /dev/null'
       }
     }
     container('docker') {
