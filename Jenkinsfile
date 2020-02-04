@@ -80,9 +80,13 @@ spec:
     }
     container('helm') {
       stage('Deploy') {
-        withCredentials([file(credentialsId: 'janusz-secrets', variable: 'secrets')]) {
-          sh "helm dependency update helm/janusz-the-bot/"
+        withCredentials([
+                usernamePassword(credentialsId: 'docker-hub-credentials', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME'),
+                file(credentialsId: 'janusz-secrets', variable: 'secrets')
+        ]) {
           sh """
+             docker login -u \\${DOCKER_USERNAME} -p \\${DOCKER_PASSWORD}
+             helm dependency update helm/janusz-the-bot/
              helm upgrade --install --atomic\
                --set image.tag=${dockerTag}\
                -f ${env.secrets}\
