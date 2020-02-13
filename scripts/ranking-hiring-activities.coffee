@@ -57,7 +57,7 @@ hiringActivitiesPerUser =
   "turos": {
     "ps": 0,
     "cr": 0,
-    "tech": 1
+    "tech": 2
   },
   "rabiej": {
     "ps": 0,
