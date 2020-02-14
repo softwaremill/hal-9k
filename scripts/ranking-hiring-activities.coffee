@@ -31,7 +31,7 @@ hiringActivitiesPerUser =
   },
   "kocur": {
     "ps": 0,
-    "cr": 1,
+    "cr": 1 + 1,
     "tech": 1
   },
   "krawczyk": {
