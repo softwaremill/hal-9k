@@ -27,7 +27,7 @@ hiringActivitiesPerUser =
   "baraniecki": {
     "ps": 0,
     "cr": 1 + 1 + 1 + 1,
-    "tech": 1
+    "tech": 1 + 1
   },
   "kocur": {
     "ps": 0,
@@ -37,7 +37,7 @@ hiringActivitiesPerUser =
   "krawczyk": {
     "ps": 0,
     "cr": 0,
-    "tech": 1,
+    "tech": 1 + 1,
   },
   "majcher": {
     "ps": 0,
