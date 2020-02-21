@@ -11,7 +11,7 @@ module.exports = (robot) ->
 
   robot.router.get '/status', (req, res) ->
     status = robot.brain.get 'status'
-    robot.logger.info "Status check #{status}"
+    robot.logger.debug "Status check #{status}"
     res.send status or 'NoOk'
 
   robot.error (err, res) ->
