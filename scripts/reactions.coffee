@@ -97,6 +97,7 @@ module.exports = (robot) ->
       if err
         robot.logger.error(err)
       else
+        robot.ogger.debug("Received body: #{body}")
         data = JSON.parse body
 
         if data.messages
