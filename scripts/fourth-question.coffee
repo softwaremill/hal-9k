@@ -22,7 +22,7 @@ module.exports = (robot) ->
     _4thQuestion = res.match[1]
 
     successHandler = (successBody) ->
-      console.log("Response : #{successBody}")
+      robot.logger.debug("Response : #{successBody}")
       jsonBody = JSON.parse(successBody)
       res.reply(jsonBody.message)
 
@@ -52,8 +52,6 @@ module.exports = (robot) ->
       res.reply("Proszę o cierpliwość, szukam ...")
       fourthQuestion.get(robot, successHandler, errorHandler)
 
-
-
   add5thQ = (res) ->
     _5thQuestion = res.match[1]
 
@@ -70,31 +68,21 @@ module.exports = (robot) ->
 
   get5thQ = (res) ->
 
+#{
+#  "status": "IN_PROGRESS | COMPLETED",
+#?  "winnerQuestionContent": "Jak leci?",
+#?  "authorOfWinningQuestion": "@jacek",
+#  "candidates": [
 #    {
-#      "currentQuestion": "Pytanie na dzisiaj asdldaslkdsaklads",
-#      "candidates": [
-#        {
-#          "id": 11,
-#          "question: "Co lubisz 1?
-#        },
-#        {
-#          "id": 12,
-#          "question: "Co lubisz 2?
-#        },
-#        {
-#          "id": 13,
-#          "question: "Co lubisz?
-#        },
-#        {
-#          "id": 14,
-#          "question: "Co lubisz?
-#        },
-#        {
-#          "id": 110,
-#          "question: "Co lubisz?
-#        }
-#      ]
+#      "id": "1",
+#      "questionContent": "Czy miałeś palec?"
+#    },
+#    {
+#      "id": "2",
+#      "questionContent": "Czy usunąłeś czwarte?"
 #    }
+#  ]
+#}
 
     now = new Date()
 
@@ -106,15 +94,25 @@ module.exports = (robot) ->
       successHandler = (successBody) ->
         robot.logger.info("Response : #{successBody}")
         jsonBody = JSON.parse(successBody)
-        questionWithVotingText = "Czwarte pytanie na dzisiaj: #{jsonBody.currentQuestion}\n"
-        for candidate, i in jsonBody.questionCandidates
-          questionWithVotingText += "#{i+1}. #{candidate.question} (#{candidate.id})\n"
 
-        questionWithVotingText += "Zagłosuj przez dodanie :one: :two: :three: :four: lub :five:"
-        res.reply(questionWithVotingText)
+        switch jsonBody.status
+          when "IN_PROGRESS"
+            votingText = "Kandydaci na 4te pytanie:\n"
+            for candidate, i in jsonBody.candidates
+              votingText += "#{i+1}. #{candidate.question} (#{candidate.id})\n"
+
+            votingText += "Zagłosuj przez dodanie :one: :two: :three: :four: lub :five:"
+            res.reply(votingText)
+          when "COMPLETED" then res.reply("Czwarte pytanie na dzisiaj: #{jsonBody.winnerQuestionContent} (autor: #{jsonBody.authorOfWinningQuestion})")
+          else res.reply("Nieznany status głosowania :/ #{jsonBody.status}")
 
       errorHandler =
-        (err, errCode) -> res.reply("Error #{errCode}")
+        (err, errCode) ->
+          switch errCode
+            when 404 then res.reply("Dzisiaj nie ma głosowania! Przynajmniej nie musisz wybierać mniejszego zła...")
+            else res.reply("Error #{errCode}: #{err}")
+
+
 
       res.reply("Proszę o cierpliwość, szukam ...")
       fourthQuestion.get5(robot, successHandler, errorHandler)

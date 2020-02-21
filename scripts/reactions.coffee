@@ -7,6 +7,7 @@
 
 users = require './common/users'
 kudos = require './kudos/kudosDao'
+fourthQuestion = require './fourth_question/FourthQuestionDao'
 {RTMClient} = require "@slack/client"
 
 module.exports = (robot) ->
@@ -40,10 +41,8 @@ module.exports = (robot) ->
             (body) ->
               jsonBody = JSON.parse(body)
               robot.logger.info(if jsonBody.message? then jsonBody.message else body)
-          ,
             (err, errCode) ->
               robot.logger.info("Error #{errCode}")
-          ,
             reactingUser,
             plusedKudo.id,
             plusedKudo.description
@@ -117,13 +116,13 @@ module.exports = (robot) ->
             robot.logger.error("Looks like there is more or less than 1 voted question: #{votedFiltered}")
           else
             votedQuestionId = votedFiltered[0]
-            robot.logger.info("Voted question ID: #{votedQuestionId}")
+            robot.logger.info("User #{reactingUser} voted for question ID: #{votedQuestionId}")
 
 
           if votedQuestionId
             votedQuestionId = votedQuestionMatch[1]
             robot.logger.info("Voted question #{votedQuestionId}")
-            # Przesłać do backendu
+            fourthQuestion.vote(robot, reactingUser, votedQuestionId)
           else
             robot.logger.error("Could not match voted question for emoticon #{event.reaction} in #{messageText}")
         else
