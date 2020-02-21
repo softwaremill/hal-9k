@@ -99,7 +99,7 @@ module.exports = (robot) ->
           when "IN_PROGRESS"
             votingText = "Kandydaci na 4te pytanie:\n"
             for candidate, i in jsonBody.candidates
-              votingText += "#{i+1}. #{candidate.question} (#{candidate.id})\n"
+              votingText += "#{i+1}. #{candidate.questionContent} (#{candidate.id})\n"
 
             votingText += "Zagłosuj przez dodanie :one: :two: :three: :four: lub :five:"
             res.reply(votingText)
