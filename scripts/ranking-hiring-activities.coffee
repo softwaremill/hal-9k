@@ -42,7 +42,7 @@ hiringActivitiesPerUser =
   "majcher": {
     "ps": 0,
     "cr": 1 + 1,
-    "tech": 0,
+    "tech": 1,
   },
   "righ": {
     "ps": 0,
