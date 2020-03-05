@@ -15,7 +15,7 @@ httpRequest = (f, successCallback, errorCallback) ->
     if err?
       errorCallback(err, res.statusCode)
     else
-      successCallback(body)
+      successCallback(body, res)
 
 prepareRequest = (endpoint, robot) ->
   unless URL?

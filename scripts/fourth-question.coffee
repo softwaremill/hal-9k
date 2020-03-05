@@ -52,19 +52,6 @@ module.exports = (robot) ->
       res.reply("Proszę o cierpliwość, szukam ...")
       fourthQuestion.get(robot, successHandler, errorHandler)
 
-  add5thQ = (res) ->
-    _5thQuestion = res.match[1]
-
-    successHandler = (successBody) ->
-      console.log("Response : #{successBody}")
-      jsonBody = JSON.parse(successBody)
-      res.reply(jsonBody.message)
-
-    errorHandler =
-      (err, errCode) -> res.reply("Error #{errCode}")
-
-    res.reply("Przyjąłem, ładowacze klas ruszają do pracy...")
-    fourthQuestion.add5(robot, successHandler, errorHandler, res.message.user.name, _5thQuestion)
 
   get5thQ = (res) ->
 
@@ -117,7 +104,6 @@ module.exports = (robot) ->
       res.reply("Proszę o cierpliwość, szukam ...")
       fourthQuestion.get5(robot, successHandler, errorHandler)
 
-  robot.respond /5te add (.*)/i, add5thQ
   robot.respond /daj 5te/i, get5thQ
 
 
