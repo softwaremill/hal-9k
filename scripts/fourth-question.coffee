@@ -71,38 +71,35 @@ module.exports = (robot) ->
 #  ]
 #}
 
-    now = new Date()
+    successHandler = (successBody, httpResponse) ->
+      robot.logger.info("Response : #{successBody}")
+      jsonBody = JSON.parse(successBody)
 
-    if now.getDay() == MONDAY
-      res.reply 'Hej, dzisiaj poniedziałek, pytanie standardowe jak Ci minął weekend?'
-    else if now.getDay() == WEDNESDAY
-      res.reply 'Dzisiaj środa, nie ma pytania, kontemplujemy ciszę ;-)'
-    else
-      successHandler = (successBody) ->
-        robot.logger.info("Response : #{successBody}")
-        jsonBody = JSON.parse(successBody)
+      if (httpResponse.statusCode == 404)
+        res.reply("Brak pytania na dzis: *#{jsonBody.message}*")
+        return
 
-        switch jsonBody.status
-          when "IN_PROGRESS"
-            votingText = "Kandydaci na 4te pytanie:\n"
-            for candidate, i in jsonBody.candidates
+      switch jsonBody.status
+        when "IN_PROGRESS"
+          votingText = "Kandydaci na 4te pytanie:\n"
+          for candidate, i in jsonBody.candidates
               votingText += "#{i+1}. #{candidate.questionContent} (#{candidate.id})\n"
 
-            votingText += "Zagłosuj przez dodanie :one: :two: :three: :four: lub :five:"
-            res.reply(votingText)
-          when "COMPLETED" then res.reply("Czwarte pytanie na dzisiaj: #{jsonBody.winnerQuestionContent} (autor: #{jsonBody.authorOfWinningQuestion})")
-          else res.reply("Nieznany status głosowania :/ #{jsonBody.status}")
+          votingText += "Zagłosuj przez dodanie :one: :two: :three: :four: lub :five:"
+          res.reply(votingText)
+        when "COMPLETED" then res.reply("Czwarte pytanie na dzisiaj: *#{jsonBody.winnerQuestionContent}* (autor: #{jsonBody.authorOfWinningQuestion})")
+        else res.reply("Nieznany status głosowania :/ #{jsonBody.status}")
 
-      errorHandler =
-        (err, errCode) ->
-          switch errCode
-            when 404 then res.reply("Dzisiaj nie ma głosowania! Przynajmniej nie musisz wybierać mniejszego zła...")
-            else res.reply("Error #{errCode}: #{err}")
+    errorHandler =
+      (err, errCode) ->
+        switch errCode
+          when 404 then res.reply("Dzisiaj nie ma głosowania! Przynajmniej nie musisz wybierać mniejszego zła...")
+          else res.reply("Error #{errCode}: #{err}")
 
 
 
-      res.reply("Proszę o cierpliwość, szukam ...")
-      fourthQuestion.get5(robot, successHandler, errorHandler)
+    res.reply("Proszę o cierpliwość, szukam ...")
+    fourthQuestion.get5(robot, successHandler, errorHandler)
 
   robot.respond /daj 5te/i, get5thQ
 
