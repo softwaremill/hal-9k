@@ -97,7 +97,7 @@ module.exports = (robot) ->
       if err
         robot.logger.error(err)
       else
-        robot.ogger.debug("Received body: #{body}")
+        robot.logger.debug("Received body: #{body}")
         data = JSON.parse body
 
         if data.messages
@@ -121,7 +121,6 @@ module.exports = (robot) ->
 
 
           if votedQuestionId
-            votedQuestionId = votedQuestionMatch[1]
             robot.logger.info("Voted question #{votedQuestionId}")
             fourthQuestion.vote(robot, reactingUser, votedQuestionId)
           else

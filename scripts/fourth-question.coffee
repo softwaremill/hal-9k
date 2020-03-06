@@ -13,12 +13,14 @@
 #   hubot poproszę o czwarte pytanie - zwraca czwarte pytanie na dzisiaj
 
 fourthQuestion = require './fourth_question/FourthQuestionDao'
+CronJob = require('cron').CronJob
 
 MONDAY = 1
 WEDNESDAY = 3
 
 module.exports = (robot) ->
   add4thQ = (res) ->
+    res.finish()
     _4thQuestion = res.match[1]
 
     successHandler = (successBody) ->
@@ -34,6 +36,7 @@ module.exports = (robot) ->
 
 
   get4thQ = (res) ->
+    res.finish()
     now = new Date()
 
     if now.getDay() == MONDAY
@@ -52,79 +55,69 @@ module.exports = (robot) ->
       res.reply("Proszę o cierpliwość, szukam ...")
       fourthQuestion.get(robot, successHandler, errorHandler)
 
-  add5thQ = (res) ->
-    _5thQuestion = res.match[1]
-
-    successHandler = (successBody) ->
-      console.log("Response : #{successBody}")
-      jsonBody = JSON.parse(successBody)
-      res.reply(jsonBody.message)
-
-    errorHandler =
-      (err, errCode) -> res.reply("Error #{errCode}")
-
-    res.reply("Przyjąłem, ładowacze klas ruszają do pracy...")
-    fourthQuestion.add5(robot, successHandler, errorHandler, res.message.user.name, _5thQuestion)
 
   get5thQ = (res) ->
+    res.finish()
 
-#{
-#  "status": "IN_PROGRESS | COMPLETED",
-#?  "winnerQuestionContent": "Jak leci?",
-#?  "authorOfWinningQuestion": "@jacek",
-#  "candidates": [
-#    {
-#      "id": "1",
-#      "questionContent": "Czy miałeś palec?"
-#    },
-#    {
-#      "id": "2",
-#      "questionContent": "Czy usunąłeś czwarte?"
-#    }
-#  ]
-#}
+    responseSender = (text) ->
+      res.reply(text)
 
-    now = new Date()
+    errorHandler =
+      (err, errCode) ->
+        res.reply("Error #{errCode}: #{err}")
 
-    if now.getDay() == MONDAY
-      res.reply 'Hej, dzisiaj poniedziałek, pytanie standardowe jak Ci minął weekend?'
-    else if now.getDay() == WEDNESDAY
-      res.reply 'Dzisiaj środa, nie ma pytania, kontemplujemy ciszę ;-)'
-    else
-      successHandler = (successBody) ->
-        robot.logger.info("Response : #{successBody}")
-        jsonBody = JSON.parse(successBody)
-
-        switch jsonBody.status
-          when "IN_PROGRESS"
-            votingText = "Kandydaci na 4te pytanie:\n"
-            for candidate, i in jsonBody.candidates
-              votingText += "#{i+1}. #{candidate.questionContent} (#{candidate.id})\n"
-
-            votingText += "Zagłosuj przez dodanie :one: :two: :three: :four: lub :five:"
-            res.reply(votingText)
-          when "COMPLETED" then res.reply("Czwarte pytanie na dzisiaj: #{jsonBody.winnerQuestionContent} (autor: #{jsonBody.authorOfWinningQuestion})")
-          else res.reply("Nieznany status głosowania :/ #{jsonBody.status}")
-
-      errorHandler =
-        (err, errCode) ->
-          switch errCode
-            when 404 then res.reply("Dzisiaj nie ma głosowania! Przynajmniej nie musisz wybierać mniejszego zła...")
-            else res.reply("Error #{errCode}: #{err}")
+    res.reply("Proszę o cierpliwość, szukam ...")
+    fourthQuestion.get5(robot, successHandlerFactory(responseSender), errorHandler)
 
 
+  displayElectionDetailsOnChrumChannel = ->
+    chrumRoomSender = (text) ->
+      robot.messageRoom "#chrum", text
 
-      res.reply("Proszę o cierpliwość, szukam ...")
-      fourthQuestion.get5(robot, successHandler, errorHandler)
+    errorHandler =
+      (err, errCode) ->
+        robot.logger.error("Couldn't display election. Error: #{err}. ErrorCode: #{errCode}")
 
-  robot.respond /5te add (.*)/i, add5thQ
+    fourthQuestion.get5(robot, successHandlerFactory(chrumRoomSender), errorHandler)
+
+
+  successHandlerFactory = (responseSender) ->
+    return (successBody, httpResponse) ->
+      robot.logger.info("Response : #{successBody}")
+      jsonBody = JSON.parse(successBody)
+
+      if (httpResponse.statusCode == 404)
+        responseSender("Brak pytania na dzis: *#{jsonBody.message}*")
+        return
+
+      switch jsonBody.status
+        when "IN_PROGRESS"
+          votingText = "Kandydaci na 4te pytanie:\n"
+          for candidate, i in jsonBody.candidates
+            votingText += "#{i + 1}. #{candidate.questionContent} (#{candidate.id})\n"
+
+          votingText += "Zagłosuj przez dodanie :one: :two: :three: :four: lub :five:"
+          responseSender(votingText)
+        when "COMPLETED"
+          responseSender("Czwarte pytanie na dzisiaj: *#{jsonBody.winnerQuestionContent}* (autor: #{jsonBody.authorOfWinningQuestion})")
+        else
+          responseSender("Nieznany status głosowania :/ #{jsonBody.status}")
+
+
+  # Display a voting message just after backend created an election with random questions
+  new CronJob('0 35 8 * * *', displayElectionDetailsOnChrumChannel, null, true, 'Europe/Warsaw')
+
+  # Display a winner question 5 minutes before chrum meeting
+  new CronJob('0 55 9 * * *', displayElectionDetailsOnChrumChannel, null, true, 'Europe/Warsaw')
+
+
   robot.respond /daj 5te/i, get5thQ
 
 
 
 
 
-  
+
   robot.respond /4te add (.*)/i, add4thQ
   robot.respond /add 4te (.*)/i, add4thQ
   robot.respond /czwarte add (.*)/i, add4thQ
