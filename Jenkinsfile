@@ -80,17 +80,18 @@ spec:
     }
     container('helm') {
       stage('Deploy') {
-        when {
-          branch 'master'
-        }
-        withCredentials([file(credentialsId: 'janusz-secrets', variable: 'secrets')]) {
-          sh """
+        if (env.BRANCH_NAME == 'master') {
+          withCredentials([file(credentialsId: 'janusz-secrets', variable: 'secrets')]) {
+            sh """
               helm dependency update helm/janusz-the-bot/
               helm upgrade --install --atomic\
                 --set image.tag=${dockerTag}\
                 -f ${env.secrets}\
                 janusz-the-bot ./helm/janusz-the-bot
              """
+          }
+        } else {
+          echo 'Not a master branch, skipping deploy'
         }
       }
     }
