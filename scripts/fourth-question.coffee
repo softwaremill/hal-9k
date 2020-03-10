@@ -70,45 +70,54 @@ module.exports = (robot) ->
     fourthQuestion.get5(robot, successHandlerFactory(responseSender), errorHandler)
 
 
-  displayElectionDetailsOnChrumChannel = ->
-    chrumRoomSender = (text) ->
-      robot.messageRoom "#janusz-bot-test", text
+  displayQuestionOnChrumChannel = (suppressPredefined) ->
+    return ->
+      chrumRoomSender = (text) ->
+        robot.messageRoom "#janusz-bot-test", text
 
-    errorHandler =
-      (err, errCode) ->
-        robot.logger.error("Couldn't display election. Error: #{err}. ErrorCode: #{errCode}")
+      errorHandler =
+        (err, errCode) ->
+          robot.logger.error("Couldn't display election. Error: #{err}. ErrorCode: #{errCode}")
 
-    fourthQuestion.get5(robot, successHandlerFactory(chrumRoomSender), errorHandler)
+      fourthQuestion.get5(robot, successHandlerFactory(chrumRoomSender, true, suppressPredefined), errorHandler)
 
 
-  successHandlerFactory = (responseSender) ->
+  successHandlerFactory = (responseSender, suppressMissing, suppressPredefined) ->
     return (successBody, httpResponse) ->
       robot.logger.info("Response : #{successBody}")
       jsonBody = JSON.parse(successBody)
 
       if (httpResponse.statusCode == 404)
-        responseSender("Brak pytania na dzis: *#{jsonBody.message}*")
+        if(!suppressMissing)
+          responseSender("Brak pytania na dzis: *#{jsonBody.message}*")
         return
 
-      switch jsonBody.status
-        when "IN_PROGRESS"
-          votingText = "Kandydaci na 4te pytanie:\n"
-          for candidate, i in jsonBody.candidates
-            votingText += "#{i + 1}. #{candidate.questionContent} (#{candidate.id})\n"
+      if(jsonBody.predefinedQuestion)
+        if(!suppressPredefined)
+          responseSender("Czwarte pytanie na dzisiaj: *#{jsonBody.predefinedQuestion}*")
+      else
+        election = jsonBody.election
+        switch election.status
+          when "IN_PROGRESS"
+            votingText = "Kandydaci na 4te pytanie [GŁOSOWANIE Z DNIA: #{election.electionDate}]:\n"
+            for candidate, i in election.candidates
+              votingText += "#{i + 1}. #{candidate.questionContent}\n"
 
-          votingText += "Zagłosuj przez dodanie :one: :two: :three: :four: lub :five:"
-          responseSender(votingText)
-        when "COMPLETED"
-          responseSender("Czwarte pytanie na dzisiaj: *#{jsonBody.winnerQuestionContent}* (autor: #{jsonBody.authorOfWinningQuestion})")
-        else
-          responseSender("Nieznany status głosowania :/ #{jsonBody.status}")
+            votingText += "Zagłosuj przez dodanie :one: :two: :three: :four: lub :five:"
+            responseSender(votingText)
+          when "COMPLETED"
+            responseSender("Czwarte pytanie na dzisiaj: *#{election.winnerQuestionContent}* (autor: #{election.authorOfWinningQuestion})")
+          else
+            responseSender("Nieznany status głosowania :/ #{election.status}")
 
 
   # Display a voting message just after backend created an election with random questions
-  new CronJob('0 35 8 * * *', displayElectionDetailsOnChrumChannel, null, true, 'Europe/Warsaw')
+  new CronJob('0 0 7 * * *', displayQuestionOnChrumChannel(true), null, true, 'Europe/Warsaw')
+
+  new CronJob('0 0 9 * * *', displayQuestionOnChrumChannel(true), null, true, 'Europe/Warsaw')
 
   # Display a winner question 5 minutes before chrum meeting
-  new CronJob('0 55 9 * * *', displayElectionDetailsOnChrumChannel, null, true, 'Europe/Warsaw')
+  new CronJob('0 30 9 * * *', displayQuestionOnChrumChannel(), null, true, 'Europe/Warsaw')
 
 
   robot.respond /daj 5te/i, get5thQ

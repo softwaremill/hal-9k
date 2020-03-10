@@ -102,29 +102,14 @@ module.exports = (robot) ->
 
         if data.messages
           messageText = data.messages[0].text
+          firstLine = messageText.split("\n")[0]
 
-          messageSplitted = messageText.split("\n")
-          voted = messageSplitted.map (line) ->
-            matcher = line.match(///^#{questionVoted}\..*\((.*)\)$///i)
-            if (matcher)
-              matcher[1] # return question id
-            else
-              null
-
-          votedFiltered = voted.filter((value) -> value != null)
-
-          if (votedFiltered.length != 1)
-            robot.logger.error("Looks like there is more or less than 1 voted question: #{votedFiltered}")
+          if(firstLine.includes("GŁOSOWANIE Z DNIA:"))
+            electionDate = firstLine.match(/202\d-\d\d-\d\d/)[0]
+            robot.logger.info("User #{reactingUser} voted for question ID: #{questionVoted}. Election date: #{electionDate}")
+            fourthQuestion.vote(robot, reactingUser, questionVoted, electionDate)
           else
-            votedQuestionId = votedFiltered[0]
-            robot.logger.info("User #{reactingUser} voted for question ID: #{votedQuestionId}")
-
-
-          if votedQuestionId
-            robot.logger.info("Voted question #{votedQuestionId}")
-            fourthQuestion.vote(robot, reactingUser, votedQuestionId)
-          else
-            robot.logger.error("Could not match voted question for emoticon #{event.reaction} in #{messageText}")
+            robot.logger.error("Voted message is not a poll message: #{messageText}")
         else
           robot.logger.error('No messages found')
 
