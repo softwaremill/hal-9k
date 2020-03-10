@@ -72,7 +72,7 @@ module.exports = (robot) ->
 
   displayElectionDetailsOnChrumChannel = ->
     chrumRoomSender = (text) ->
-      robot.messageRoom "#chrum", text
+      robot.messageRoom "#janusz-bot-test", text
 
     errorHandler =
       (err, errCode) ->
@@ -105,10 +105,10 @@ module.exports = (robot) ->
 
 
   # Display a voting message just after backend created an election with random questions
-#  new CronJob('0 35 8 * * *', displayElectionDetailsOnChrumChannel, null, true, 'Europe/Warsaw')
+  new CronJob('0 35 8 * * *', displayElectionDetailsOnChrumChannel, null, true, 'Europe/Warsaw')
 
   # Display a winner question 5 minutes before chrum meeting
-#  new CronJob('0 55 9 * * *', displayElectionDetailsOnChrumChannel, null, true, 'Europe/Warsaw')
+  new CronJob('0 55 9 * * *', displayElectionDetailsOnChrumChannel, null, true, 'Europe/Warsaw')
 
 
   robot.respond /daj 5te/i, get5thQ
