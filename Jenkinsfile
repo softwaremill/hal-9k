@@ -80,6 +80,9 @@ spec:
     }
     container('helm') {
       stage('Deploy') {
+        when {
+          branch 'master'
+        }
         withCredentials([file(credentialsId: 'janusz-secrets', variable: 'secrets')]) {
           sh """
               helm dependency update helm/janusz-the-bot/
