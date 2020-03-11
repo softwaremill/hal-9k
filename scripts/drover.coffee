@@ -7,7 +7,7 @@
 
 CronJob = require('cron').CronJob
 
-timeZone = 'Europe/Amsterdam'
+timeZone = 'Europe/Warsaw'
 defaultChannel = '#_wazne_'
 
 CRON_JOBS_LIST = "CRON_JOBS_LIST"
@@ -98,20 +98,26 @@ module.exports = (robot) ->
       jobManager = new JobManager(getJobs, saveJobs, remind)
 
   robot.respond /cron "(.*)" at "(.*)" on "(.*)"/i, (msg) ->
+    msg.finish()
     jobName = msg.match[1]
     jobCronExpr = msg.match[2]
     jobChannel = msg.match[3]
+    robot.logger.info("Adding cron job: message=#{jobName}; cron=#{jobCronExpr}; channel=#{jobChannel}")
     try
       jobManager.addJob jobName, jobCronExpr, jobChannel
     catch error
+      robot.logger.error("Couldn't add new cron job: #{error}")
       msg.reply error
 
   robot.respond /cron "(.*)" at "([^"]*)"$/i, (msg) ->
+    msg.finish()
     jobName = msg.match[1]
     jobCronExpr = msg.match[2]
+    robot.logger.info("Adding cron job to default channel(#{defaultChannel}): message=#{jobName}; cron=#{jobCronExpr}")
     try
       jobManager.addJob jobName, jobCronExpr
     catch error
+      robot.logger.error("Couldn't add new cron job to default channel: #{error}")
       msg.reply error
 
   robot.respond /cron list/i, (msg) ->

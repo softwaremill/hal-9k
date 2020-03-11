@@ -66,8 +66,6 @@ module.exports = (robot) ->
       else
         data = JSON.parse body
 
-        robot.logger.info("Dupa debug. data: #{JSON.stringify(data)}")
-
         if data.messages
           messageText = data.messages[0].text
           textMatch = messageText.match(/kudos (add|dodaj) @?(\S*) (.*)/i)

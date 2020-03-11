@@ -5,6 +5,6 @@ enabled = false
 
 module.exports = (robot) ->
 
-  robot.hear /.*/i, (msg) ->
-    if enabled
+  if enabled
+    robot.hear /.*/i, (msg) ->
       robot.logger.info(msg)
