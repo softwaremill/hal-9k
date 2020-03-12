@@ -57,8 +57,8 @@ mysql:
   mysqlDatabase: janusz
   initializationFiles:
     janusz-db.sql: |-
-      CREATE DATABASE IF NOT EXISTS bob DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
-      USE bob;
+      CREATE DATABASE IF NOT EXISTS janusz DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+      USE janusz;
       CREATE TABLE IF NOT EXISTS brain (id INT,data TEXT, PRIMARY KEY (id));
 
 slack:
