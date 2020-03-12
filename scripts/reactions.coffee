@@ -102,7 +102,7 @@ module.exports = (robot) ->
           messageText = data.messages[0].text
           firstLine = messageText.split("\n")[0]
 
-          if(firstLine.includes("GŁOSOWANIE Z DNIA:"))
+          if(firstLine.includes("GŁOSOWANIE"))
             electionDate = firstLine.match(/202\d-\d\d-\d\d/)[0]
             robot.logger.info("User #{reactingUser} voted for question ID: #{questionVoted}. Election date: #{electionDate}")
             fourthQuestion.vote(robot, reactingUser, questionVoted, electionDate)

@@ -15,6 +15,8 @@
 fourthQuestion = require './fourth_question/FourthQuestionDao'
 CronJob = require('cron').CronJob
 
+timeZone = 'Europe/Warsaw'
+
 MONDAY = 1
 WEDNESDAY = 3
 
@@ -99,7 +101,7 @@ module.exports = (robot) ->
         election = jsonBody.election
         switch election.status
           when "IN_PROGRESS"
-            votingText = "Kandydaci na 4te pytanie [GŁOSOWANIE Z DNIA: #{election.electionDate}]:\n"
+            votingText = "Kandydaci na 4te pytanie -- [GŁOSOWANIE #{election.electionDate}] -- Trwa od *7:00* do *9:30* \n"
             for candidate, i in election.candidates
               votingText += "#{i + 1}. #{candidate.questionContent}\n"
 
@@ -112,12 +114,12 @@ module.exports = (robot) ->
 
 
   # Display a voting message just after backend created an election with random questions
-  new CronJob('0 0 7 * * *', displayQuestionOnChrumChannel(true), null, true, 'Europe/Warsaw')
+  new CronJob('0 0 7 * * *', displayQuestionOnChrumChannel(true), null, true, timeZone)
 
-  new CronJob('0 0 9 * * *', displayQuestionOnChrumChannel(true), null, true, 'Europe/Warsaw')
+  new CronJob('0 0 9 * * *', displayQuestionOnChrumChannel(true), null, true, timeZone)
 
   # Display a winner question 5 minutes before chrum meeting
-  new CronJob('0 30 9 * * *', displayQuestionOnChrumChannel(), null, true, 'Europe/Warsaw')
+  new CronJob('0 30 9 * * *', displayQuestionOnChrumChannel(), null, true, timeZone)
 
 
   robot.respond /daj 5te/i, get5thQ
