@@ -19,11 +19,9 @@ module.exports = (robot) ->
     msg.send output
 
   robot.router.get "/brain", (req, res) ->
-    data = robot.brain.data
-    data['users'] = {}
-
+    filteredData = Object.assign({}, robot.brain.data, {users: {}})
     res.set 'Content-Type', 'application/json'
-    res.send JSON.stringify data
+    res.send JSON.stringify filteredData
 
   robot.respond /pokaż (szkodników|użytkowników)$/i, (msg) ->
     response = ""
