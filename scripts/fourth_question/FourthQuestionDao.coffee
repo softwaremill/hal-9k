@@ -11,10 +11,6 @@ module.exports.add = (robot, onSuccess, onError, author, question) ->
 
   backend.post("/rest/fourth-question", data, robot, onSuccess, onError)
 
-
-module.exports.get5 = (robot, onSuccess, onError) ->
-  backend.get "/rest/fourth-question/v2", robot, onSuccess, onError
-
 module.exports.vote = (robot, votingUser, votedQuestion, electionDate) ->
   data = {
     votedQuestion: votedQuestion
@@ -28,4 +24,4 @@ module.exports.vote = (robot, votingUser, votedQuestion, electionDate) ->
   onError = (err, errCode) ->
     robot.logger.error("Error voting on question #{votedQuestion} by user #{votingUser}: (#{errCode}) #{err}")
 
-  backend.post("/rest/fourth-question/v2/voted", data, robot, onSuccess, onError)
+  backend.post("/rest/fourth-question/voted", data, robot, onSuccess, onError)
