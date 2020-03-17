@@ -17,9 +17,6 @@ CronJob = require('cron').CronJob
 
 timeZone = 'Europe/Warsaw'
 
-MONDAY = 1
-WEDNESDAY = 3
-
 module.exports = (robot) ->
   add4thQ = (res) ->
     res.finish()
@@ -39,27 +36,6 @@ module.exports = (robot) ->
 
   get4thQ = (res) ->
     res.finish()
-    now = new Date()
-
-    if now.getDay() == MONDAY
-      res.reply 'Hej, dzisiaj poniedziałek, pytanie standardowe jak Ci minął weekend?'
-    else if now.getDay() == WEDNESDAY
-      res.reply 'Dzisiaj środa, nie ma pytania, kontemplujemy ciszę ;-)'
-    else
-      successHandler = (successBody) ->
-        robot.logger.info("Response : #{successBody}")
-        jsonBody = JSON.parse(successBody)
-        res.reply("Czwarte pytanie na dzisiaj: #{jsonBody.message}")
-
-      errorHandler =
-        (err, errCode) -> res.reply("Error #{errCode}")
-
-      res.reply("Proszę o cierpliwość, szukam ...")
-      fourthQuestion.get(robot, successHandler, errorHandler)
-
-
-  get5thQ = (res) ->
-    res.finish()
 
     responseSender = (text) ->
       res.reply(text)
@@ -69,19 +45,19 @@ module.exports = (robot) ->
         res.reply("Error #{errCode}: #{err}")
 
     res.reply("Proszę o cierpliwość, szukam ...")
-    fourthQuestion.get5(robot, successHandlerFactory(responseSender), errorHandler)
+    fourthQuestion.get(robot, successHandlerFactory(responseSender), errorHandler)
 
 
   displayQuestionOnChrumChannel = (suppressPredefined) ->
     return ->
       chrumRoomSender = (text) ->
-        robot.messageRoom "#janusz-bot-test", text
+        robot.messageRoom "#chrum", text
 
       errorHandler =
         (err, errCode) ->
           robot.logger.error("Couldn't display election. Error: #{err}. ErrorCode: #{errCode}")
 
-      fourthQuestion.get5(robot, successHandlerFactory(chrumRoomSender, true, suppressPredefined), errorHandler)
+      fourthQuestion.get(robot, successHandlerFactory(chrumRoomSender, true, suppressPredefined), errorHandler)
 
 
   successHandlerFactory = (responseSender, suppressMissing, suppressPredefined) ->
@@ -115,6 +91,8 @@ module.exports = (robot) ->
 
   # Display a voting message just after backend created an election with random questions
   new CronJob('0 0 7 * * *', displayQuestionOnChrumChannel(true), null, true, timeZone)
+
+  new CronJob('0 30 8 * * *', displayQuestionOnChrumChannel(true), null, true, timeZone)
 
   new CronJob('0 0 9 * * *', displayQuestionOnChrumChannel(true), null, true, timeZone)
 
