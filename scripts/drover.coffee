@@ -90,7 +90,11 @@ module.exports = (robot) ->
     robot.brain.set(CRON_JOBS_LIST, jobs)
 
   remind = (channel, message) ->
-    robot.messageRoom channel, message
+    response:
+      text: message,
+      mrkdwn_in: ["text"]
+
+    robot.messageRoom channel, response
 
   jobManager = null
   robot.brain.on "loaded", =>
@@ -155,7 +159,7 @@ module.exports = (robot) ->
   robot.respond /cron (help|pomoc|\?)$/i, (msg) ->
     msg.send """
       cron list - lists all the defined reminders
-      cron "<message>" at "<cron expression>" on "<channel name with #> - adds new reminder for given cron expression and channel
+      cron "<message>" at "<cron expression>" on "<channel name with #>" - adds new reminder for given cron expression and channel
       cron "<message>" at "<cron expression>" - adds new reminder for given cron expression for default channel `#{defaultChannel}`
       cron delete <number> - deletes reminder for given index (to check index type `hubot cron list`)
       cron show   <number> - prints full job definition for given index (to check index use `hubot cron list`)
