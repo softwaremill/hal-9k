@@ -94,6 +94,7 @@ module.exports = (robot) ->
 
   robot.respond /cron "(.*)" at "(.*)" on "(.*)"/i, (msg) ->
     msg.finish()
+    robot.logger.info "Got cron command: #{msg.match[0]}"
     jobName = msg.match[1]
     jobCronExpr = msg.match[2]
     jobChannel = msg.match[3]
