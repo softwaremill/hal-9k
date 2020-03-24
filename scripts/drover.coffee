@@ -26,16 +26,11 @@ class Job
   stop: ->
     @cronJob.stop()
 
-  getNiceMessage: ->
-    if @message.length > 50
-      return "#{@message.substring(0, 50)}(...)"
-    return @message
-
   getDefinition: ->
     return "\"#{@message}\" at \"#{@cronExpr}\" on \"#{@channel}\""
 
   toString: ->
-    return "#{@getNiceMessage()} (expr: #{@cronExpr} channel: #{@channel})"
+    return "#{@message} (expr: #{@cronExpr} channel: #{@channel})"
 
   toMap: -> {message: @message, cronExpr: @cronExpr, channel: @channel}
 
@@ -135,7 +130,7 @@ module.exports = (robot) ->
     jobs = jobManager.jobs
     for job, index in jobs
       attachments.push
-        text: "#{index} : ```#{jobs[index]}```",
+        text: "#{index}: #{jobs[index].message}\n Expr: `#{jobs[index].cronExpr}` on #{jobs[index].channel}",
         mrkdwn_in: [
           "text"
         ]
@@ -147,8 +142,10 @@ module.exports = (robot) ->
       as_user: true
 
     msg.send response
-    msg.send "You can remove cron job with: `cron delete <number>`"
-    msg.send "For more details go to <https://kiwi.softwaremill.com/display/ORG/Automatyczne+przypomnienia+z+Januszem)|Kiwi>"
+    msg.send """
+      You can remove cron job with: `cron delete <number>`, for more details go to
+      <https://kiwi.softwaremill.com/display/ORG/Automatyczne+przypomnienia+z+Januszem)|Kiwi>
+    """
 
   robot.respond /cron delete all/i, (msg) ->
     jobManager.removeAll()
