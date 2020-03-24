@@ -109,7 +109,7 @@ module.exports = (robot) ->
     robot.logger.info("Adding cron job: message=#{jobName}; cron=#{jobCronExpr}; channel=#{jobChannel}")
     try
       jobManager.addJob jobName, jobCronExpr, jobChannel
-      msg.reply ":+1:"
+      msg.send ":+1:"
     catch error
       robot.logger.error("Couldn't add new cron job: #{error}")
       msg.reply error
@@ -121,7 +121,7 @@ module.exports = (robot) ->
     robot.logger.info("Adding cron job to default channel(#{defaultChannel}): message=#{jobName}; cron=#{jobCronExpr}")
     try
       jobManager.addJob jobName, jobCronExpr
-      msg.reply ":+1:"
+      msg.send ":+1:"
     catch error
       robot.logger.error("Couldn't add new cron job to default channel: #{error}")
       msg.reply error
@@ -130,20 +130,35 @@ module.exports = (robot) ->
     if jobManager is null
       msg.reply "Jobs loading in progress..."
       return
+
+    attachments = []
     jobs = jobManager.jobs
-    msg.send "#{i} : #{jobs[i]}" for job, i in jobs
-    msg.send "You can remove cron job with: cron delete (number)."
-    msg.send "For more details go to https://kiwi.softwaremill.com/display/ORG/Automatyczne+przypomnienia+z+Januszem"
+    for job, index in jobs
+      attachments.push
+        text: "#{i} : ```#{jobs[i]}```",
+        mrkdwn_in: [
+          "text"
+        ]
+
+    response =
+      text: "Defined jobs"
+      attachments: attachments
+      username: robot.name
+      as_user: true
+
+    msg.send response
+    msg.send "You can remove cron job with: `cron delete <number>`"
+    msg.send "For more details go to <https://kiwi.softwaremill.com/display/ORG/Automatyczne+przypomnienia+z+Januszem)|Kiwi>"
 
   robot.respond /cron delete all/i, (msg) ->
     jobManager.removeAll()
-    msg.reply "All jobs stopped."
+    msg.send "All wiped out!"
 
   robot.respond /cron delete (\d+)/i, (msg) ->
     jobIndex = msg.match[1]
     job = jobManager.remove(jobIndex)
     if(job?)
-      msg.reply "Job removed: #{job}"
+      msg.send "Job with index #{jobIndex} was removed!"
     else
       msg.reply "No job with index #{jobIndex}"
 
