@@ -135,7 +135,7 @@ module.exports = (robot) ->
     jobs = jobManager.jobs
     for job, index in jobs
       attachments.push
-        text: "#{i} : ```#{jobs[i]}```",
+        text: "#{index} : ```#{jobs[index]}```",
         mrkdwn_in: [
           "text"
         ]
