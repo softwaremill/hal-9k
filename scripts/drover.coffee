@@ -90,7 +90,7 @@ module.exports = (robot) ->
     robot.brain.set(CRON_JOBS_LIST, jobs)
 
   remind = (channel, message) ->
-    response:
+    response =
       text: message,
       mrkdwn_in: ["text"]
 
