@@ -109,6 +109,7 @@ module.exports = (robot) ->
     robot.logger.info("Adding cron job: message=#{jobName}; cron=#{jobCronExpr}; channel=#{jobChannel}")
     try
       jobManager.addJob jobName, jobCronExpr, jobChannel
+      msg.reply ":+1:"
     catch error
       robot.logger.error("Couldn't add new cron job: #{error}")
       msg.reply error
@@ -120,6 +121,7 @@ module.exports = (robot) ->
     robot.logger.info("Adding cron job to default channel(#{defaultChannel}): message=#{jobName}; cron=#{jobCronExpr}")
     try
       jobManager.addJob jobName, jobCronExpr
+      msg.reply ":+1:"
     catch error
       robot.logger.error("Couldn't add new cron job to default channel: #{error}")
       msg.reply error
