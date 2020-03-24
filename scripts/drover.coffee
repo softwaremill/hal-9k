@@ -94,7 +94,7 @@ module.exports = (robot) ->
 
   robot.respond /cron "(.*)" at "(.*)" on "(.*)"/i, (msg) ->
     msg.finish()
-    robot.logger.info "Got cron command: #{msg.match[0]}"
+    robot.logger.info "Got cron command: #{msg.message.text}"
     jobName = msg.match[1]
     jobCronExpr = msg.match[2]
     jobChannel = msg.match[3]
@@ -128,9 +128,7 @@ module.exports = (robot) ->
     for job, index in jobs
       attachments.push
         text: "#{index}: #{jobs[index].message}\n Expr: `#{jobs[index].cronExpr}` on #{jobs[index].channel}",
-        mrkdwn_in: [
-          "text"
-        ]
+        mrkdwn_in: ["text"]
 
     response =
       text: "Defined jobs"
