@@ -49,6 +49,11 @@ hiringActivitiesPerUser =
     "cr": 1 + 1 + 1 + 1,
     "tech": 1,
   },
+  "pewinski": {
+    "ps": 0,
+    "cr": 0,
+    "tech": 1,
+  },
   "righ": {
     "ps": 0,
     "cr": 1 + 1 + 1 + 1,
