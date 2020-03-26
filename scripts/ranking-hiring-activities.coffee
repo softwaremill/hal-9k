@@ -71,7 +71,7 @@ hiringActivitiesPerUser =
   },
   "rabiej": {
     "ps": 0,
-    "cr": 4 + 7,
+    "cr": 4 + 7 + 1,
     "tech": 0
   }
 
