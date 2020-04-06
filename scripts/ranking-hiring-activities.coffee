@@ -73,6 +73,11 @@ hiringActivitiesPerUser =
     "ps": 0,
     "cr": 4 + 7 + 1,
     "tech": 0
+  },
+  "antolak": {
+    "ps": 0,
+    "cr": 1 + 1,
+    "tech": 0
   }
 
 module.exports = hiringActivitiesPerUser
