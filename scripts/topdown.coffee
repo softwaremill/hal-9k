@@ -7,4 +7,4 @@
 module.exports = (robot) ->
 
   robot.respond /(td|topdown) (zoom|backlog|planning|standup)/i, (res) ->
-    res.send 'Spotkanie jest na <https://zoom.us/j/2716999780|Zoom>'
+    res.send 'Spotkanie jest na <https://zoom.us/j/95270460488?pwd=WCttYkxUT3VQbFRuN2tPOVdYNDdYZz09|Zoom>'
