@@ -14,10 +14,50 @@
 
 fourthQuestion = require './fourth_question/FourthQuestionDao'
 CronJob = require('cron').CronJob
-
+{WebClient} = require "@slack/client"
+{RTMClient} = require "@slack/client"
+slackUtils = require './common/slack-utils'
 timeZone = 'Europe/Warsaw'
 
 module.exports = (robot) ->
+
+  slackWebClient = new WebClient(robot.adapter.options.token)
+  slackRtmClient = new RTMClient(robot.adapter.options.token)
+  slackRtmClient.start()
+
+  FourthQuestionVotingEndSentence = "Zagłosuj przez wybranie odpowiedniej reakcji"
+
+  EmojiToNumberOfVotedQuestionMap = [
+    {
+      name: "orange_diamond",
+      questionNumber: 1
+    },
+    {
+      name: "large_blue_circle",
+      questionNumber: 2
+    },
+    {
+      name: "red_triangle",
+      questionNumber: 3
+    },
+    {
+      name: "green_square",
+      questionNumber: 4
+    },
+    {
+      name: "purple_heart",
+      questionNumber: 5
+    },
+  ]
+
+  getQuestionNumberForEmoji = (emoji) ->
+    filtered = EmojiToNumberOfVotedQuestionMap.filter (x) -> x.name == emoji
+    return filtered[0].questionNumber
+
+  getEmojiForQuestionNumber = (qNumber) ->
+    filtered = EmojiToNumberOfVotedQuestionMap.filter (x) -> x.questionNumber == qNumber
+    return filtered[0].name
+
   add4thQ = (res) ->
     res.finish()
     _4thQuestion = res.match[1]
@@ -79,15 +119,20 @@ module.exports = (robot) ->
           when "IN_PROGRESS"
             votingText = "Kandydaci na 4te pytanie -- [GŁOSOWANIE #{election.electionDate}] -- Trwa od *7:00* do *9:30* \n"
             for candidate, i in election.candidates
-              votingText += "#{i + 1}. #{candidate.questionContent}\n"
+              votingText += ":#{getEmojiForQuestionNumber(i + 1)}  #{candidate.questionContent}\n"
 
-            votingText += "Zagłosuj przez dodanie :one: :two: :three: :four: lub :five:"
+            votingText += FourthQuestionVotingEndSentence
             responseSender(votingText)
           when "COMPLETED"
             responseSender("Czwarte pytanie na dzisiaj: *#{election.winnerQuestionContent}* (autor: #{election.authorOfWinningQuestion})")
           else
             responseSender("Nieznany status głosowania :/ #{election.status}")
 
+  addReaction = (emojiName, event) ->
+    slackWebClient.reactions.add
+      name: emojiName,
+      channel: "#{event.channel}",
+      timestamp: "#{event.ts}"
 
   # Display a voting message just after backend created an election with random questions
   new CronJob('0 0 7 * * *', displayQuestionOnChrumChannel(true), null, true, timeZone)
@@ -130,3 +175,39 @@ module.exports = (robot) ->
     robot.logger.info message
     robot.receive message
     return
+
+  slackRtmClient.on 'message', (event) ->
+    if (event.bot_id != undefined && event.text.match(///#{FourthQuestionVotingEndSentence}///i))
+      for item in EmojiToNumberOfVotedQuestionMap
+        addReaction(item.name, event)
+
+  handleVotingReaction = (event) ->
+    reactingUser = event.user
+    questionVoted = getQuestionNumberForEmoji(event.reaction)
+    robot.logger.info("Question voted: #{questionVoted}")
+
+    slackUtils.prepareFindMessageRequest(robot, event).get() (err, res, body) ->
+      if err
+        robot.logger.error(err)
+      else
+        robot.logger.debug("Received body: #{body}")
+        data = JSON.parse body
+
+        if data.messages
+          messageText = data.messages[0].text
+          firstLine = messageText.split("\n")[0]
+
+          if(firstLine.includes("GŁOSOWANIE"))
+            electionDate = firstLine.match(/20\d\d-\d\d-\d\d/)[0]
+            robot.logger.info("User #{reactingUser} voted for question ID: #{questionVoted}. Election date: #{electionDate}")
+            fourthQuestion.vote(robot, reactingUser, questionVoted, electionDate)
+          else
+            robot.logger.error("Voted message is not a poll message: #{messageText}")
+        else
+          robot.logger.error('No messages found')
+
+  reactionsListener = (event) ->
+    if ((EmojiToNumberOfVotedQuestionMap.map (it) -> it.name ).indexOf(event.reaction) isnt -1)
+      handleVotingReaction(event)
+
+  slackRtmClient.on 'reaction_added', reactionsListener

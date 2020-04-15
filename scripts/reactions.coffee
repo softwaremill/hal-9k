@@ -9,20 +9,12 @@ users = require './common/users'
 kudos = require './kudos/kudosDao'
 fourthQuestion = require './fourth_question/FourthQuestionDao'
 {RTMClient} = require "@slack/client"
+slackUtils = require './common/slack-utils'
 
 module.exports = (robot) ->
   slackToken = process.env.HUBOT_SLACK_TOKEN
   client = new RTMClient(slackToken)
-  apiUrl = process.env.SLACK_API_URL
   client.start()
-
-  prepareFindMessageRequest = (event) ->
-    channel = event.item.channel
-    messageId = event.item.ts
-
-    return robot.http("#{apiUrl}/channels.history?channel=#{channel}&latest=#{messageId}&inclusive=true&count=1")
-      .header('Content-Type', 'application/json')
-      .header('Authorization', "Bearer #{slackToken}")
 
   handlePlusedKudos = (kudosReceiver, kudosDesc, reactingUser) ->
     user = users.getAllUsers(robot).find((u) -> u.id == kudosReceiver || u.name == kudosReceiver)
@@ -60,7 +52,7 @@ module.exports = (robot) ->
   handlePlusOneReaction = (event) ->
     reactingUser = event.user
 
-    prepareFindMessageRequest(event).get() (err, res, body) ->
+    slackUtils.prepareFindMessageRequest(robot, event).get() (err, res, body) ->
       if err
         robot.logger.error(err)
       else
@@ -78,46 +70,9 @@ module.exports = (robot) ->
         else
           robot.logger.error('No messages found')
 
-  emoticonToNumber = (emoticonText) ->
-    switch emoticonText
-      when 'one' then 1
-      when 'two' then 2
-      when 'three' then 3
-      when 'four' then 4
-      when 'five' then 5
-
-  handleVotingReaction = (event) ->
-    reactingUser = event.user
-    questionVoted = emoticonToNumber(event.reaction)
-    robot.logger.info("Question voted: #{questionVoted}")
-
-    prepareFindMessageRequest(event).get() (err, res, body) ->
-      if err
-        robot.logger.error(err)
-      else
-        robot.logger.debug("Received body: #{body}")
-        data = JSON.parse body
-
-        if data.messages
-          messageText = data.messages[0].text
-          firstLine = messageText.split("\n")[0]
-
-          if(firstLine.includes("GŁOSOWANIE"))
-            electionDate = firstLine.match(/202\d-\d\d-\d\d/)[0]
-            robot.logger.info("User #{reactingUser} voted for question ID: #{questionVoted}. Election date: #{electionDate}")
-            fourthQuestion.vote(robot, reactingUser, questionVoted, electionDate)
-          else
-            robot.logger.error("Voted message is not a poll message: #{messageText}")
-        else
-          robot.logger.error('No messages found')
-
-
   reactionsListener = (event) ->
     if (event.reaction == '+1')
       handlePlusOneReaction(event)
-    if (['one', 'two', 'three', 'four', 'five'].indexOf(event.reaction) isnt -1)
-      handleVotingReaction(event)
-
 
   client.on 'reaction_added', reactionsListener
 
