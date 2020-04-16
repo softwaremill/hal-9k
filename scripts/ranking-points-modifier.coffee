@@ -8,6 +8,7 @@ pointsModifierPerUser =
   "koziarkiewicz": -2 # minus 2019
   "wachal": 1 # kafka ebook
   "lenart": 1 + 1 # k8s part 1, k8s part 2
+  "kubala": 0.5 # TMWL March
 
 module.exports = pointsModifierPerUser
   
