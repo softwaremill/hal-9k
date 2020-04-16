@@ -119,7 +119,7 @@ module.exports = (robot) ->
           when "IN_PROGRESS"
             votingText = "Kandydaci na 4te pytanie -- [GŁOSOWANIE #{election.electionDate}] -- Trwa od *7:00* do *9:30* \n"
             for candidate, i in election.candidates
-              votingText += ":#{getEmojiForQuestionNumber(i + 1)}  #{candidate.questionContent}\n"
+              votingText += ":#{getEmojiForQuestionNumber(i + 1)}:  #{candidate.questionContent}\n"
 
             votingText += FourthQuestionVotingEndSentence
             responseSender(votingText)
