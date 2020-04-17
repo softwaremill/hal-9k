@@ -32,6 +32,3 @@ module.exports = (robot) ->
 
   robot.hear /.*(ja pierdol)(e|ę).*(\s)(@?janusz).*/i, (res) ->
     res.send sorryMsg
-
-  robot.hear /.*(zatrudnia)(ć|c|my)\??(\s?).*/i, (res) ->
-    res.send "Ciekawe co powie Nerdal ... https://www.screencast.com/t/N4cbbaZlCvW"
