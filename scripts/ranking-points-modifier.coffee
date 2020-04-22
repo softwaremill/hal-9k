@@ -9,7 +9,8 @@ pointsModifierPerUser =
   "wachal": 1 # kafka ebook
   "lenart": 1 + 1 # k8s part 1, k8s part 2
   "kubala": 0.5 # TMWL March
-  "szymanski": 1 + 1 + 1 + 1 # ama SML, liderem byc, nozbe, agilewarsaw
+  "szymanski": 1 + 1 + 1 + 1 + 1# ama SML, liderem byc, nozbe, agilewarsaw, goldenline
+  "puchta": 1 # goldenline
 
 module.exports = pointsModifierPerUser
   
