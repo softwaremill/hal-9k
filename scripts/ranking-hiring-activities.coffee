@@ -21,7 +21,7 @@ hiringActivitiesPerUser =
   },
   "chmielarz": {
     "ps": 0,
-    "cr": 17,
+    "cr": 15,
     "tech": 1
   },
   "kijanowski": {
