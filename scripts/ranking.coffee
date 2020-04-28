@@ -133,7 +133,8 @@ module.exports = (robot) ->
     robot.logger.info 'emitting ranking:show to #mainframe'
     robot.emit 'ranking:show', 'mainframe'
 
-  new CronJob('0 0 9 28 * *', showRanking, null, true, tz)
+  # Disabled on purpose
+  # new CronJob('0 0 9 28 * *', showRanking, null, true, tz)
   # new CronJob('*/15 * * * * *', showDebugRanking, null, true, tz)
 
   robot.respond /RANKING$/i, (msg) ->
