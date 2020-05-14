@@ -10,10 +10,16 @@ put = (endpoint, data, robot, successCallback, errorCallback) ->
 get = (endpoint, robot, successCallback, errorCallback) ->
   httpRequest(prepareRequest(endpoint, robot).get(), successCallback, errorCallback)
 
+del = (endpoint, data, robot, successCallback, errorCallback) -> 
+  httpRequest(prepareRequest(endpoint, robot).del(JSON.stringify(data)), successCallback, errorCallback)
+
 httpRequest = (f, successCallback, errorCallback) ->
   f (err, res, body) ->
     if err?
-      errorCallback(err, res.statusCode)
+      if res?
+        errorCallback(err, res.statusCode)
+      else
+        errorCallback(err, null)
     else
       successCallback(body, res)
 
@@ -32,3 +38,4 @@ module.exports =
   post: post
   put: put
   get: get
+  delete: del
