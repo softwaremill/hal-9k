@@ -82,3 +82,18 @@ module.exports.getMoodStatsForMonth = (robot, messageResponse, year, month) ->
   ,
     errorHandler(messageResponse)
   )
+
+module.exports.getRecentMoodStats = (robot, messageResponse, numberOfDays) ->
+  robot.logger.info("Fetching recent moods stats since last #{numberOfDays} days");
+  backend.get("/rest/mood-stats/recent/#{numberOfDays}", robot,
+    (successBody) ->
+      jsonBody = JSON.parse(successBody)
+      messageText = "*Najniższy nastrój w firmie w ostatnich #{numberOfDays} dniach:*\n"
+
+      for i in [0..jsonBody.length-1]
+        twoDigitValueAfterCommaMood = (Math.round(jsonBody[i].averageMood * 100) / 100).toFixed(2);
+        messageText += " #{i+1}. #{jsonBody[i].userName}: #{twoDigitValueAfterCommaMood} (ilość danych: #{jsonBody[i].numberOfMoodData})\n"
+      messageResponse.reply(messageText)
+  ,
+    errorHandler(messageResponse)
+  )
