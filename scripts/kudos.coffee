@@ -7,6 +7,7 @@
 
 users = require './common/users'
 kudos = require './kudos/kudosDao'
+SlackTextMessage = require 'hubot-slack/src/message'
 
 displayKudos = (robot, res, kudos) ->
   kudosAsString = for kudo in JSON.parse(kudos)
@@ -99,17 +100,13 @@ module.exports = (robot) ->
       robot.logger.info "Response from backend: #{body}"
       jsonBody = JSON.parse(body)
       if jsonBody.error
-        res.reply "I się porobiło ... #{jsonBody.message}"
+        robot.logger.error jsonBody.message
       else
         res.reply "Ok, kudos dodany. ID=#{jsonBody.id}"
 
     onError =
       (err, errCode) -> res.reply "Error #{errCode}:#{error}"
 
-    robot.logger.info "Text #{JSON.stringify(res.text)}"
-    robot.logger.info "Raw Text #{res.rawText}"
-    robot.logger.info "Raw Message #{res.rawMessage}"
-
-    kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, res.message.text)
+    kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, res.message.rawMessage.text)
 
   robot.hearReaction matchingReaction, handleReaction
