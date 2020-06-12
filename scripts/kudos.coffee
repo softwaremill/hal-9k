@@ -114,9 +114,9 @@ module.exports = (robot) ->
 
     response.then (result) ->
       if result.ok
-        robot.logger.info result.message.text
+        robot.logger.info "Got reaction's message: #{result.message.text}"
+        kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, result.message.text)
       else
         robot.logger.error result.error
-    # kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, res.message.rawMessage.text)
 
   robot.hearReaction matchingReaction, handleReaction
