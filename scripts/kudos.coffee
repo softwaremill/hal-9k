@@ -94,18 +94,10 @@ module.exports = (robot) ->
     res.send "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
 
   matchingReaction = (msg) ->
-    robot.logger.info "Heard reaction #{msg.type} with #{msg.reaction} from #{msg.user.username} in #{msg.room}"
-    msg.type == 'added' && msg.reaction =='heart'
+    robot.logger.info "Heard reaction #{msg.type} with #{msg.reaction} from #{JSON.stringify(msg.user)} in #{msg.room}"
+    msg.type == 'added' and msg.reaction =='heart'
 
   handleReaction = (msg) ->
-    if msg instanceof Object
-      try
-        robot.logger.info JSON.stringify(msg)
-      catch error
-        robot.logger.info "Message is #{msg}"
-        robot.logger.error error
-
-    robot.logger.info "Handling reaction #{msg.type} from #{msg.user} in #{msg.room}"
-    robot.messageRoom msg.room, "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
+    msg.send "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
 
   robot.hearReaction matchingReaction, handleReaction
