@@ -92,6 +92,7 @@ module.exports = (robot) ->
     res.send "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
 
   matchingReaction = (msg) ->
+    robot.logger.info JSON.stringify(msg.item)
     robot.logger.info "Heard reaction #{msg.type} #{msg.reaction} from #{msg.user.name} in #{msg.item.channel} on #{msg.item.event_ts}"
     msg.type == 'added' and msg.reaction == 'kudos' and msg.item.type == 'message'
 
@@ -107,6 +108,6 @@ module.exports = (robot) ->
     onError =
       (err, errCode) -> res.reply "Error #{errCode}:#{error}"
 
-    kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, res.message.rawMessage.text)
+    # kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, res.message.rawMessage.text)
 
   robot.hearReaction matchingReaction, handleReaction
