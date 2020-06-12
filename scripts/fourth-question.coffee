@@ -14,16 +14,10 @@
 
 fourthQuestion = require './fourth_question/FourthQuestionDao'
 CronJob = require('cron').CronJob
-{WebClient} = require "@slack/client"
-{RTMClient} = require "@slack/client"
 slackUtils = require './common/slack-utils'
 timeZone = 'Europe/Warsaw'
 
 module.exports = (robot) ->
-
-  slackWebClient = new WebClient(robot.adapter.options.token)
-  slackRtmClient = new RTMClient(robot.adapter.options.token)
-  slackRtmClient.start()
 
   FourthQuestionVotingEndSentence = "Zagłosuj przez wybranie odpowiedniej reakcji"
 
@@ -129,7 +123,7 @@ module.exports = (robot) ->
             responseSender("Nieznany status głosowania :/ #{election.status}")
 
   addReaction = (emojiName, event) ->
-    slackWebClient.reactions.add
+    robot.adapter.client.web.reactions.add
       name: emojiName,
       channel: "#{event.channel}",
       timestamp: "#{event.ts}"
@@ -174,7 +168,7 @@ module.exports = (robot) ->
     robot.receive message
     return
 
-  slackRtmClient.on 'message', (event) ->
+  robot.adapter.client.rtm.on 'message', (event) ->
     if (event.bot_id != undefined && event.text.match(///#{FourthQuestionVotingEndSentence}///i))
       for item in EmojiToNumberOfVotedQuestionMap
         addReaction(item.name, event)
@@ -208,4 +202,4 @@ module.exports = (robot) ->
     if ((EmojiToNumberOfVotedQuestionMap.map (it) -> it.name ).indexOf(event.reaction) isnt -1)
       handleVotingReaction(event)
 
-  slackRtmClient.on 'reaction_added', reactionsListener
+  robot.adapter.client.rtm.on 'reaction_added', reactionsListener
