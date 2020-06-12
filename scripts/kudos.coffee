@@ -104,8 +104,9 @@ module.exports = (robot) ->
       jsonBody = JSON.parse(body)
       if jsonBody.error
         robot.logger.error jsonBody.message
+        robot.messageRoom res.message.user.id, "Coś poszło nie tak: #{jsonBody.message}"
       else
-        res.reply "Ok, kudos dodany. ID=#{jsonBody.id}"
+        robot.messageRoom res.message.user.id, "Ok, kudos dodany. ID=#{jsonBody.id}"
 
     onError =
       (err, errCode) -> res.reply "Error #{errCode}:#{error}"
