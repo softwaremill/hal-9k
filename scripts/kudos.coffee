@@ -109,8 +109,8 @@ module.exports = (robot) ->
       (err, errCode) -> res.reply "Error #{errCode}:#{error}"
 
     response = robot.adapter.client.web.reactions.get
-      channel: msg.item.channel
-      timestamp: msg.item.ts
+      channel: res.message.item.channel
+      timestamp: res.message.item.ts
 
     robot.logger.info response.message.text
     # kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, res.message.rawMessage.text)
