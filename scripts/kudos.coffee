@@ -106,7 +106,9 @@ module.exports = (robot) ->
     onError =
       (err, errCode) -> res.reply "Error #{errCode}:#{error}"
 
-    robot.logger.info "Message #{JSON.stringify(res.message)}"
+    robot.logger.info "Text #{JSON.stringify(res.text)}"
+    robot.logger.info "Raw Text #{res.rawText}"
+    robot.logger.info "Raw Message #{res.rawMessage}"
 
     kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, res.message.text)
 
