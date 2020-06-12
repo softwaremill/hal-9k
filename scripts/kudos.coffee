@@ -83,6 +83,8 @@ module.exports = (robot) ->
       daj kudos(a) <nazwa> <treść> - j.w.
       kudos +1 <id> <komentarz> - dodaje +1 do kudosa o id <id> z opcjonalnym komentarzem <komentarz>
 
+      Możesz również dać :kudos: na czyjejś wiadomości aby dać tej osobie Kudosa za tę właśnie wiadomość!
+
       Kudosy są dostępne na stronie http://kudos.softwaremill.com
       Login: #{kudosAppLogin}
       Hasło: #{kudosAppPassword}
