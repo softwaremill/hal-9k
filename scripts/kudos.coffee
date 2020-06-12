@@ -117,7 +117,16 @@ module.exports = (robot) ->
     response.then (result) ->
       if result.ok
         robot.logger.info "Got reaction's message: #{result.message.text}"
-        kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, result.message.text)
+
+        reactions = (reaction for reaction in result.message.reactions when reaction.name is 'kudos')
+
+        if reactions.length == 0
+          robot.logger.info "No kudos reactions yet, adding a new kudos"
+          kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, result.message.text)
+        else
+          # kudos.addPlusOne(robot, onSuccess, onError, )
+          robot.logger.info "Kudos already added, do plus one, TODO: implement"
+          kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, result.message.text)
       else
         robot.logger.error result.error
 
