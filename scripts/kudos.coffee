@@ -85,3 +85,6 @@ module.exports = (robot) ->
       Login: #{kudosAppLogin}
       Hasło: #{kudosAppPassword}
     """
+
+  robot.hear /.*(dziękuję|dzięki|dziekuje|dzieki).*/i, (res) ->
+    res.send "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
