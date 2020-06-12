@@ -90,10 +90,10 @@ module.exports = (robot) ->
       Hasło: #{kudosAppPassword}
     """
 
-  robot.hear /.*(dziękuję|dzięki|dziekuje|dzieki).*/i, (res) ->
+  robot.hear /.*(dziękuję|dzięki|dziekuje|dzieki|thx|thanks).*/i, (res) ->
     res.send "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
 
   robot.hearReaction /.*heart.*/i, (msg) ->
-    robot.logger.info "Heard reaction #{JSON.stringify(msg)}"
+    robot.logger.info "Heard reaction from #{msg.user} in #{user.room}"
     if msg.reaction == ':heart:' || msg.reaction == ':ciekawe:' || msg.reaction.startWith ':+1:'
       robot.messageRoom msg.room, "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
