@@ -102,8 +102,8 @@ module.exports = (robot) ->
     onError =
       (err, errCode) -> res.reply "Error #{errCode}:#{error}"
 
-    robot.logger.info JSON.stringify(res.item_user)
+    robot.logger.info JSON.stringify(res.message)
 
-    kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.item_user.id, res.text)
+    kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, res.text)
 
   robot.hearReaction matchingReaction, handleReaction
