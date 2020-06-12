@@ -93,7 +93,7 @@ module.exports = (robot) ->
   robot.hear /.*(dziękuję|dzięki|dziekuje|dzieki).*/i, (res) ->
     res.send "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
 
-  robot.on 'reaction', (msg) ->
+  robot.on 'reaction_added', (msg) ->
     robot.logger.info JSON.stringify(msg)
     if msg.reaction == ':heart:' || msg.reaction == ':ciekawe:' || msg.reaction.startWith ':+1:'
       robot.messageRoom msg.room, "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
