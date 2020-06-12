@@ -92,7 +92,7 @@ module.exports = (robot) ->
     res.send "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
 
   matchingReaction = (msg) ->
-    robot.logger.info "Heard reaction #{msg.type} #{msg.reaction} from #{msg.user.name} in #{msg.item.channel} on #{msg.event_ts}"
+    robot.logger.info "Heard reaction #{msg.type} #{msg.reaction} from #{msg.user.name} in #{msg.item.channel} on #{msg.item.event_ts}"
     msg.type == 'added' and msg.reaction == 'kudos' and msg.item.type == 'message'
 
   handleReaction = (res) ->
