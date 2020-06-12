@@ -95,7 +95,7 @@ module.exports = (robot) ->
 
   matchingReaction = (msg) ->
     robot.logger.info "Heard reaction #{msg.type} with #{msg.reaction} from #{msg.user.name} in #{msg.room}"
-    msg.type == 'added' and msg.reaction =='heart'
+    msg.type == 'added' and msg.reaction == 'heart'
 
   handleReaction = (msg) ->
     msg.send "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
