@@ -93,9 +93,14 @@ module.exports = (robot) ->
   robot.hear /.*(dziękuję|dzięki|dziekuje|dzieki|thx|thanks).*/i, (res) ->
     res.send "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
 
-  handleReaction = (msg) ->
+  applicableReaction = (msg) ->
     robot.logger.info "Heard reaction #{msg.type} from #{msg.user} in #{msg.room}"
-    if msg.type == 'added' && msg.reaction == 'heart'
-      robot.messageRoom msg.room, "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
+    msg.type == 'added' && msg.reaction =='heart'
 
-  robot.hearReaction handleReaction
+  options = {}
+
+  reactionHandler = (msg) ->
+    robot.logger.info "Handling reaction #{msg.type} from #{msg.user} in #{msg.room}"
+    robot.messageRoom msg.room, "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
+
+  robot.hearReaction applicableReaction, options, reactionHandler
