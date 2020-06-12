@@ -125,9 +125,8 @@ module.exports = (robot) ->
           robot.logger.info "No kudos reactions yet, adding a new kudos"
           kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, result.message.text)
         else
-          # kudos.addPlusOne(robot, onSuccess, onError, )
-          robot.logger.info "Kudos already added, do plus one, TODO: implement"
-          kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, result.message.text)
+          robot.logger.info "Kudos already added, do plus one"
+          kudos.addPlusOneByDesc(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, result.message.text)
       else
         robot.logger.error result.error
 
