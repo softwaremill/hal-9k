@@ -93,7 +93,7 @@ module.exports = (robot) ->
 
   matchingReaction = (msg) ->
     robot.logger.info JSON.stringify(msg.item)
-    robot.logger.info "Heard reaction #{msg.type} #{msg.reaction} from #{msg.user.name} in #{msg.item.channel} on #{msg.item.event_ts}"
+    robot.logger.info "Heard reaction #{msg.type} #{msg.reaction} from #{msg.user.name} in #{msg.item.channel} on #{msg.item.ts}"
     msg.type == 'added' and msg.reaction == 'kudos' and msg.item.type == 'message'
 
   handleReaction = (res) ->
@@ -108,6 +108,11 @@ module.exports = (robot) ->
     onError =
       (err, errCode) -> res.reply "Error #{errCode}:#{error}"
 
+    response = robot.adapter.client.web.reactions.get
+      channel: msg.item.channel
+      timestamp: msg.item.ts
+
+    robot.logger.info response.message.text
     # kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, res.message.rawMessage.text)
 
   robot.hearReaction matchingReaction, handleReaction
