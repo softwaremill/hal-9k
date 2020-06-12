@@ -54,6 +54,7 @@ module.exports = (robot) ->
 
   robot.respond /kudos add @?(\S*) (.*)/i, addKudos
   robot.respond /kudos dodaj dla @?(\S*) (.*)/i, addKudos
+  robot.respond /daj kudos(a?) @?(\S*) (.*)/i, addKudos
 
   addPlusOne = (res) ->
     kudosId = res.match[1]
@@ -79,6 +80,7 @@ module.exports = (robot) ->
       kudos pokaż dla <nazwa> - j.w.
       kudos add <nazwa> <treść> - dodaje kudosa o treści <treść> dla użytkownika <nazwa>
       kudos dodaj dla <nazwa> <treść> - j.w.
+      daj kudos(a) <nazwa> <treść> - j.w.
       kudos +1 <id> <komentarz> - dodaje +1 do kudosa o id <id> z opcjonalnym komentarzem <komentarz>
 
       Kudosy są dostępne na stronie http://kudos.softwaremill.com
