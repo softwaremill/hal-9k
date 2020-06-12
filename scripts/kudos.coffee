@@ -8,14 +8,11 @@
 users = require './common/users'
 kudos = require './kudos/kudosDao'
 
-String::startsWith ?= (s) -> @[...s.length] is s
-
 displayKudos = (robot, res, kudos) ->
   kudosAsString = for kudo in JSON.parse(kudos)
     "\nOd #{kudo.kudoer.name}: #{kudo.description} (id=#{kudo.id})"
 
   res.reply(kudosAsString.join(''))
-
 
 module.exports = (robot) ->
   showKudos = (res) ->
@@ -94,11 +91,19 @@ module.exports = (robot) ->
     res.send "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
 
   matchingReaction = (msg) ->
-    robot.logger.info "Heard reaction #{msg.type} with #{msg.reaction} from #{msg.user.name} in #{msg.room}"
-    robot.logger.info msg.item
-    msg.type == 'added' and msg.reaction == 'heart'
+    robot.logger.info "Heard reaction #{msg.type} with #{msg.reaction} from #{msg.user.name} in #{msg.item.channel}"
+    msg.type == 'added' and msg.reaction == 'kudos' and msg.item.type == 'message'
 
-  handleReaction = (msg) ->
-    msg.send "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
+  handleReaction = (res) ->
+    onSuccess = (body) ->
+      jsonBody = JSON.parse(body)
+      res.reply "Ok, kudos dodany. ID=#{jsonBody.id}"
+
+    onError =
+      (err, errCode) -> res.reply "Error #{errCode}:#{error}"
+
+    robot.logger.info JSON.stringify(res.item_user)
+
+    kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.item_user.id, res.text)
 
   robot.hearReaction matchingReaction, handleReaction
