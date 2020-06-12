@@ -8,6 +8,8 @@
 users = require './common/users'
 kudos = require './kudos/kudosDao'
 
+String::startsWith ?= (s) -> @[...s.length] is s
+
 displayKudos = (robot, res, kudos) ->
   kudosAsString = for kudo in JSON.parse(kudos)
     "\nOd #{kudo.kudoer.name}: #{kudo.description} (id=#{kudo.id})"
@@ -93,5 +95,5 @@ module.exports = (robot) ->
 
   robot.on 'reaction', msg ->
     robot.logger.info JSON.stringify(msg)
-    if msg.reaction == ':heart:' || msg.reaction == ':ciekawe:'
+    if msg.reaction.startsWith ':heart:' || msg.reaction == ':ciekawe:' || msg.reaction.startWith ':+1:'
       robot.messageRoom msg.room, "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
