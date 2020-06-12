@@ -98,12 +98,15 @@ module.exports = (robot) ->
     onSuccess = (body) ->
       robot.logger.info "Response from backend: #{body}"
       jsonBody = JSON.parse(body)
-      res.reply "Ok, kudos dodany. ID=#{jsonBody.id}"
+      if jsonBody.error
+        res.reply "I się porobiło ... #{jsonBody.message}"
+      else
+        res.reply "Ok, kudos dodany. ID=#{jsonBody.id}"
 
     onError =
       (err, errCode) -> res.reply "Error #{errCode}:#{error}"
 
-    robot.logger.info res.message
+    robot.logger.info "Message #{JSON.stringify(res.message)}"
 
     kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, res.message.text)
 
