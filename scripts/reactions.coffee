@@ -18,7 +18,7 @@ module.exports = (robot) ->
 
   handlePlusedKudos = (kudosReceiver, kudosDesc, reactingUser) ->
     user = users.getAllUsers(robot).find((u) -> u.id == kudosReceiver || u.name == kudosReceiver)
-    robot.logger.error("user #{kudosReceiver}")
+    robot.logger.info("user #{kudosReceiver}")
 
     if user == undefined
       robot.logger.error("user #{kudosReceiver} not found")
@@ -34,7 +34,7 @@ module.exports = (robot) ->
               jsonBody = JSON.parse(body)
               robot.logger.info(if jsonBody.message? then jsonBody.message else body)
             (err, errCode) ->
-              robot.logger.info("Error #{errCode}")
+              robot.logger.error("Error #{errCode}")
             reactingUser,
             plusedKudo.id,
             plusedKudo.description
