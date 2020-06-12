@@ -112,7 +112,11 @@ module.exports = (robot) ->
       channel: res.message.item.channel
       timestamp: res.message.item.ts
 
-    robot.logger.info response.message.text
+    response.then (result) ->
+      if result.ok
+        robot.logger.info result.message.text
+      else
+        robot.logger.error result.error
     # kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, res.message.rawMessage.text)
 
   robot.hearReaction matchingReaction, handleReaction
