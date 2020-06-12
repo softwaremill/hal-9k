@@ -94,9 +94,11 @@ module.exports = (robot) ->
     res.send "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
 
   robot.on 'reaction_added', (msg) ->
+    robot.logger.info "On reaction_added #{JSON.stringify(msg)}"
     if msg.reaction == ':heart:' || msg.reaction == ':ciekawe:' || msg.reaction.startWith ':+1:'
       robot.messageRoom msg.room, "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
 
   robot.receive (msg) ->
+    robot.logger.info "Received message #{JSON.stringify(msg)}"
     if msg.reaction == ':heart:' || msg.reaction == ':ciekawe:' || msg.reaction.startWith ':+1:'
       robot.messageRoom msg.room, "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
