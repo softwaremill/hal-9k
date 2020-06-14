@@ -24,7 +24,7 @@ module.exports = (robot) ->
       username: robot.name
       as_user: true
 
-    res.send response
+    robot.messageRoom res.message.user.id, response
 
   showKudos = (res, kudosUser) ->
     user = users.getUser(robot, kudosUser)
