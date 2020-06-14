@@ -5,11 +5,12 @@ backend = require '../common/backend'
 module.exports.getKudos = (robot, userId, onSuccess, onError) ->
   backend.get("/rest/kudos/#{userId}", robot, onSuccess, onError)
 
-module.exports.addKudos = (robot, successHandler, errorHandler, kudoer, kudosReceiverId, description) ->
+module.exports.addKudos = (robot, successHandler, errorHandler, kudoer, kudosReceiverId, description, messageId) ->
   data = {
     userName: kudosReceiverId,
     description: description,
     kudoer: kudoer
+    messageId: messageId
   }
 
   backend.post("/rest/kudos", data, robot, successHandler, errorHandler)
@@ -22,11 +23,11 @@ module.exports.addPlusOne = (robot, successHandler, errorHandler, kudoer, kudoId
 
   backend.post("/rest/kudos/#{kudoId}/plusOnes", data, robot, successHandler, errorHandler)
 
-module.exports.addPlusOneByDesc = (robot, successHandler, errorHandler, kudosRewardedId, kudosGiverId, description) ->
+module.exports.addPlusOneByMessageId = (robot, successHandler, errorHandler, kudosRewardedId, messageId, description) ->
   data = {
     description: description,
     kudosRewardedId: kudosRewardedId,
-    kudosGiverId: kudosGiverId
+    messageId: messageId
   }
 
   backend.put("/rest/kudos/plus-one", data, robot, successHandler, errorHandler)

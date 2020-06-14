@@ -7,13 +7,14 @@
 
 users = require './common/users'
 kudos = require './kudos/kudosDao'
-SlackTextMessage = require 'hubot-slack/src/message'
 
 displayKudos = (robot, res, kudos) ->
   kudosAsString = for kudo in JSON.parse(kudos)
     "\nOd #{kudo.kudoer.name}: #{kudo.description} (id=#{kudo.id})"
 
   res.reply(kudosAsString.join(''))
+
+KUDOS_REACTION = 'kudos'
 
 module.exports = (robot) ->
   showKudos = (res) ->
@@ -50,7 +51,8 @@ module.exports = (robot) ->
       errorHandler =
         (err, errCode) -> res.reply("Error #{errCode}")
 
-      kudos.addKudos(robot, successHandler, errorHandler, res.message.user.id, user.id, kudosDesc)
+      robot.logger.info "Adds a new kudos based on messageId #{res.message.ts}"
+      kudos.addKudos(robot, successHandler, errorHandler, res.message.user.id, user.id, kudosDesc, res.message.ts)
 
   robot.respond /kudos add @?(\S*) (.*)/i, addKudos
   robot.respond /kudos dodaj dla @?(\S*) (.*)/i, addKudos
@@ -96,7 +98,7 @@ module.exports = (robot) ->
   matchingReaction = (msg) ->
     robot.logger.info JSON.stringify(msg.item)
     robot.logger.info "Heard reaction #{msg.type} #{msg.reaction} from #{msg.user.name} in #{msg.item.channel} on #{msg.item.ts}"
-    msg.type == 'added' and msg.reaction == 'kudos' and msg.item.type == 'message'
+    msg.type == 'added' and msg.reaction == KUDOS_REACTION and msg.item.type == 'message'
 
   handleReaction = (res) ->
     onSuccess = (body) ->
@@ -119,14 +121,14 @@ module.exports = (robot) ->
       if result.ok
         robot.logger.info "Got reaction's message: #{result.message.text}"
 
-        reactions = (reaction for reaction in result.message.reactions when reaction.name is 'kudos')
+        reactions = (reaction for reaction in result.message.reactions when reaction.name is KUDOS_REACTION)
 
         if reactions.length == 0
           robot.logger.info "No kudos reactions yet, adding a new kudos"
-          kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, result.message.text)
+          kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, result.message.text, res.message.item.ts)
         else
           robot.logger.info "Kudos already added, do plus one"
-          kudos.addPlusOneByDesc(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, result.message.text)
+          kudos.addPlusOneByMessageId(robot, onSuccess, onError, res.message.user.id, res.message.item.ts, result.message.text)
           # kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, result.message.text)
       else
         robot.logger.error result.error
