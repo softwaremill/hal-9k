@@ -108,8 +108,10 @@ module.exports = (robot) ->
     response.then (result) ->
       if result.ok
         robot.logger.info "Got reaction's message: #{result.message.text}"
-
+        robot.logger.info JSON.stringify(result)
         reactions = (reaction for reaction in result.message.reactions when reaction.name is KUDOS_REACTION)
+
+        robot.logger.info "Found reactions #{reactions.length}"
 
         if reactions.length == 1 # if there is one reaction it means that this user just clicked it
           robot.logger.info "No kudos reactions yet, adding a new kudos for message id: #{res.message.item.ts}"
