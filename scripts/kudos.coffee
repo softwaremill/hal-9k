@@ -117,12 +117,12 @@ module.exports = (robot) ->
     kudosAppLogin = process.env.HUBOT_KUDOS_APP_LOGIN
     kudosAppPassword = process.env.HUBOT_KUDOS_APP_PASSWORD
     res.send """
-      kudos help - wyświetla tę pomoc
-      kudos show <nazwa> - pokazuje kudosy dla użytkownika <nazwa>
-      kudos pokaż dla <nazwa> - j.w.
-      kudos add <nazwa> <treść> - dodaje kudosa o treści <treść> dla użytkownika <nazwa>
-      kudos dodaj dla <nazwa> <treść> - j.w.
-      (do)daj kudos(a) <nazwa> <treść> - j.w.
+      `kudos help` - wyświetla tę pomoc
+      `kudos show <@nazwa>` - pokazuje kudosy dla użytkownika <nazwa>
+      `kudos pokaż dla <@nazwa>` - j.w.
+      `kudos add <@nazwa> <treść>` - dodaje kudosa o treści <treść> dla użytkownika <nazwa>
+      `kudos dodaj dla <@nazwa> <treść>` - j.w.
+      `(do)daj kudos(a) <nazwa> <treść>` - j.w.
 
       Możesz również dać :kudos: na czyjejś wiadomości aby dać tej osobie Kudosa za tę właśnie wiadomość!
 
