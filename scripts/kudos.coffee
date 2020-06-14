@@ -119,7 +119,8 @@ module.exports = (robot) ->
           robot.messageRoom res.message.user.id, "Ok, kudos dodany. Status=#{body}"
 
     onError =
-      (err, errCode) -> res.reply "Error #{errCode}:#{error}"
+      (err, errCode) ->
+        robot.messageRoom res.message.user.id, "Upss... coś poszło nie tak przy dodawniu :+1: do kudosa: (#{errCode}) #{error}"
 
     response = robot.adapter.client.web.reactions.get
       channel: res.message.item.channel
