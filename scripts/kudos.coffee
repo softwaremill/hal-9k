@@ -8,24 +8,30 @@
 users = require './common/users'
 kudos = require './kudos/kudosDao'
 
-displayKudos = (robot, res, kudos) ->
-  kudosAsString = for kudo in JSON.parse(kudos)
-    "\nOd #{kudo.kudoer.name}: #{kudo.description} (id=#{kudo.id})"
-
-  res.reply(kudosAsString.join(''))
-
 KUDOS_REACTION = 'kudos'
 
 module.exports = (robot) ->
-  showKudos = (res) ->
-    kudosUser = res.match[1]
+  displayKudos = (robot, res, kudos, kudosUser) ->
+    attachments = []
+    for kudos in JSON.parse(kudos)
+      text: "- od #{kudos.kudoer.name}: #{kudos.description}",
+      mrkdwn_in: ["text"]
 
+    response =
+      text: "Kudosy #{kudosUser}"
+      attachments: attachments
+      username: robot.name
+      as_user: true
+
+    res.send response
+
+  showKudos = (res, kudosUser) ->
     user = users.getUser(robot, kudosUser)
     if (user == undefined)
       res.reply "Nie znam żadnego #{kudosUser}."
     else
-      successHandler = (successBody) ->
-        displayKudos(robot, res, successBody)
+      successHandler = (body) ->
+        displayKudos(robot, res, body, kudosUser)
 
       errorHandler = (err, errCode) ->
         robot.logger.error "Error getting kudos from the backend. Error: #{error}"
@@ -33,8 +39,10 @@ module.exports = (robot) ->
 
       kudos.getKudos(robot, user.id, successHandler, errorHandler)
 
-  robot.respond /kudos show @?(.*)/i, showKudos
-  robot.respond /kudos pokaż dla @?(.*)/i, showKudos
+  robot.respond /kudos (show|pokaż dla) @?(.*)/i, (res) ->
+    showKudos res, res.match[2]
+  robot.respond /^poka(z|ż) kudos(y)? (dla )?@?(\S+)$/i, (res) ->
+    showKudos res, res.match[4]
 
   addKudos = (res, kudosReceiver, kudosDesc) ->
     user = users.getUser(robot, kudosReceiver)
@@ -113,16 +121,17 @@ module.exports = (robot) ->
 
   robot.hearReaction matchingReaction, handleReaction
 
-  robot.respond /kudos help/i, (res) ->
+  robot.respond /kudos (help|pomoc)/i, (res) ->
     kudosAppLogin = process.env.HUBOT_KUDOS_APP_LOGIN
     kudosAppPassword = process.env.HUBOT_KUDOS_APP_PASSWORD
     res.send """
-      `kudos help` - wyświetla tę pomoc
-      `kudos show <@nazwa>` - pokazuje kudosy dla użytkownika <nazwa>
+      `kudos pomoc|help` - wyświetla tę pomoc
+      `pokaż kudos(y) <@nazwa>` - listuje kudosy dla użytkownika <@nazwa>
       `kudos pokaż dla <@nazwa>` - j.w.
-      `kudos add <@nazwa> <treść>` - dodaje kudosa o treści <treść> dla użytkownika <nazwa>
+      `kudos show <@nazwa>` - j.w. (przestarzałe, nie używać!)
+      `(do)daj kudos(a) <nazwa> <treść>` - dodaje kudosa o treści <treść> dla użytkownika <@nazwa>
       `kudos dodaj dla <@nazwa> <treść>` - j.w.
-      `(do)daj kudos(a) <nazwa> <treść>` - j.w.
+      `kudos add <@nazwa> <treść>` - j.w. (przestarzałe, nie używać!)
 
       Możesz również dać :kudos: na czyjejś wiadomości aby dać tej osobie Kudosa za tę właśnie wiadomość!
 
