@@ -79,23 +79,25 @@ module.exports = (robot) ->
     msg.type == 'added' and msg.reaction == KUDOS_REACTION and msg.item.type == 'message'
 
   handleReaction = (res) ->
-    onSuccess(description) -> (body) ->
-      robot.logger.info "Response from backend: #{body}"
-      jsonBody = body
-      try
-        jsonBody = JSON.parse(body)
-      catch error
-        robot.logger.error "Cannot parse #{body} as JSON, got error: #{error}"
+    onSuccess = (description) ->
+      handler = (body) ->
+        robot.logger.info "Response from backend: #{body}"
+        jsonBody = body
+        try
+          jsonBody = JSON.parse(body)
+        catch error
+          robot.logger.error "Cannot parse #{body} as JSON, got error: #{error}"
 
-      if jsonBody.error
-        robot.logger.error jsonBody.message
-        robot.messageRoom res.message.user.id, "Coś poszło nie tak: #{jsonBody.message}"
-      else if jsonBody.id
-        robot.messageRoom res.message.user.id, "Ok, kudos dodany, id=#{jsonBody.id}: #{description}"
-      else if jsonBody.message
-        robot.messageRoom res.message.user.id, "Ok, kudos dodany, status=#{jsonBody.message}: #{description}"
-      else
-        robot.messageRoom res.message.user.id, "Hm... może się udało a może nie, status=#{body}"
+        if jsonBody.error
+          robot.logger.error jsonBody.message
+          robot.messageRoom res.message.user.id, "Coś poszło nie tak: #{jsonBody.message}"
+        else if jsonBody.id
+          robot.messageRoom res.message.user.id, "Ok, kudos dodany, id=#{jsonBody.id}: #{description}"
+        else if jsonBody.message
+          robot.messageRoom res.message.user.id, "Ok, kudos dodany, status=#{jsonBody.message}: #{description}"
+        else
+          robot.messageRoom res.message.user.id, "Hm... może się udało a może nie, status=#{body}"
+      handler
 
     onError =
       (err, errCode) ->
