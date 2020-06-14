@@ -56,7 +56,8 @@ module.exports = (robot) ->
 
   robot.respond /kudos add @?(\S*) (.*)/i, addKudos
   robot.respond /kudos dodaj dla @?(\S*) (.*)/i, addKudos
-  robot.respond /daj kudos(a?) @?(\S*) (.*)/i, addKudos
+  robot.respond /daj kudosa @?(\S*) (.*)/i, addKudos
+  robot.respond /daj kudos @?(\S*) (.*)/i, addKudos
 
   addPlusOne = (res) ->
     kudosId = res.match[1]
