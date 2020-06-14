@@ -111,8 +111,8 @@ module.exports = (robot) ->
 
         reactions = (reaction for reaction in result.message.reactions when reaction.name is KUDOS_REACTION)
 
-        if reactions.length == 0
-          robot.logger.info "No kudos reactions yet, adding a new kudos"
+        if reactions.length == 1
+          robot.logger.info "No kudos reactions yet, adding a new kudos for message id: #{res.message.item.ts}"
           kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, result.message.text, res.message.item.ts)
         else
           robot.logger.info "Kudos already added, do plus one"
