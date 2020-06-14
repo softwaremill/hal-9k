@@ -103,12 +103,22 @@ module.exports = (robot) ->
   handleReaction = (res) ->
     onSuccess = (body) ->
       robot.logger.info "Response from backend: #{body}"
-      jsonBody = JSON.parse(body)
+      jsonBody = body
+      try
+        jsonBody = JSON.parse(body)
+      catch error
+        robot.logger.error "Cannot parse #{body} as JSON, got error: #{error}"
+
       if jsonBody.error
         robot.logger.error jsonBody.message
         robot.messageRoom res.message.user.id, "Coś poszło nie tak: #{jsonBody.message}"
       else
-        robot.messageRoom res.message.user.id, "Ok, kudos dodany. ID=#{jsonBody.id}"
+        if jsonBody.id
+          robot.messageRoom res.message.user.id, "Ok, kudos dodany. ID=#{jsonBody.id}"
+        else if jsonBody.message
+          robot.messageRoom res.message.user.id, "Ok, kudos dodany. Status=#{jsonBody.message}"
+        else
+          robot.messageRoom res.message.user.id, "Ok, kudos dodany. Status=#{body}"
 
     onError =
       (err, errCode) -> res.reply "Error #{errCode}:#{error}"
@@ -129,7 +139,6 @@ module.exports = (robot) ->
         else
           robot.logger.info "Kudos already added, do plus one"
           kudos.addPlusOneByMessageId(robot, onSuccess, onError, res.message.user.id, res.message.item.ts, result.message.text)
-          # kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, result.message.text)
       else
         robot.logger.error result.error
 
