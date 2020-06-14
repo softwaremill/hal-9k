@@ -22,11 +22,11 @@ module.exports.addPlusOne = (robot, successHandler, errorHandler, kudoer, kudoId
 
   backend.post("/rest/kudos/#{kudoId}/plusOnes", data, robot, successHandler, errorHandler)
 
-module.exports.addPlusOneByDesc = (robot, successHandler, errorHandler, userName, kudoer, description) ->
+module.exports.addPlusOneByDesc = (robot, successHandler, errorHandler, kudosRewardedId, kudosGiverId, description) ->
   data = {
     description: description,
-    userName: userName,
-    kudoer: kudoer
+    kudosRewardedId: kudosRewardedId,
+    kudosGiverId: kudosGiverId
   }
 
   backend.put("/rest/kudos/plus-one", data, robot, successHandler, errorHandler)
