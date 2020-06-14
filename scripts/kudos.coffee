@@ -37,8 +37,8 @@ module.exports = (robot) ->
   robot.respond /kudos pokaż dla @?(.*)/i, showKudos
 
   addKudos = (res) ->
-    kudosReceiver = res.match[1]
-    kudosDesc = res.match[2]
+    kudosReceiver = res.match[2]
+    kudosDesc = res.match[3]
 
     user = users.getUser(robot, kudosReceiver)
     if (user == undefined)
@@ -51,13 +51,11 @@ module.exports = (robot) ->
       errorHandler =
         (err, errCode) -> res.reply("Error #{errCode}")
 
-      robot.logger.info "Adds a new kudos based on messageId #{res.message.ts}"
+      robot.logger.info JSON.stringify(res.message)
       kudos.addKudos(robot, successHandler, errorHandler, res.message.user.id, user.id, kudosDesc, res.message.ts)
 
-  robot.respond /kudos add @?(\S*) (.*)/i, addKudos
-  robot.respond /kudos dodaj dla @?(\S*) (.*)/i, addKudos
-  robot.respond /daj kudosa @?(\S*) (.*)/i, addKudos
-  robot.respond /daj kudos @?(\S*) (.*)/i, addKudos
+  robot.respond /kudos (add|dodaj dla) @?(\S*) (.*)/i, addKudos
+  robot.respond /daj kudos(a?) @?(\S*) (.*)/i, addKudos
 
   addPlusOne = (res) ->
     kudosId = res.match[1]
