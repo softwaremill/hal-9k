@@ -125,7 +125,7 @@ module.exports = (robot) ->
   robot.respond /kudos (help|pomoc)/i, (res) ->
     kudosAppLogin = process.env.HUBOT_KUDOS_APP_LOGIN
     kudosAppPassword = process.env.HUBOT_KUDOS_APP_PASSWORD
-    res.send """
+    robot.messageRoom res.message.user.id, """
       `kudos pomoc|help` - wyświetla tę pomoc
       `pokaż kudos(y) <nazwa>` - listuje kudosy dla użytkownika <nazwa>
       `kudos pokaż dla <nazwa>` - j.w.
