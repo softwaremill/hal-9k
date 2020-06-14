@@ -7,15 +7,8 @@
 
 users = require './common/users'
 kudos = require './kudos/kudosDao'
-fourthQuestion = require './fourth_question/FourthQuestionDao'
-{RTMClient} = require "@slack/client"
-slackUtils = require './common/slack-utils'
 
 module.exports = (robot) ->
-  slackToken = process.env.HUBOT_SLACK_TOKEN
-  client = new RTMClient(slackToken)
-  client.start()
-
   handlePlusedKudos = (kudosReceiver, kudosDesc, reactingUser) ->
     user = users.getAllUsers(robot).find((u) -> u.id == kudosReceiver || u.name == kudosReceiver)
     robot.logger.info("user #{kudosReceiver}")
@@ -50,14 +43,15 @@ module.exports = (robot) ->
 
 
   handlePlusOneReaction = (event) ->
-    reactingUser = event.user
+    reactingUser = event.message.user.id
 
-    slackUtils.prepareFindMessageRequest(robot, event).get() (err, res, body) ->
-      if err
-        robot.logger.error(err)
-      else
-        data = JSON.parse body
+    request = robot.adapter.client.web.conversations.history
+      channel: event.message.item.channel
+      latest: event.message.item.ts
+      inclusive: true
+      limit: 1
 
+    request.then (data) ->
         if data.messages
           messageText = data.messages[0].text
           textMatch = messageText.match(/kudos (add|dodaj) @?(\S*) (.*)/i)
@@ -68,11 +62,10 @@ module.exports = (robot) ->
             handlePlusedKudos(kudosReceiver, kudosDesc, reactingUser)
 
         else
+          robot.messageRoom event.message.user.id "Upss.... nie znalazłem kudsa :("
           robot.logger.error('No messages found')
 
-  reactionsListener = (event) ->
-    if (event.reaction == '+1')
-      handlePlusOneReaction(event)
+  matchingReaction = (msg) ->
+    msg.type == 'added' and msg.reaction == '+1' and msg.item.type == 'message'
 
-  client.on 'reaction_added', reactionsListener
-
+  robot.hearReaction matchingReaction, handlePlusOneReaction
