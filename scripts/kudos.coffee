@@ -41,7 +41,7 @@ module.exports = (robot) ->
 
   robot.respond /kudos (show|pokaż dla) @?(.*)/i, (res) ->
     showKudos res, res.match[2]
-  robot.respond /^poka(z|ż) kudos(y)? (dla )?@?(\S+)$/i, (res) ->
+  robot.respond /poka(z|ż) kudos(y)? (dla )?@?(\S+)/i, (res) ->
     showKudos res, res.match[4]
 
   addKudos = (res, kudosReceiver, kudosDesc) ->
@@ -64,7 +64,7 @@ module.exports = (robot) ->
     kudosDesc = res.match[3]
     addKudos(res, kudosReceiver, kudosDesc)
 
-  robot.respond /^(do)?daj kudos(a?) @?(\S*) (.*)/i, (res) ->
+  robot.respond /(do)?daj kudos(a?) @?(\S*) (.*)/i, (res) ->
     kudosReceiver = res.match[3]
     kudosDesc = res.match[4]
     addKudos(res, kudosReceiver, kudosDesc)
