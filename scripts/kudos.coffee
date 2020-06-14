@@ -36,17 +36,14 @@ module.exports = (robot) ->
   robot.respond /kudos show @?(.*)/i, showKudos
   robot.respond /kudos pokaż dla @?(.*)/i, showKudos
 
-  addKudos = (res) ->
-    kudosReceiver = res.match[2]
-    kudosDesc = res.match[3]
-
+  addKudos = (res, kudosReceiver, kudosDesc) ->
     user = users.getUser(robot, kudosReceiver)
     if (user == undefined)
       res.reply "Nie znam żadnego #{kudosReceiver}."
     else
       successHandler = (successBody) ->
         jsonBody = JSON.parse(successBody)
-        res.reply("Ok, kudos dodany. ID=#{jsonBody.id}")
+        robot.messageRoom res.message.user.id, "Ok, kudos dodany. ID=#{jsonBody.id}"
 
       errorHandler =
         (err, errCode) -> res.reply("Error #{errCode}")
@@ -54,42 +51,16 @@ module.exports = (robot) ->
       robot.logger.info "Adds a new kudos based on message id: #{res.message.id}"
       kudos.addKudos(robot, successHandler, errorHandler, res.message.user.id, user.id, kudosDesc, res.message.id)
 
-  robot.respond /kudos (add|dodaj dla) @?(\S*) (.*)/i, addKudos
-  robot.respond /daj kudos(a?) @?(\S*) (.*)/i, addKudos
+  robot.respond /kudos (add|dodaj dla) @?(\S*) (.*)/i, (res) ->
+    kudosReceiver = res.match[2]
+    kudosDesc = res.match[3]
+    addKudos(res, kudosReceiver, kudosDesc)
 
-  addPlusOne = (res) ->
-    kudosId = res.match[1]
-    kudosDesc = res.match[2]
+  robot.respond /^(do)?daj kudos(a?) @?(\S*) (.*)/i, (res) ->
+    kudosReceiver = res.match[3]
+    kudosDesc = res.match[4]
+    addKudos(res, kudosReceiver, kudosDesc)
 
-    successHandler = (successBody) ->
-      jsonBody = JSON.parse(successBody)
-      res.reply(if jsonBody.message? then jsonBody.message else successBody)
-
-    errorHandler =
-      (err, errCode) -> res.reply("Error #{errCode}")
-
-    kudos.addPlusOne(robot, successHandler, errorHandler, res.message.user.id, kudosId, kudosDesc)
-
-  robot.respond /kudos \+1 @?([0-9]+)\s?((.*\s*)+)/i, addPlusOne
-
-  robot.respond /kudos help/i, (res) ->
-    kudosAppLogin = process.env.HUBOT_KUDOS_APP_LOGIN
-    kudosAppPassword = process.env.HUBOT_KUDOS_APP_PASSWORD
-    res.send """
-      kudos help - wyświetla tę pomoc
-      kudos show <nazwa> - pokazuje kudosy dla użytkownika <nazwa>
-      kudos pokaż dla <nazwa> - j.w.
-      kudos add <nazwa> <treść> - dodaje kudosa o treści <treść> dla użytkownika <nazwa>
-      kudos dodaj dla <nazwa> <treść> - j.w.
-      daj kudos(a) <nazwa> <treść> - j.w.
-      kudos +1 <id> <komentarz> - dodaje +1 do kudosa o id <id> z opcjonalnym komentarzem <komentarz>
-
-      Możesz również dać :kudos: na czyjejś wiadomości aby dać tej osobie Kudosa za tę właśnie wiadomość!
-
-      Kudosy są dostępne na stronie http://kudos.softwaremill.com
-      Login: #{kudosAppLogin}
-      Hasło: #{kudosAppPassword}
-    """
 
   robot.hear /.*(dziękuję|dzięki|dziekuje|dzieki|thx|thanks).*/i, (res) ->
     robot.messageRoom res.message.user.id, "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
@@ -110,13 +81,12 @@ module.exports = (robot) ->
       if jsonBody.error
         robot.logger.error jsonBody.message
         robot.messageRoom res.message.user.id, "Coś poszło nie tak: #{jsonBody.message}"
+      else if jsonBody.id
+        robot.messageRoom res.message.user.id, "Ok, kudos dodany. ID=#{jsonBody.id}"
+      else if jsonBody.message
+        robot.messageRoom res.message.user.id, "Ok, kudos dodany. Status=#{jsonBody.message}"
       else
-        if jsonBody.id
-          robot.messageRoom res.message.user.id, "Ok, kudos dodany. ID=#{jsonBody.id}"
-        else if jsonBody.message
-          robot.messageRoom res.message.user.id, "Ok, kudos dodany. Status=#{jsonBody.message}"
-        else
-          robot.messageRoom res.message.user.id, "Ok, kudos dodany. Status=#{body}"
+        robot.messageRoom res.message.user.id, "Ok, kudos dodany. Status=#{body}"
 
     onError =
       (err, errCode) ->
@@ -142,3 +112,23 @@ module.exports = (robot) ->
         robot.logger.error result.error
 
   robot.hearReaction matchingReaction, handleReaction
+
+  robot.respond /kudos help/i, (res) ->
+    kudosAppLogin = process.env.HUBOT_KUDOS_APP_LOGIN
+    kudosAppPassword = process.env.HUBOT_KUDOS_APP_PASSWORD
+    res.send """
+      kudos help - wyświetla tę pomoc
+      kudos show <nazwa> - pokazuje kudosy dla użytkownika <nazwa>
+      kudos pokaż dla <nazwa> - j.w.
+      kudos add <nazwa> <treść> - dodaje kudosa o treści <treść> dla użytkownika <nazwa>
+      kudos dodaj dla <nazwa> <treść> - j.w.
+      (do)daj kudos(a) <nazwa> <treść> - j.w.
+
+      Możesz również dać :kudos: na czyjejś wiadomości aby dać tej osobie Kudosa za tę właśnie wiadomość!
+
+      Kilkając :+1: pod czyimś kudosem, podbijasz o jeden obdarowanego kudosem.
+
+      Kudosy są dostępne na stronie http://kudos.softwaremill.com
+      Login: #{kudosAppLogin}
+      Hasło: #{kudosAppPassword}
+    """
