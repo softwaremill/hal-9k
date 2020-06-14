@@ -79,7 +79,7 @@ module.exports = (robot) ->
     msg.type == 'added' and msg.reaction == KUDOS_REACTION and msg.item.type == 'message'
 
   handleReaction = (res) ->
-    onSuccess(description) = (body) ->
+    onSuccess(description) -> (body) ->
       robot.logger.info "Response from backend: #{body}"
       jsonBody = body
       try
