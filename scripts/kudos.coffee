@@ -136,7 +136,7 @@ module.exports = (robot) ->
 
       Możesz również dać :kudos: na czyjejś wiadomości aby dać tej osobie Kudosa za tę właśnie wiadomość!
 
-      Kilkając :+1: pod czyimś kudosem, podbijasz o jeden obdarowanego kudosem.
+      Kilkając :+1: pod czyimś kudosem (danym za pomocą `janusz daj kudos...`), podbijasz o jeden obdarowanego kudosem.
 
       Kudosy są dostępne na stronie http://kudos.softwaremill.com
       Login: #{kudosAppLogin}
