@@ -93,10 +93,11 @@ module.exports = (robot) ->
     """
 
   robot.hear /.*(dziękuję|dzięki|dziekuje|dzieki|thx|thanks).*/i, (res) ->
-    res.send "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
+    robot.logger.info JSON.stringify(res.user)
+    robot.logger.info JSON.stringify(res.message)
+    robot.messageRoom res.user.id "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
 
   matchingReaction = (msg) ->
-    robot.logger.info JSON.stringify(msg.item)
     robot.logger.info "Heard reaction #{msg.type} #{msg.reaction} from #{msg.user.name} in #{msg.item.channel} on #{msg.item.ts}"
     msg.type == 'added' and msg.reaction == KUDOS_REACTION and msg.item.type == 'message'
 
