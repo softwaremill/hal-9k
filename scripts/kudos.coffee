@@ -113,7 +113,9 @@ module.exports = (robot) ->
 
         robot.logger.info "Found reactions #{reactions.length}"
 
-        if reactions.length == 1 # if there is one reaction it means that this user just clicked it
+        if reactions.length == 0
+          robot.messageRoom res.message.user.id, "Upss... nie ma emotki :kudos: na wiadomości!"
+        else if reactions.length == 1 and reactions[0].count == 1 # if there is just one reaction with one user it means that this user just clicked it
           robot.logger.info "No kudos reactions yet, adding a new kudos for message id: #{res.message.item.ts}"
           kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, result.message.text, res.message.item.ts)
         else
