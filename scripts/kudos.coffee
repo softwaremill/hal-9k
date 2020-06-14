@@ -51,8 +51,8 @@ module.exports = (robot) ->
       errorHandler =
         (err, errCode) -> res.reply("Error #{errCode}")
 
-      robot.logger.info JSON.stringify(res.message)
-      kudos.addKudos(robot, successHandler, errorHandler, res.message.user.id, user.id, kudosDesc, res.message.ts)
+      robot.logger.info "Adds a new kudos based on message id: #{res.message.id}"
+      kudos.addKudos(robot, successHandler, errorHandler, res.message.user.id, user.id, kudosDesc, res.message.id)
 
   robot.respond /kudos (add|dodaj dla) @?(\S*) (.*)/i, addKudos
   robot.respond /daj kudos(a?) @?(\S*) (.*)/i, addKudos
