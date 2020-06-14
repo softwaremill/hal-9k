@@ -14,11 +14,12 @@ module.exports = (robot) ->
   displayKudos = (robot, res, kudos, kudosUser) ->
     attachments = []
     for kudos in JSON.parse(kudos)
-      text: "- od #{kudos.kudoer.name}: #{kudos.description}",
-      mrkdwn_in: ["text"]
+      attachments.push
+        text: "- od *#{kudos.kudoer.name}*: #{kudos.description}",
+        mrkdwn_in: ["text"]
 
     response =
-      text: "Kudosy #{kudosUser}"
+      text: "Kudosy dla *#{kudosUser}*:"
       attachments: attachments
       username: robot.name
       as_user: true
@@ -126,12 +127,12 @@ module.exports = (robot) ->
     kudosAppPassword = process.env.HUBOT_KUDOS_APP_PASSWORD
     res.send """
       `kudos pomoc|help` - wyświetla tę pomoc
-      `pokaż kudos(y) <@nazwa>` - listuje kudosy dla użytkownika <@nazwa>
-      `kudos pokaż dla <@nazwa>` - j.w.
-      `kudos show <@nazwa>` - j.w. (przestarzałe, nie używać!)
-      `(do)daj kudos(a) <nazwa> <treść>` - dodaje kudosa o treści <treść> dla użytkownika <@nazwa>
-      `kudos dodaj dla <@nazwa> <treść>` - j.w.
-      `kudos add <@nazwa> <treść>` - j.w. (przestarzałe, nie używać!)
+      `pokaż kudos(y) <nazwa>` - listuje kudosy dla użytkownika <nazwa>
+      `kudos pokaż dla <nazwa>` - j.w.
+      `kudos show <nazwa>` - j.w. (przestarzałe, nie używać!)
+      `(do)daj kudos(a) <nazwa> <treść>` - dodaje kudosa o treści <treść> dla użytkownika <nazwa>
+      `kudos dodaj dla <nazwa> <treść>` - j.w.
+      `kudos add <nazwa> <treść>` - j.w. (przestarzałe, nie używać!)
 
       Możesz również dać :kudos: na czyjejś wiadomości aby dać tej osobie Kudosa za tę właśnie wiadomość!
 
