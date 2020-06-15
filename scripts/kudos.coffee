@@ -72,7 +72,7 @@ module.exports = (robot) ->
 
 
   robot.hear /.*(dziękuję|dzięki|dziekuje|dzieki|thx|thanks).*/i, (res) ->
-    robot.messageRoom res.message.user.id, "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
+    robot.messageRoom res.message.user.id, "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :) #{res.message.permalink}"
 
   matchingReaction = (msg) ->
     robot.logger.info "Heard reaction #{msg.type} #{msg.reaction} from #{msg.user.name} in #{msg.item.channel} on #{msg.item.ts}"
