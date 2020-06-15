@@ -33,7 +33,25 @@ module.exports = (robot) ->
       (err, errCode) ->
         robot.messageRoom res.message.user.id, "Upss... coś poszło nie tak przy dodawniu :+1: do kudosa: (#{errCode}) #{error}"
 
-    kudos.addPlusOneByMessageId(robot, onSuccess, onError, res.message.user.id, res.message.item.ts)
+    kudos.isKudos(
+      robot,
+      (body) ->
+        try
+          json = JSON.parse(body)
+          robot.logger.info "Response #{body}"
+          if json.message? == 'true'
+            robot.logger.info "Message #{res.message.item.ts} is Kudos"
+            kudos.addPlusOneByMessageId(robot, onSuccess, onError, res.message.user.id, res.message.item.ts)
+          else
+            robot.logger.info "Message #{res.message.item.ts} is not a Kudos"
+        catch error
+          robot.logger.error error
+      ,
+      (err, errCode) ->
+          robot.logger.error "Error: #{err} (#{errCode})"
+      ,
+      res.message.item.ts
+    )
 
   matchingReaction = (msg) ->
     msg.type == 'added' and msg.reaction.startsWith('+1') and msg.item.type == 'message'

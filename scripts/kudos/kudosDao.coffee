@@ -30,3 +30,6 @@ module.exports.addPlusOneByMessageId = (robot, successHandler, errorHandler, kud
   }
 
   backend.put("/rest/kudos/plus-one", data, robot, successHandler, errorHandler)
+
+module.exports.isKudos = (robot, successHandler, errorHandler, messageId) ->
+  backend.get("/rest/kudos/is-kudos/#{messageId}", robot, successHandler, errorHandler)
