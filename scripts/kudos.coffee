@@ -72,8 +72,8 @@ module.exports = (robot) ->
 
 
   robot.hear /.*(dziękuję|dzięki|dziekuje|dzieki|thx|thanks).*/i, (res) ->
-    robot.logger.info JSON.stringify(res.message)
-    robot.messageRoom res.message.user.id, "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :) #{res.message.permalink}"
+    link = "https://softwaremill.slack.com/archives/#{res.message.rawMessage.channel}/p#{res.message.rawMessage.id.replace('.','')}"
+    robot.messageRoom res.message.user.id, "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :) #{link}"
 
   matchingReaction = (msg) ->
     robot.logger.info "Heard reaction #{msg.type} #{msg.reaction} from #{msg.user.name} in #{msg.item.channel} on #{msg.item.ts}"
