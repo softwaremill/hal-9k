@@ -72,7 +72,7 @@ module.exports = (robot) ->
 
 
   robot.hear /.*(dziękuję|dzięki|dziekuje|dzieki|thx|thanks).*/i, (res) ->
-    link = "https://softwaremill.slack.com/archives/#{res.message.rawMessage.channel}/p#{res.message.rawMessage.id.replace('.','')}"
+    link = "https://softwaremill.slack.com/archives/#{res.message.rawMessage.channel}/p#{res.message.rawMessage.ts.replace('.','')}"
     robot.messageRoom res.message.user.id, "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :) #{link}"
 
   matchingReaction = (msg) ->
