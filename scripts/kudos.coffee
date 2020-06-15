@@ -72,6 +72,7 @@ module.exports = (robot) ->
 
 
   robot.hear /.*(dziękuję|dzięki|dziekuje|dzieki|thx|thanks).*/i, (res) ->
+    robot.logger.info JSON.stringify(res.message)
     robot.messageRoom res.message.user.id, "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :) #{res.message.permalink}"
 
   matchingReaction = (msg) ->
