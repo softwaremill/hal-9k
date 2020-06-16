@@ -71,6 +71,11 @@ module.exports = (robot) ->
     addKudos(res, kudosReceiver, kudosDesc)
 
   robot.hear /.*(dziękuję|dzięki|dziekuje|dzieki|thx|thanks).*/i, (res) ->
+    if res.random [true, false]
+      robot.logger.info "Sends notification about giving kudos"
+    else
+      robot.logger.info "No kudos reminder"
+
     link = "https://softwaremill.slack.com/archives/#{res.message.rawMessage.channel}/p#{res.message.rawMessage.ts.replace('.','')}"
     text = "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :) #{link}"
 
