@@ -84,7 +84,7 @@ module.exports = (robot) ->
       channel: res.message.rawMessage.channel
       attachments: attachments
       text: "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
-      user: robot.name
+      user: res.message.user.id
       as_user: true
 
   matchingReaction = (msg) ->
