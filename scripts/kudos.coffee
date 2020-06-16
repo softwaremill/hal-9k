@@ -83,7 +83,7 @@ module.exports = (robot) ->
     robot.adapter.client.web.chat.postEphemeral
       channel: res.message.rawMessage.channel
       user: res.message.user.id
-      attachments: JSON.stringify(attachments)
+      attachments: "#{JSON.stringify(attachments)}"
       text: text
       as_user: true
 
