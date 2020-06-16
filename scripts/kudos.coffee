@@ -76,8 +76,6 @@ module.exports = (robot) ->
 
     response =
       text: "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :) #{link}"
-      username: robot.name
-      as_user: true
       response_type: "ephemeral"
 
     robot.send response
