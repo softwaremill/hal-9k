@@ -65,7 +65,7 @@ slack:
   token: 11111111111
   exitOnDisconnect: true
   apiUrl: "https://softwaremill.slack.com/api"
-  logLevel: debug
+  logLevel: info
 
 backend:
   fourthQuestionLambdaUrl: "https://amazonaws.com/FourthQuestionApiDeploy/fourth-question"
