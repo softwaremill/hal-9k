@@ -79,18 +79,19 @@ module.exports = (robot) ->
       pretext: "Link"
       text: link
 
-    robot.logger.info "Sends response to #{res.message.rawMessage.channel} with #{JSON.stringify(attachments)}"
+    encoded = encodeURIComponent(JSON.stringify(attachments))
+    robot.logger.info "Sends response to #{res.message.rawMessage.channel} with #{encoded}"
     response = robot.adapter.client.web.chat.postEphemeral
       channel: res.message.rawMessage.channel
       user: res.message.user.id
-      attachments: encodeURIComponent(JSON.stringify(attachments))
+      attachments: encoded
       text: text
       as_user: true
     response
-      .catch (error) ->
-        robot.logger.error error
       .then (result) ->
         robot.logger.info result
+      .catch (error) ->
+        robot.logger.error error
 
   matchingReaction = (msg) ->
     robot.logger.info "Heard reaction #{msg.type} #{msg.reaction} from #{msg.user.name} in #{msg.item.channel} on #{msg.item.ts}"
