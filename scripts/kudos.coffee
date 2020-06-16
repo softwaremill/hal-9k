@@ -80,7 +80,7 @@ module.exports = (robot) ->
       text: link
 
     robot.logger.info "Sends response to #{res.message.rawMessage.channel} with #{JSON.stringify(attachments)}"
-    robot.adapter.client.web.chat.postEphemera
+    robot.adapter.client.web.chat.postEphemeral
       channel: res.message.rawMessage.channel
       user: res.message.user.id
       attachments: JSON.stringify(attachments)
