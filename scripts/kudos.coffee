@@ -74,12 +74,12 @@ module.exports = (robot) ->
   robot.hear /.*(dziękuję|dzięki|dziekuje|dzieki|thx|thanks).*/i, (res) ->
     link = "https://softwaremill.slack.com/archives/#{res.message.rawMessage.channel}/p#{res.message.rawMessage.ts.replace('.','')}"
 
-    response =
-      text: "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :) #{link}"
-      response_type: "ephemeral"
-
     robot.logger.info "Sends response #{JSON.stringify(response)}"
-    robot.reply response
+    robot.adapter.client.web.postEphemeral
+      channel: res.message.rawMessage.channel;
+      text: "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :) #{link}"
+      user: robot.name;
+      as_user: true;
 
   matchingReaction = (msg) ->
     robot.logger.info "Heard reaction #{msg.type} #{msg.reaction} from #{msg.user.name} in #{msg.item.channel} on #{msg.item.ts}"
