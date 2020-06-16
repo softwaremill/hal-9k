@@ -83,7 +83,7 @@ module.exports = (robot) ->
       channel: res.message.rawMessage.channel
       text: text
       user: res.message.user.id
-      as_user: true
+      as_user: "true"
 
     robot.logger.info "Sends response to #{res.message.rawMessage.channel} as #{JSON.stringify(message)}"
     robot.adapter.client.web.chat.postEphemeral(message)
