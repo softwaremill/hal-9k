@@ -7,7 +7,9 @@ properties([
   disableConcurrentBuilds(),
   [$class: 'GithubProjectProperty', displayName: 'Janusz the Bot', projectUrlStr: 'https://github.com/softwaremill/janusz-the-bot/'],
   overrideIndexTriggers(false),
-  quietPeriod(30),
+  options(
+    quietPeriod(30)
+  ),
   pipelineTriggers([
     githubPush(),
     pollSCM('H/15 * * * *')
