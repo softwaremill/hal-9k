@@ -70,16 +70,20 @@ module.exports = (robot) ->
     kudosDesc = res.match[4]
     addKudos(res, kudosReceiver, kudosDesc)
 
-
   robot.hear /.*(dziękuję|dzięki|dziekuje|dzieki|thx|thanks).*/i, (res) ->
     link = "https://softwaremill.slack.com/archives/#{res.message.rawMessage.channel}/p#{res.message.rawMessage.ts.replace('.','')}"
     text = "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :) #{link}"
 
-    robot.logger.info "Sends response to #{res.message.rawMessage.channel}"
-    robot.adapter.client.web.chat.postEphemeral
+    attachments = []
+    attachments.push
+      pretext: "Link"
+      text: link
+
+    robot.logger.info "Sends response to #{res.message.rawMessage.channel} with #{JSON.stringify(attachments)}"
+    robot.adapter.client.web.chat.postEphemera
       channel: res.message.rawMessage.channel
       user: res.message.user.id
-      attachments: [{"pretext": "Link", "text": text}]
+      attachments: JSON.stringify(attachments)
       text: text
       as_user: true
 
