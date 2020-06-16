@@ -85,7 +85,7 @@ module.exports = (robot) ->
       attachments: attachments
       text: "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
       user: robot.name
-      as_user: true;
+      as_user: true
 
   matchingReaction = (msg) ->
     robot.logger.info "Heard reaction #{msg.type} #{msg.reaction} from #{msg.user.name} in #{msg.item.channel} on #{msg.item.ts}"
