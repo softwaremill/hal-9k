@@ -83,9 +83,10 @@ module.exports = (robot) ->
     response = robot.adapter.client.web.chat.postEphemeral
       channel: res.message.rawMessage.channel
       user: res.message.user.id
-      attachments: "[{\"text\":\"test\"}]"
+      attachments: [{"text":"test"}]
       text: text
       as_user: true
+
     response
       .then (result) ->
         robot.logger.info result
