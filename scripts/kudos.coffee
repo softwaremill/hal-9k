@@ -73,18 +73,21 @@ module.exports = (robot) ->
 
   robot.hear /.*(dziękuję|dzięki|dziekuje|dzieki|thx|thanks).*/i, (res) ->
     link = "https://softwaremill.slack.com/archives/#{res.message.rawMessage.channel}/p#{res.message.rawMessage.ts.replace('.','')}"
+    text = "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :) #{link}"
 
-    attachments = []
-    attachments.push
-      pretext: "Link"
-      text: link
+    blocks = []
+    blocks.push
+      type: "section"
+      text:
+        type: "mrkdwn"
+        text: text
 
     robot.logger.info "Sends response to #{res.message.rawMessage.channel} with attachments #{attachments}"
     robot.adapter.client.web.chat.postEphemeral
       channel: res.message.rawMessage.channel
-      attachments: attachments
-      text: "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
       user: res.message.user.id
+      blocks: blocks
+      text: text
       as_user: true
 
   matchingReaction = (msg) ->
