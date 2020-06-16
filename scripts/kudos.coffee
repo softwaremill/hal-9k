@@ -82,7 +82,7 @@ module.exports = (robot) ->
         type: "mrkdwn"
         text: text
 
-    robot.logger.info "Sends response to #{res.message.rawMessage.channel} with attachments #{attachments}"
+    robot.logger.info "Sends response to #{res.message.rawMessage.channel}"
     robot.adapter.client.web.chat.postEphemeral
       channel: res.message.rawMessage.channel
       user: res.message.user.id
