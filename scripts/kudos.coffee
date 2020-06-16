@@ -80,12 +80,17 @@ module.exports = (robot) ->
       text: link
 
     robot.logger.info "Sends response to #{res.message.rawMessage.channel} with #{JSON.stringify(attachments)}"
-    robot.adapter.client.web.chat.postEphemeral
+    response = robot.adapter.client.web.chat.postEphemeral
       channel: res.message.rawMessage.channel
       user: res.message.user.id
       attachments: "#{JSON.stringify(attachments)}"
       text: text
       as_user: true
+    response
+      .catch (error) ->
+        robot.logger.error error
+      .then (result) ->
+        robot.logger.info result
 
   matchingReaction = (msg) ->
     robot.logger.info "Heard reaction #{msg.type} #{msg.reaction} from #{msg.user.name} in #{msg.item.channel} on #{msg.item.ts}"
