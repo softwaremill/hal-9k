@@ -39,7 +39,7 @@ module.exports = (robot) ->
         try
           json = JSON.parse(body)
           robot.logger.info "Response #{body}"
-          if json.message? == true
+          if json.message == "true"
             robot.logger.info "Message #{res.message.item.ts} is Kudos"
             kudos.addPlusOneByMessageId(robot, onSuccess, onError, res.message.user.id, res.message.item.ts)
           else
