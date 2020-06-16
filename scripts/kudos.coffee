@@ -79,12 +79,11 @@ module.exports = (robot) ->
       pretext: "Link"
       text: link
 
-    encoded = encodeURIComponent(JSON.stringify(attachments))
-    robot.logger.info "Sends response to #{res.message.rawMessage.channel} with #{encoded}"
+    robot.logger.info "Sends response to #{res.message.rawMessage.channel}"
     response = robot.adapter.client.web.chat.postEphemeral
       channel: res.message.rawMessage.channel
       user: res.message.user.id
-      attachments: encoded
+      attachments: "[{\"text\":\"test\"}]"
       text: text
       as_user: true
     response
