@@ -75,7 +75,7 @@ module.exports = (robot) ->
     link = "https://softwaremill.slack.com/archives/#{res.message.rawMessage.channel}/p#{res.message.rawMessage.ts.replace('.','')}"
 
     robot.logger.info "Sends response to #{res.message.rawMessage.channel}"
-    robot.adapter.client.web.postEphemeral
+    robot.adapter.client.web.chat.postEphemeral
       channel: res.message.rawMessage.channel
       text: "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :) #{link}"
       user: robot.name
