@@ -78,7 +78,8 @@ module.exports = (robot) ->
       text: "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :) #{link}"
       response_type: "ephemeral"
 
-    robot.send response
+    robot.logger.info "Sends response #{JSON.stringify(response)}"
+    robot.reply response
 
   matchingReaction = (msg) ->
     robot.logger.info "Heard reaction #{msg.type} #{msg.reaction} from #{msg.user.name} in #{msg.item.channel} on #{msg.item.ts}"
