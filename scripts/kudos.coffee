@@ -77,9 +77,10 @@ module.exports = (robot) ->
     robot.logger.info "Sends response to #{res.message.rawMessage.channel}"
     robot.adapter.client.web.chat.postEphemeral
       channel: res.message.rawMessage.channel
-      attachments:
+      attachments:[{
         pretext: "Link"
         text: link
+      }]
       text: "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
       user: robot.name
       as_user: true;
