@@ -83,7 +83,9 @@ module.exports = (robot) ->
       res.message.rawMessage.channel,
       text,
       res.message.user.id,
-      true
+      {
+        as_user: true
+      }
     ).then (result) ->
         robot.logger.info result
       .catch (error) ->
