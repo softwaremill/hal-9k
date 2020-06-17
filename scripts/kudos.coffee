@@ -79,15 +79,12 @@ module.exports = (robot) ->
     link = "https://softwaremill.slack.com/archives/#{res.message.rawMessage.channel}/p#{res.message.rawMessage.ts.replace('.','')}"
     text = "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :) #{link}"
 
-    message =
-      channel: res.message.rawMessage.channel
-      text: text
-      user: res.message.user.id
-      as_user: "true"
-
-    robot.logger.info "Sends response to #{res.message.rawMessage.channel} as #{JSON.stringify(message)}"
-    robot.adapter.client.web.chat.postEphemeral(message)
-      .then (result) ->
+    # temporary solution https://github.com/slackapi/hubot-slack/issues/599#issuecomment-645249121
+    robot.adapter.client.web.chat.postEphemeral(
+      res.message.rawMessage.channel,
+      text,
+      res.message.user.id
+    ).then (result) ->
         robot.logger.info result
       .catch (error) ->
         robot.logger.error error
