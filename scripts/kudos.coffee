@@ -76,14 +76,14 @@ module.exports = (robot) ->
     else
       robot.logger.info "No kudos reminder"
 
-    link = "https://softwaremill.slack.com/archives/#{res.message.rawMessage.channel}/p#{res.message.rawMessage.ts.replace('.','')}"
-    text = "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :) #{link}"
+    text = "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
 
     # temporary solution https://github.com/slackapi/hubot-slack/issues/599#issuecomment-645249121
     robot.adapter.client.web.chat.postEphemeral(
       res.message.rawMessage.channel,
       text,
-      res.message.user.id
+      res.message.user.id,
+      true
     ).then (result) ->
         robot.logger.info result
       .catch (error) ->
