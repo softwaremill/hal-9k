@@ -91,18 +91,18 @@ module.exports = (robot) ->
       robot.logger.info "No kudos reminder"
 
     text = 'A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)'
-    attachments = [
+    attachments = [{
       text: 'Dasz kudosa?',
       fallback: 'Please use Slack client to handle this!',
       callback_id: 'dismiss_kudos_suggestion',
       attachment_type: 'default',
-      actions:[
+      actions: [{
         name: 'dismiss_suggestion',
         text: 'Nie tym razem',
         type: 'button',
         value: 'dismiss'
-      ]
-    ]
+      }]
+    }]
 
     # temporary solution https://github.com/slackapi/hubot-slack/issues/599#issuecomment-645249121
     robot.adapter.client.web.chat.postEphemeral(

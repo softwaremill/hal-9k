@@ -62,7 +62,9 @@ mysql:
       CREATE TABLE IF NOT EXISTS brain (id INT,data TEXT, PRIMARY KEY (id));
 
 slack:
-  token: 11111111111
+  token: 11111111111 # hubot https://softwaremill.slack.com/services/B03JTM099
+  botToken: 11111111111 # classic app https://api.slack.com/apps/A0156M45HSB
+  verificationToken: 1231231231231
   exitOnDisconnect: true
   apiUrl: "https://softwaremill.slack.com/api"
   logLevel: info

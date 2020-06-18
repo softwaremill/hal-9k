@@ -5,7 +5,8 @@ metadata:
   labels:
 {{- include "janusz-the-bot.labels" . | nindent 4 }}
 data:
-  HUBOT_SLACK_TOKEN: {{ .Values.slack.token }}
+  HUBOT_SLACK_TOKEN: {{ .Values.slack.botToken }}
+  HUBOT_SLACK_VERIFICATION_TOKEN: {{ .Values.slack.verificationToken }}
   MYSQL_URL: mysql://{{ .Values.mysql.mysqlUser }}:{{ .Values.mysql.mysqlPassword }}@{{ include "janusz-the-bot.fullname" . }}-mysql/{{ .Values.mysql.mysqlDatabase }}
   FOURTH_QUESTION_LAMBDA_URL: {{ .Values.backend.fourthQuestionLambdaUrl }}
   HUBOT_BITBUCKET_PASSWORD: {{ .Values.bitbucket.password }}
