@@ -154,20 +154,6 @@ module.exports = (robot) ->
   robot.respond /jakie dziś czwarte/i, get4thQ
   robot.respond /poproszę o czwarte pytanie/i, get4thQ
 
-  robot.hear /^(januszu)? (.+)/i, (res) ->
-    res.finish()
-
-    robot.logger.info "Catching: #{res.match[2]}"
-
-    message = res.message
-    message.done = false
-    message.text = message.text.replace(res.match[1], robot.name)
-
-    robot.logger.info "Reroute message back to robot"
-    robot.logger.info message
-    robot.receive message
-    return
-
   robot.adapter.client.rtm.on 'message', (event) ->
     if (event.bot_id != undefined && event.text.match(///#{FourthQuestionVotingEndSentence}///i))
       for item in EmojiToNumberOfVotedQuestionMap
