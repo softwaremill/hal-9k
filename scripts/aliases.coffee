@@ -2,7 +2,7 @@
 #   Hubot will react on different names
 
 module.exports = (robot) ->
-  robot.hear /^(janusz|januszu)? (.+)/i, (res) ->
+  robot.hear /^(januszu)? (.+)/i, (res) ->
     res.finish()
 
     robot.logger.info "Catching: #{res.match[2]}"
