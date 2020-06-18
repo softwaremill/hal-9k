@@ -14,7 +14,7 @@ module.exports = (robot) ->
 
   slackMessages = undefined
 
-  slackMessages = createMessageAdapter process.env.HUBOT_SLACK_VERIFICATION_TOKEN
+  slackMessages = createMessageAdapter process.env.HUBOT_SIGNING_SECRET
   robot.slackMessages = slackMessages
 
   robot.router.post '/slack/actions', slackMessages.expressMiddleware()

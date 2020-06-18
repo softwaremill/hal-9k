@@ -7,6 +7,7 @@ metadata:
 data:
   HUBOT_SLACK_TOKEN: {{ .Values.slack.botToken }}
   HUBOT_SLACK_VERIFICATION_TOKEN: {{ .Values.slack.verificationToken }}
+  HUBOT_SLACK_SIGNING_SECRET: {{ .Values.slack.signingSecret }}
   MYSQL_URL: mysql://{{ .Values.mysql.mysqlUser }}:{{ .Values.mysql.mysqlPassword }}@{{ include "janusz-the-bot.fullname" . }}-mysql/{{ .Values.mysql.mysqlDatabase }}
   FOURTH_QUESTION_LAMBDA_URL: {{ .Values.backend.fourthQuestionLambdaUrl }}
   HUBOT_BITBUCKET_PASSWORD: {{ .Values.bitbucket.password }}
