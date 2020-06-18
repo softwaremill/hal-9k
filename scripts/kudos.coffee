@@ -102,6 +102,7 @@ module.exports = (robot) ->
         type: 'button',
         value: 'dismiss'
       }]
+      response_url: 'http://janusz-the-bot.sml.io/slack/actions'
     }]
 
     # temporary solution https://github.com/slackapi/hubot-slack/issues/599#issuecomment-645249121
