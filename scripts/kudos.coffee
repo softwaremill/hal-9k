@@ -70,13 +70,39 @@ module.exports = (robot) ->
     kudosDesc = res.match[4]
     addKudos(res, kudosReceiver, kudosDesc)
 
+
+  robot.slackMessages.action "dismiss_kudos_suggestion", (payload, respond) ->
+    robot.logger.info "Handles callback: dismiss_kudos_suggestion"
+    robot.logger.info JSON.stringify payload
+
+    actionValue = payload.actions[0].value
+    if actionValue == 'dismiss'
+      respond({
+        response_type: 'ephemeral',
+        text: '',
+        replace_original: 'true',
+        delete_original:'true'
+      })
+
   robot.hear /.*(dziękuję|dzięki|dziekuje|dzieki|thx|thanks).*/i, (res) ->
     if res.random [true, false]
       robot.logger.info "Sends notification about giving kudos"
     else
       robot.logger.info "No kudos reminder"
 
-    text = "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
+    text = 'A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)'
+    attachments = [
+      text: 'Dasz kudosa?',
+      fallback: 'Please use Slack client to handle this!',
+      callback_id: 'dismiss_kudos_suggestion',
+      attachment_type: 'default',
+      actions:[
+        name: 'dismiss_suggestion',
+        text: 'Nie tym razem',
+        type: 'button',
+        value: 'dismiss'
+      ]
+    ]
 
     # temporary solution https://github.com/slackapi/hubot-slack/issues/599#issuecomment-645249121
     robot.adapter.client.web.chat.postEphemeral(
@@ -84,6 +110,7 @@ module.exports = (robot) ->
       text,
       res.message.user.id,
       {
+        attachments: attachments
         as_user: true
       }
     ).then (result) ->
