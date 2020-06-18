@@ -12,6 +12,7 @@ services:
       - CLEARDB_DATABASE_URL=mysql://root:password@mysql/janusz
       - HUBOT_SLACK_TOKEN
       - HUBOT_SLACK_VERIFICATION_TOKEN
+      - HUBOT_SLACK_SIGNING_TOKEN
       - HUBOT_TRELLO_BOARD
       - HUBOT_TRELLO_KEY
       - HUBOT_TRELLO_TOKEN
