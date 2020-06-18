@@ -91,19 +91,16 @@ module.exports = (robot) ->
       robot.logger.info "No kudos reminder"
 
     text = 'A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)'
-    attachments = [{
-      text: 'Dasz kudosa?',
-      fallback: 'Please use Slack client to handle this!',
-      callback_id: 'dismiss_kudos_suggestion',
-      attachment_type: 'default',
-      actions: [{
-        name: 'dismiss_suggestion',
-        text: 'Nie tym razem',
-        type: 'button',
-        value: 'dismiss'
-      }]
-      response_url: 'http://janusz-the-bot.sml.io/slack/actions'
-    }]
+    blocks = [
+      type: 'actions'
+      elements: [
+        type: 'button'
+        text:
+          type: 'dismiss_suggestion'
+          text: 'Nie tym razem'
+          emoji: false
+      ]
+    ]
 
     # temporary solution https://github.com/slackapi/hubot-slack/issues/599#issuecomment-645249121
     robot.adapter.client.web.chat.postEphemeral(
@@ -111,7 +108,7 @@ module.exports = (robot) ->
       text,
       res.message.user.id,
       {
-        attachments: attachments
+        blocks: blocks
         as_user: true
       }
     ).then (result) ->
