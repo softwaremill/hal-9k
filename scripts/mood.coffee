@@ -22,16 +22,16 @@ module.exports = (robot) ->
   remindMoodQuestion = (res) ->
     res.reply COMMAND_USAGE_DESCRIPTION
 
-  recordMoodFromEvent = (event, client) ->
+  recordMoodFromEvent = (event) ->
     mood = parseInt(event.text.match(VALID_MOOD_COMMAND_REGEXP)[1])
     if mood < 1 or mood > 5
-      remindMoodQuestionFromEvent(event, client)
+      remindMoodQuestionFromEvent(event)
     else
       moodDescription = event.text.match(VALID_MOOD_COMMAND_REGEXP)[2]
-      moodDao.addMoodFromEvent(client, event, robot, mood, moodDescription)
+      moodDao.addMoodFromEvent(event, robot, mood, moodDescription)
 
-  remindMoodQuestionFromEvent = (event, client) ->
-    client.sendMessage(COMMAND_USAGE_DESCRIPTION, event.channel)
+  remindMoodQuestionFromEvent = (event) ->
+    robot.messageRoom event.channel, COMMAND_USAGE_DESCRIPTION
 
   robot.hear VALID_MOOD_COMMAND_REGEXP, recordMood
   robot.hear INVALID_MOOD_COMMAND_REGEXP, remindMoodQuestion
@@ -40,8 +40,8 @@ module.exports = (robot) ->
     if (event.subtype == 'me_message')
       robot.logger.info("Me message = #{JSON.stringify(event)}")
       if (event.text.match(VALID_MOOD_COMMAND_REGEXP))
-        recordMoodFromEvent(event, client)
+        recordMoodFromEvent(event)
       else if (event.text.match(INVALID_MOOD_COMMAND_REGEXP))
-        remindMoodQuestionFromEvent(event, client)
+        remindMoodQuestionFromEvent(event)
 
   robot.adapter.client.on 'message', meMessageListener

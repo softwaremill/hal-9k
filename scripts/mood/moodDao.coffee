@@ -4,8 +4,8 @@ users = require '../common/users'
 errorHandler = (messageResponse) ->
   (err, errCode) -> messageResponse.reply("Error #{errCode}")
 
-errorHandlerForEvent = (event, client) ->
-  (err, errCode) -> client.sendMessage("Error #{errCode}", event.channel)
+errorHandlerForEvent = (event, robot) ->
+  (err, errCode) -> robot.messageRoom event.channel, "Error #{errCode}"
 
 module.exports.addMood = (robot, messageResponse, mood, description) ->
   robot.logger.info("message: #{messageResponse}");
@@ -32,7 +32,7 @@ module.exports.addMood = (robot, messageResponse, mood, description) ->
 
   backend.post("/rest/mood", data, robot, successHandler, errorHandler(messageResponse))
 
-module.exports.addMoodFromEvent = (client, event, robot, mood, description) ->
+module.exports.addMoodFromEvent = (event, robot, mood, description) ->
   robot.logger.info("event: #{JSON.stringify(event)}");
   robot.logger.info("mood: #{mood}");
   robot.logger.info("description: #{description}");
@@ -48,15 +48,15 @@ module.exports.addMoodFromEvent = (client, event, robot, mood, description) ->
     jsonBody = JSON.parse(successBody)
     if (jsonBody.message == "ok")
       if (new Date().getDay() == 5)
-        client.sendMessage("Miłego weekendu! Do poniedziałku.", event.channel)
+        robot.messageRoom event.channel, "Miłego weekendu! Do poniedziałku."
       else
-        client.sendMessage("Trzymaj się, do jutra @#{users.getUserById(robot, event.user).name}!", event.channel)
+        robot.messageRoom event.channel, "Trzymaj się, do jutra @#{users.getUserById(robot, event.user).name}!"
     else
       robot.logger.info("Bad response from janusz mood storage!")
       robot.logger.info(jsonBody)
-      client.sendMessage("Coś znowu poszło nie tak. @grzesiek, raaaaatuj!", event.channel)
+      robot.messageRoom event.channel, "Coś znowu poszło nie tak. @grzesiek, raaaaatuj!"
 
-  backend.post("/rest/mood", data, robot, successHandler, errorHandlerForEvent(event, client))
+  backend.post("/rest/mood", data, robot, successHandler, errorHandlerForEvent(event, robot))
 
 
 module.exports.getMoodStats = (robot, messageResponse) ->
