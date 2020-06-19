@@ -18,8 +18,8 @@ module.exports = (robot) ->
   robot.slackMessages = slackMessages
 
   loggingMiddleware = (req, res, next) ->
-    robot.logger.info "Request: #{JSON.stringify(req)}"
-    robot.logger.info "Response: #{JSON.stringify(res)}"
+    robot.logger.info req
+    robot.logger.info res
     next()
 
   handlers = [loggingMiddleware, slackMessages.expressMiddleware()]
