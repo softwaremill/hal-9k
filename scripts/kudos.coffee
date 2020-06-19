@@ -59,9 +59,11 @@ module.exports = (robot) ->
           .catch (error) ->
             robot.logger.error error
             robot.messageRoom res.message.user.id, "Ok, kudos dodany ale nie mogłem potwierdzić, że dodałem kudosa bo: #{error}"
+            false
           .then (result) ->
             robot.logger.info result
-            robot.messageRoom res.message.user.id, "Ok, kudos dodany!"
+            if result
+              robot.messageRoom res.message.user.id, "Ok, kudos dodany!"
 
       errorHandler =
         (err, errCode) -> res.reply("Error #{errCode}")
