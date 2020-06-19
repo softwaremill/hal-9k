@@ -52,9 +52,10 @@ module.exports = (robot) ->
     else
       successHandler = () ->
         response = robot.adapter.client.web.reactions.add
-          channel: res.message.rawMessage.channel
           name: 'white_check_mark'
-          timestamp: res.message.id
+          opts:
+            channel: res.message.rawMessage.channel
+            timestamp: res.message.id
         response
           .catch (error) ->
             robot.logger.error error
