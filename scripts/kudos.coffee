@@ -50,9 +50,19 @@ module.exports = (robot) ->
     if (user == undefined)
       res.reply "Nie znam żadnego #{kudosReceiver}."
     else
-      successHandler = (successBody) ->
-        jsonBody = JSON.parse(successBody)
-        robot.messageRoom res.message.user.id, "Ok, kudos dodany. ID=#{jsonBody.id}"
+      successHandler = () ->
+        robot.logger.info res.message
+        response = robot.adapter.client.web.reactions.add
+          channel: res.message.rawMessage.channel
+          name: 'white_check_mark'
+          timestamp: res.message.rawMessage.timestamp
+        response
+          .catch (error) ->
+            robot.logger.error error
+            robot.messageRoom res.message.user.id, "Ok, kudos dodany ale nie mogłem potwierdzić, że dodałem kudosa bo: #{error}"
+          .then (result) ->
+            robot.logger.info result
+            robot.messageRoom res.message.user.id, "Ok, kudos dodany!"
 
       errorHandler =
         (err, errCode) -> res.reply("Error #{errCode}")
@@ -65,9 +75,9 @@ module.exports = (robot) ->
     kudosDesc = res.match[3]
     addKudos(res, kudosReceiver, kudosDesc)
 
-  robot.respond /(do)?daj kudos(a?) @?(\S*) (.*)/i, (res) ->
-    kudosReceiver = res.match[3]
-    kudosDesc = res.match[4]
+  robot.respond /(do)?daj kudos(a?)( dla)? @?(\S*) (.*)/i, (res) ->
+    kudosReceiver = res.match[4]
+    kudosDesc = res.match[5]
     addKudos(res, kudosReceiver, kudosDesc)
 
 
