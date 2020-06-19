@@ -86,7 +86,6 @@ module.exports = (robot) ->
 
   robot.slackMessages.action 'dismiss_kudos_suggestion', (payload, respond) ->
     robot.logger.info "Handles callback: dismiss_kudos_suggestion"
-    robot.logger.info JSON.stringify payload
 
     actionValue = payload.actions[0].value
     if actionValue == 'dismiss'
