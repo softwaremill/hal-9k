@@ -51,11 +51,10 @@ module.exports = (robot) ->
       res.reply "Nie znam żadnego #{kudosReceiver}."
     else
       successHandler = () ->
-        robot.logger.info res.message
         response = robot.adapter.client.web.reactions.add
           channel: res.message.rawMessage.channel
           name: 'white_check_mark'
-          timestamp: res.message.rawMessage.timestamp
+          timestamp: res.message.id
         response
           .catch (error) ->
             robot.logger.error error
