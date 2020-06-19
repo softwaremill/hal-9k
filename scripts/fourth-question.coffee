@@ -123,10 +123,13 @@ module.exports = (robot) ->
             responseSender("Nieznany status głosowania :/ #{election.status}")
 
   addReaction = (emojiName, event) ->
-    robot.adapter.client.web.reactions.add
-      name: emojiName,
-      channel: "#{event.channel}",
-      timestamp: "#{event.ts}"
+    robot.adapter.client.web.reactions.add(
+      emojiName,
+      {
+        channel: event.channel,
+        timestamp: event.ts
+      }
+    )
 
   # Display a voting message just after backend created an election with random questions
   new CronJob('0 0 7 * * *', displayQuestionOnChrumChannel(true), null, true, timeZone)
