@@ -18,7 +18,7 @@ module.exports = (robot) ->
     robot.logger.info "robot.slackMessages already defined"
     return
 
-  slackMessages = createMessageAdapter process.env.HUBOT_SLACK_SIGNING_SECRET
+  slackMessages = createMessageAdapter process.env.HUBOT_SLACK_VERIFICATION_TOKEN
   robot.slackMessages = slackMessages
 
   loggingMiddleware = (req, res, next) ->
