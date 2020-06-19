@@ -36,3 +36,4 @@ data:
   SENDGRID_USERNAME: {{ .Values.sendgrid.username }}
   SLACK_API_URL: {{ .Values.slack.apiUrl }}
   HUBOT_LOG_LEVEL: {{ .Values.slack.logLevel }}
+  DEBUG: "@slack/interactive-messages:*"
