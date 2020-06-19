@@ -17,4 +17,11 @@ module.exports = (robot) ->
   slackMessages = createMessageAdapter process.env.HUBOT_SLACK_SIGNING_SECRET
   robot.slackMessages = slackMessages
 
-  robot.router.post '/slack/actions', slackMessages.expressMiddleware()
+  loggingMiddleware = (res, req, query) ->
+    robot.logger.info "Response: #{res}"
+    robot.logger.info "Request: #{req}"
+    robot.logger.info "Query: #{query}"
+
+  handlers = [slackMessages.expressMiddleware(), loggingMiddleware]
+
+  robot.router.post '/slack/actions', handlers
