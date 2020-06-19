@@ -84,7 +84,7 @@ module.exports = (robot) ->
     kudosDesc = res.match[5]
     addKudos(res, kudosReceiver, kudosDesc)
 
-  robot.slackMessages.action 'dismiss_suggestion', (payload, respond) ->
+  robot.slackMessages.action 'dismiss_kudos_suggestion', (payload, respond) ->
     robot.logger.info "Handles callback: dismiss_kudos_suggestion"
     robot.logger.info JSON.stringify payload
 
@@ -103,19 +103,18 @@ module.exports = (robot) ->
     else
       robot.logger.info "No kudos reminder"
 
-    text = 'A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)'
+    text = "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
     attachments = [
-      text: 'Dasz kudosa?',
-      fallback: 'Please use Slack client to handle this!'
-      callback_id: 'dismiss_kudos_suggestion'
-      attachment_type: 'default'
+      text: "Dasz kudosa?",
+      fallback: "Upss... ten klient nie obsługuje przycisków :("
+      callback_id: "dismiss_kudos_suggestion"
+      attachment_type: "default"
       actions: [
-        name: 'dismiss_suggestion'
-        text: 'Nie tym razem'
-        type: 'button'
-        value: 'dismiss'
+        name: "dismiss_suggestion"
+        text: "Nie tym razem"
+        type: "button"
+        value: "dismiss"
       ]
-      response_url: 'http://janusz-the-bot.sml.io/slack/actions'
     ]
 
     # temporary solution https://github.com/slackapi/hubot-slack/issues/599#issuecomment-645249121
