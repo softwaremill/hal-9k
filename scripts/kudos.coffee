@@ -84,7 +84,7 @@ module.exports = (robot) ->
     kudosDesc = res.match[5]
     addKudos(res, kudosReceiver, kudosDesc)
 
-  robot.slackMessages.action 'dismiss_kudos_suggestion', (payload, respond) ->
+  robot.slackMessages.action 'dismiss_suggestion', (payload, respond) ->
     robot.logger.info "Handles callback: dismiss_kudos_suggestion"
     robot.logger.info JSON.stringify payload
 
