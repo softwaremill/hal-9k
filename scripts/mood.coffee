@@ -9,13 +9,8 @@ INVALID_MOOD_COMMAND_REGEXP = /^out(\s\D.*)?$/i
 COMMAND_USAGE_DESCRIPTION = "Hej jak Ci minął dzień? Napisz `/me out [nastrój 1-5] [opcjonalnie pare słów co się działo]`"
 
 moodDao = require './mood/moodDao'
-{ RTMClient } = require "@slack/client"
 
 module.exports = (robot) ->
-  slackToken = process.env.HUBOT_SLACK_TOKEN
-  client = new RTMClient(slackToken)
-  client.start()
-
   recordMood = (res) ->
     mood = parseInt(res.match[1])
     if mood < 1 or mood > 5
