@@ -98,9 +98,11 @@ module.exports = (robot) ->
 
   robot.hear /.*(dziękuję|dzięki|dziekuje|dzieki|thx|thanks).*/i, (res) ->
     if res.random [true, false]
-      robot.logger.info "Sends notification about giving kudos"
+      robot.logger.info "Asks to give a Kudos"
     else
       robot.logger.info "No kudos reminder"
+      res.finish()
+      return
 
     text = "A może tak dać kudosa? A jak dać kudosa to pisz `janusz kudos help` :)"
     attachments = [
