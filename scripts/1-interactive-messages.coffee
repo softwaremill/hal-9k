@@ -18,10 +18,9 @@ module.exports = (robot) ->
   robot.slackMessages = slackMessages
 
   loggingMiddleware = (req, res, next) ->
-    robot.logger.info req
-    robot.logger.info res
+    robot.logger.info req.body
     next()
 
-  handlers = [loggingMiddleware, slackMessages.expressMiddleware()]
+  handlers = [loggingMiddleware, slackMessages.expressMiddleware]
 
   robot.router.post '/slack/actions', handlers
