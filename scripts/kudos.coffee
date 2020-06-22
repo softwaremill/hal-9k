@@ -32,11 +32,12 @@ module.exports = (robot) ->
       res.reply "Nie znam żadnego #{kudosUser}."
     else
       successHandler = (body) ->
+        robot.slackConfirm res
         displayKudos(robot, res, body, kudosUser)
 
       errorHandler = (err, errCode) ->
-        robot.logger.error "Error getting kudos from the backend. Error: #{error}"
-        res.reply("Error #{errCode}")
+        robot.logger.error "#{errCode}: #{err}"
+        robot.messageRoom res.message.user.id, "Nie moge pobrać listy kudosów #{errCode}: #{err}"
 
       kudos.getKudos(robot, user.id, successHandler, errorHandler)
 
@@ -51,25 +52,10 @@ module.exports = (robot) ->
       res.reply "Nie znam żadnego #{kudosReceiver}."
     else
       successHandler = () ->
-        response = robot.adapter.client.web.reactions.add(
-          'white_check_mark',
-          {
-            channel: res.message.rawMessage.channel
-            timestamp: res.message.id
-          }
-        )
-        response
-          .catch (error) ->
-            robot.logger.error error
-            robot.messageRoom res.message.user.id, "Ok, kudos dodany ale nie mogłem potwierdzić, że dodałem kudosa bo: #{error}"
-            false
-          .then (result) ->
-            robot.logger.info result
-            if result
-              robot.messageRoom res.message.user.id, "Ok, kudos dodany!"
-
-      errorHandler =
-        (err, errCode) -> res.reply("Error #{errCode}")
+        robot.slackConfirm res, "Ok, kudos dodany!"
+      errorHandler = (err, errCode) ->
+        robot.logger.error "#{errCode}: #{err}"
+        robot.messageRoom res.message.user.id, "Coś poszło nie tak #{errCode}: #{err}"
 
       robot.logger.info "Adds a new kudos based on message id: #{res.message.id}"
       kudos.addKudos(robot, successHandler, errorHandler, res.message.user.id, user.id, kudosDesc, res.message.id)
@@ -100,7 +86,7 @@ module.exports = (robot) ->
     if res.random [true, false]
       robot.logger.info "Asks to give a Kudos"
     else
-      robot.logger.info "No kudos reminder"
+      robot.logger.info "No kudos hint"
       res.finish()
       return
 
@@ -148,24 +134,21 @@ module.exports = (robot) ->
 
         if jsonBody.error
           robot.logger.error jsonBody.message
-          robot.messageRoom res.message.user.id, "Coś poszło nie tak: #{jsonBody.message}"
-        else if jsonBody.id
-          robot.messageRoom res.message.user.id, "Ok, kudos dodany, id=#{jsonBody.id}: #{description}"
-        else if jsonBody.message
+          robot.messageRoom res.message.user.id, "Coś poszło nie tak: #{jsonBody.error} - #{jsonBody.message}"
+        else if jsonBody.id and jsonBody.message
           robot.messageRoom res.message.user.id, "Ok, kudos dodany, status=#{jsonBody.message}: #{description}"
         else
           robot.messageRoom res.message.user.id, "Hm... może się udało a może nie, status=#{body}"
       handler
 
-    onError =
-      (err, errCode) ->
-        robot.messageRoom res.message.user.id, "Upss... coś poszło nie tak przy dodawniu :+1: do kudosa: (#{errCode}) #{error}"
+    onError = (err, errCode) ->
+      robot.logger.error "#{errCode}: #{err}"
+      robot.messageRoom res.message.user.id, "Upss... coś poszło nie tak przy dodawniu :+1: do kudosa: (#{errCode}) #{error}"
 
-    response = robot.adapter.client.web.reactions.get
+    robot.adapter.client.web.reactions.get(
       channel: res.message.item.channel
       timestamp: res.message.item.ts
-
-    response.then (result) ->
+    ).then (result) ->
       if result.ok
         robot.logger.info "Got reaction's message: #{result.message.text}"
         robot.logger.info JSON.stringify(result)
@@ -184,12 +167,17 @@ module.exports = (robot) ->
           kudos.addPlusOneByMessageId(robot, onSuccess(":+1:"), onError, res.message.user.id, res.message.item.ts)
       else
         robot.logger.error result.error
+    .catch (error) ->
+      robot.logger.error error
 
   robot.hearReaction matchingReaction, handleReaction
 
   robot.respond /kudos (help|pomoc)/i, (res) ->
+    robot.slackConfirm res
+
     kudosAppLogin = process.env.HUBOT_KUDOS_APP_LOGIN
     kudosAppPassword = process.env.HUBOT_KUDOS_APP_PASSWORD
+
     robot.messageRoom res.message.user.id, """
       `kudos pomoc|help` - wyświetla tę pomoc
       `pokaż kudos(y) <nazwa>` - listuje kudosy dla użytkownika <nazwa>
@@ -201,7 +189,7 @@ module.exports = (robot) ->
 
       Możesz również dać :kudos: na czyjejś wiadomości aby dać tej osobie Kudosa za tę właśnie wiadomość!
 
-      Kilkając :+1: pod czyimś kudosem (danym za pomocą `janusz daj kudos...`), podbijasz o jeden obdarowanego kudosem.
+      Kilkając :+1: pod czyimś kudosem (danym za pomocą `janusz daj kudos...` lub :kudos:), podbijasz o jeden obdarowanego kudosem.
 
       Kudosy są dostępne na stronie http://kudos.softwaremill.com
       Login: #{kudosAppLogin}
