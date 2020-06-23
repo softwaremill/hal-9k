@@ -123,23 +123,23 @@ module.exports = (robot) ->
     msg.type == 'added' and msg.reaction == KUDOS_REACTION and msg.item.type == 'message'
 
   handleReaction = (res) ->
-    onSuccess = (description) ->
-      handler = (body) ->
-        robot.logger.info "Response from backend: #{body}"
-        jsonBody = body
-        try
-          jsonBody = JSON.parse(body)
-        catch error
-          robot.logger.error "Cannot parse #{body} as JSON, got error: #{error}"
+    onSuccess = (body) ->
+      robot.logger.info "Response from backend: #{body}"
+      jsonBody = body
+      try
+        jsonBody = JSON.parse(body)
+      catch error
+        robot.logger.error "Cannot parse #{body} as JSON, got error: #{error}"
 
-        if jsonBody.error
-          robot.logger.error jsonBody.message
-          robot.messageRoom res.message.user.id, "Coś poszło nie tak: #{jsonBody.error} - #{jsonBody.message}"
-        else if jsonBody.id and jsonBody.message
-          robot.messageRoom res.message.user.id, "Ok, kudos dodany, status=#{jsonBody.message}: #{description}"
-        else
-          robot.messageRoom res.message.user.id, "Hm... może się udało a może nie, status=#{body}"
-      handler
+      if jsonBody.error
+        robot.logger.error jsonBody.message
+        robot.messageRoom res.message.user.id, "Coś poszło nie tak: #{jsonBody.error} - #{jsonBody.message}"
+      else if jsonBody.id
+        robot.messageRoom res.message.user.id, "Ok, kudos dodany!"
+      else if jsonBody.message
+        robot.messageRoom res.message.user.id, "Ok, kudos (chyba) dodany: #{jsonBody.message}"
+      else
+        robot.messageRoom res.message.user.id, "Hm... może się udało a może nie: ```#{body}```"
 
     onError = (err, errCode) ->
       robot.logger.error "#{errCode}: #{err}"
@@ -160,10 +160,10 @@ module.exports = (robot) ->
         else if reactions.length == 1 and reactions[0].count == 1 # if there is just one reaction with one user it means that this user just clicked it
           robot.logger.info "No kudos reactions yet, adding a new kudos for message id: #{res.message.item.ts}"
           description = "Kudos za #{result.message.permalink}"
-          kudos.addKudos(robot, onSuccess(description), onError, res.message.user.id, res.message.item_user.id, description, res.message.item.ts)
+          kudos.addKudos(robot, onSuccess, onError, res.message.user.id, res.message.item_user.id, description, res.message.item.ts)
         else
           robot.logger.info "Kudos already added, do plus one"
-          kudos.addPlusOneByMessageId(robot, onSuccess(":+1:"), onError, res.message.user.id, res.message.item.ts)
+          kudos.addPlusOneByMessageId(robot, onSuccess, onError, res.message.user.id, res.message.item.ts)
       else
         robot.logger.error result.error
     .catch (error) ->
