@@ -47,8 +47,9 @@ module.exports = (robot) ->
   robot.adapter.client.on 'message', meMessageListener
 
   messageMatcher = (message) ->
-    robot.logger.info "Checking if #{JSON.stringify(message)} is a proper me_message"
-    message.subtype? == 'me_message' and message.text.match VALID_MOOD_COMMAND_REGEXP
+    if message.subtype? == 'me_message'
+      robot.logger.info "Message #{JSON.stringify(message)} is a me_message"
+      message.text.match VALID_MOOD_COMMAND_REGEXP
 
   responseHandler = (response) ->
     robot.logger.info "Handling me_message"
