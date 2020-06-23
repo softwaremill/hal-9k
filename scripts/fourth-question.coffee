@@ -169,19 +169,16 @@ module.exports = (robot) ->
     questionVoted = getQuestionNumberForEmoji(event.reaction)
     robot.logger.info("Question voted: #{questionVoted}")
 
-    # see https://github.com/slackapi/node-slack-sdk/blob/v3.16.1-sec.2/lib/clients/web/facets/conversations.js#L81-L102
-    webClient.conversations.history(
-      event.item.channel,
-      {
-        latest: event.item.ts
-        inclusive: true
-        limit: 1
-      }
-    ).then (result) ->
-        robot.logger.info result
-     .catch (err) ->
-        robot.logger.error err
-        robot.messageRoom event.user.id, "Nie mogłem dodać Twojego głosu na 4te bo: #{err}"
+    webClient.conversations.history
+      channel: event.item.channel
+      latest: event.item.ts
+      inclusive: true
+      limit: 1
+    .then (result) ->
+      robot.logger.info result
+    .catch (err) ->
+      robot.logger.error err
+      robot.messageRoom event.user.id, "Nie mogłem dodać Twojego głosu na 4te bo: #{err}"
 
   reactionsListener = (event) ->
     if ((EmojiToNumberOfVotedQuestionMap.map (it) -> it.name ).indexOf(event.reaction) isnt -1)

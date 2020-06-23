@@ -21,6 +21,7 @@
     "url": "https://github.com/softwaremill/janusz-the-bot.git"
   },
   "dependencies": {
+    "@slack/client": "5.0.2",
     "@slack/interactive-messages": "0.2.0",
     "cron": "1.0.0",
     "flip": "~0.1.1",
