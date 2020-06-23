@@ -15,11 +15,11 @@
 fourthQuestion = require './fourth_question/FourthQuestionDao'
 CronJob = require('cron').CronJob
 timeZone = 'Europe/Warsaw'
-# temporary solution to use a different token with proper scopes
 {WebClient} = require "@slack/client"
 
 module.exports = (robot) ->
 
+  # temporary solution to use a different token with proper scopes
   webClient = new WebClient(process.env.HUBOT_SLACK_OAUTH_TOKEN)
 
   FourthQuestionVotingEndSentence = "Zagłosuj przez wybranie odpowiedniej reakcji"
@@ -177,18 +177,18 @@ module.exports = (robot) ->
       limit: 1
     .then (data) ->
       robot.logger.info data
-        if data.messages
-          messageText = data.messages[0].text
-          firstLine = messageText.split("\n")[0]
+      if data.messages
+        messageText = data.messages[0].text
+        firstLine = messageText.split("\n")[0]
 
-          if firstLine.includes("GŁOSOWANIE")
-            electionDate = firstLine.match(/20\d\d-\d\d-\d\d/)[0]
-            robot.logger.info("User #{reactingUser} voted for question ID: #{questionVoted}. Election date: #{electionDate}")
-            fourthQuestion.vote(robot, reactingUser, questionVoted, electionDate)
-          else
-            robot.logger.error("Voted message is not a poll message: #{messageText}")
+        if firstLine.includes("GŁOSOWANIE")
+          electionDate = firstLine.match(/20\d\d-\d\d-\d\d/)[0]
+          robot.logger.info("User #{reactingUser} voted for question ID: #{questionVoted}. Election date: #{electionDate}")
+          fourthQuestion.vote(robot, reactingUser, questionVoted, electionDate)
         else
-          robot.logger.error("No messages found in #{data}")
+          robot.logger.error("Voted message is not a poll message: #{messageText}")
+      else
+        robot.logger.error("No messages found in #{data}")
     .catch (err) ->
       robot.logger.error err
       robot.messageRoom event.user.id, "Nie mogłem dodać Twojego głosu na 4te bo: #{err}"
