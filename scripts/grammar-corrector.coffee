@@ -17,6 +17,9 @@ module.exports = (robot) ->
       request = JSON.stringify(
         {"userName": msg.message.user.name, "msg": msg.message.text}
       )
+      if (msg.message.user.name is undefined)
+        robot.logger.warn("Ort checking message with undefined user = #{JSON.stringify(msg.message)}")
+
       robot.http(GRAMMAR_STATS_URL + '/mistakes')
       .header('Content-Type', 'application/json')
       .header('Auth-token', TOKEN)
