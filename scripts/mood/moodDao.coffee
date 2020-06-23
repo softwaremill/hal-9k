@@ -50,7 +50,7 @@ module.exports.addMoodFromEvent = (event, robot, mood, description) ->
       if (new Date().getDay() == 5)
         robot.messageRoom event.channel, "Miłego weekendu! Do poniedziałku."
       else
-        robot.messageRoom event.channel, "Trzymaj się, do jutra @#{users.getUserById(robot, event.user).name}!"
+        robot.messageRoom event.channel, "Trzymaj się, do jutra @#{event.user.name}!"
     else
       robot.logger.info("Bad response from janusz mood storage!")
       robot.logger.info(jsonBody)
