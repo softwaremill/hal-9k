@@ -14,10 +14,13 @@
 
 fourthQuestion = require './fourth_question/FourthQuestionDao'
 CronJob = require('cron').CronJob
-slackUtils = require './common/slack-utils'
 timeZone = 'Europe/Warsaw'
+# temporary solution to use a different token with proper scopes
+{WebClient} = require "@slack/client"
 
 module.exports = (robot) ->
+
+  webClient = new WebClient(process.env.HUBOT_SLACK_OAUTH_TOKEN)
 
   FourthQuestionVotingEndSentence = "Zagłosuj przez wybranie odpowiedniej reakcji"
 
@@ -167,7 +170,7 @@ module.exports = (robot) ->
     robot.logger.info("Question voted: #{questionVoted}")
 
     # see https://github.com/slackapi/node-slack-sdk/blob/v3.16.1-sec.2/lib/clients/web/facets/conversations.js#L81-L102
-    robot.adapter.client.web.conversations.history(
+    webClient.conversations.history(
       event.item.channel,
       {
         latest: event.item.ts
