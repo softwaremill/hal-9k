@@ -44,17 +44,4 @@ module.exports = (robot) ->
       else if (event.text.match(INVALID_MOOD_COMMAND_REGEXP))
         remindMoodQuestionFromEvent(event)
 
-  # robot.adapter.client.on 'message', meMessageListener
-
-  messageMatcher = (message) ->
-    robot.logger.info message
-    if message.subtype? == 'me_message'
-      robot.logger.info "Message #{JSON.stringify(message)} is a me_message"
-      message.text.match VALID_MOOD_COMMAND_REGEXP
-
-  responseHandler = (response) ->
-    robot.logger.info "Handling me_message"
-    robot.logger.info response
-    recordMoodFromEvent response
-
-  robot.listen messageMatcher, responseHandler
+  robot.adapter.client.on 'message', meMessageListener
