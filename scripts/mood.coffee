@@ -45,3 +45,12 @@ module.exports = (robot) ->
         remindMoodQuestionFromEvent(event)
 
   robot.adapter.client.on 'message', meMessageListener
+
+  messageMatcher = (message) ->
+    robot.logger.info message
+    message.subtype? == 'me_message'
+
+  responseHandler = (response) ->
+    return response
+
+  robot.listen messageMatcher, responseHandler
