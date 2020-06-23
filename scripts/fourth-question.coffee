@@ -166,6 +166,7 @@ module.exports = (robot) ->
         addReaction(item.name, event)
 
   handleVotingReaction = (event) ->
+    reactingUser = event.user
     questionVoted = getQuestionNumberForEmoji(event.reaction)
     robot.logger.info("Question voted: #{questionVoted}")
 
@@ -174,8 +175,20 @@ module.exports = (robot) ->
       latest: event.item.ts
       inclusive: true
       limit: 1
-    .then (result) ->
-      robot.logger.info result
+    .then (data) ->
+      robot.logger.info data
+        if data.messages
+          messageText = data.messages[0].text
+          firstLine = messageText.split("\n")[0]
+
+          if firstLine.includes("GŁOSOWANIE")
+            electionDate = firstLine.match(/20\d\d-\d\d-\d\d/)[0]
+            robot.logger.info("User #{reactingUser} voted for question ID: #{questionVoted}. Election date: #{electionDate}")
+            fourthQuestion.vote(robot, reactingUser, questionVoted, electionDate)
+          else
+            robot.logger.error("Voted message is not a poll message: #{messageText}")
+        else
+          robot.logger.error("No messages found in #{data}")
     .catch (err) ->
       robot.logger.error err
       robot.messageRoom event.user.id, "Nie mogłem dodać Twojego głosu na 4te bo: #{err}"
