@@ -167,7 +167,7 @@ module.exports = (robot) ->
     robot.logger.info("Question voted: #{questionVoted}")
 
     robot.adapter.client.web.conversations.history(
-      channel: event.item.channel,
+      event.item.channel,
       {
         latest: event.item.ts
         inclusive: true
