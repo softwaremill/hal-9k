@@ -166,6 +166,7 @@ module.exports = (robot) ->
     questionVoted = getQuestionNumberForEmoji(event.reaction)
     robot.logger.info("Question voted: #{questionVoted}")
 
+    # see https://github.com/slackapi/node-slack-sdk/blob/v3.16.1-sec.2/lib/clients/web/facets/conversations.js#L81-L102
     robot.adapter.client.web.conversations.history(
       event.item.channel,
       {
