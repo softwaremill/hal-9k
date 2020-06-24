@@ -18,7 +18,7 @@ module.exports = (robot) ->
         {"userName": msg.message.user.name, "msg": msg.message.text}
       )
       if (msg.message.user.name is undefined)
-        robot.logger.warn("Ort checking message with undefined user = #{JSON.stringify(msg.message)}")
+        robot.logger.info("Ort checking message with undefined user = #{JSON.stringify(msg.message.user)}")
 
       robot.http(GRAMMAR_STATS_URL + '/mistakes')
       .header('Content-Type', 'application/json')
