@@ -13,13 +13,10 @@ TOKEN = process.env.HUBOT_GRAMMAR_STATS_APP_AUTH_TOKEN
 
 module.exports = (robot) ->
   robot.hear /.*/, (msg) ->
-    if(msg.message.text.indexOf(' ort ') == -1)
+    if(msg.message.text.indexOf(' ort ') == -1 && msg.message.user.name)
       request = JSON.stringify(
         {"userName": msg.message.user.name, "msg": msg.message.text}
       )
-      if (msg.message.user.name is undefined)
-        robot.logger.info("Ort checking message with undefined user = #{JSON.stringify(msg.message.user)}")
-
       robot.http(GRAMMAR_STATS_URL + '/mistakes')
       .header('Content-Type', 'application/json')
       .header('Auth-token', TOKEN)
