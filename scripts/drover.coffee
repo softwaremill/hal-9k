@@ -138,7 +138,7 @@ module.exports = (robot) ->
 
     msg.send response
     msg.send """
-      You can remove cron job with: `cron delete <number>`, for more details go to <https://kiwi.softwaremill.com/display/ORG/Automatyczne+przypomnienia+z+Januszem)|Kiwi>
+      You can remove cron job with: `cron delete <number>`, for more details go to <https://softwaremill.atlassian.net/l/c/y6Z1Fxpi)|Kiwi>
     """
 
   robot.respond /cron delete all/i, (msg) ->
