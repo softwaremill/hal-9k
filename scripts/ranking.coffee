@@ -121,7 +121,7 @@ prepareMessage = (stats) ->
   attachments
 
 sectionHeader = (prefix) ->
-  "#{prefix} ranking <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603|króla wód> - (Suma) => [Blogi / Konferencyjki / Meetupy / Hiring / <https://kiwi.softwaremill.com/pages/viewpage.action?pageId=35719603&focusedCommentId=36929932#comment-36929932|Inne> ]:"
+  "#{prefix} ranking <https://softwaremill.atlassian.net/l/c/pfRnqqgu|króla wód> - (Suma) => [Blogi / Konferencyjki / Meetupy / Hiring / Inne ]:"
 
 module.exports = (robot) ->
 
