@@ -114,7 +114,7 @@ module.exports = (robot) ->
         election = jsonBody.election
         switch election.status
           when "IN_PROGRESS"
-            votingText = "Kandydaci na 4te pytanie -- [GŁOSOWANIE #{election.electionDate}] -- Trwa od *7:00* do *9:30* \n"
+            votingText = "Kandydaci na 4te pytanie -- [GŁOSOWANIE #{election.electionDate}] -- Trwa od *7:00* do *9:50* \n"
             for candidate, i in election.candidates
               votingText += ":#{getEmojiForQuestionNumber(i + 1)}:  #{candidate.questionContent}\n"
 
@@ -138,7 +138,7 @@ module.exports = (robot) ->
   new CronJob('0 0 7 * * *', displayQuestionOnChrumChannel(true), null, true, timeZone)
 
   # Display a winner question 30 minutes before chrum meeting
-  new CronJob('30 30 9 * * *', displayQuestionOnChrumChannel(), null, true, timeZone)
+  new CronJob('30 50 9 * * *', displayQuestionOnChrumChannel(), null, true, timeZone)
 
 
   robot.respond /4te add (.*)/i, add4thQ
