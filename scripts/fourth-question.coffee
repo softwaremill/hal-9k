@@ -137,7 +137,7 @@ module.exports = (robot) ->
   # Display a voting message just after backend created an election with random questions
   new CronJob('0 0 7 * * *', displayQuestionOnChrumChannel(true), null, true, timeZone)
 
-  # Display a winner question 30 minutes before chrum meeting
+  # Display a winner question 10 minutes before chrum meeting
   new CronJob('30 50 9 * * *', displayQuestionOnChrumChannel(), null, true, timeZone)
 
 
