@@ -8,11 +8,11 @@ PTS_PER_CR_OR_TC_ITEM = 0.25
 PTS_PER_PRE_SCREENING_ITEM = 0.1
 
 zlib = require('zlib');
-CronJob = require('cron').CronJob
 pointsModifier = require('./ranking-points-modifier.coffee')
 hiringModifier = require('./ranking-hiring-activities.coffee')
 
-tz = 'Europe/Warsaw'
+# CronJob = require('cron').CronJob
+# tz = 'Europe/Warsaw'
 
 weights =
   "blog-posts": 1
