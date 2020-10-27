@@ -54,6 +54,7 @@ module.exports = (robot) ->
     )
 
   matchingReaction = (msg) ->
-    msg.type == 'added' and msg.reaction.startsWith('+1') and msg.item.type == 'message'
+    robot.logger.info "Got message type #{msg.type} with reaction #{msg.reaction}"
+    msg.type == 'added' and msg.item.type == 'message' and (msg.reaction.startsWith('+1') or msg.reaction == 'white_check_mark')
 
   robot.hearReaction matchingReaction, handlePlusOneReaction
