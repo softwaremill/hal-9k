@@ -36,12 +36,8 @@ module.exports = (robot) ->
 
   robot.hear /^hitler(!)?/i, (res) ->
     response =
-      blocks: [{
-        type: "section"
-        text:
-          type: "mrkdwn"
-          text: hitlerMsg
-      }]
+      type: "mrkdwn"
+      text: hitlerMsg
 
     robot.logger.info "Sending hitler message: #{JSON.stringify response}"
     res.send response
