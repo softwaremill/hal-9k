@@ -9,7 +9,7 @@ module.exports = (robot) ->
   fochMsg = 'No co? Każdy może się pomylić :foch:'
   motylaNogaMsg ='Poczytaj sobie https://www.youtube.com/watch?v=OGXfPVdmosY'
   sorryMsg = 'Przepraszam, ja też miewam gorsze dni :('
-  hitlerMsg = '**Koniec flejmu, wracać do pracy**! :muscle:'
+  hitlerMsg = '*Koniec flejmu, wracać do pracy*! :muscle:'
 
   robot.respond /(about|o sobie|introduce yourself)$/i, (res) ->
     res.send "Od czego by tu zacząć... no tak jestem wybitnie uzdolniony" +
@@ -36,9 +36,11 @@ module.exports = (robot) ->
 
   robot.hear /^hitler(!)?/i, (res) ->
     response =
-      text: hitlerMsg
-      username: robot.name
-      as_user: true
-      type: "mrkdwn"
+      blocks: [
+        type: "section"
+        text:
+          text: hitlerMsg
+          type: "mrkdwn"
+      ]
 
     res.send response
