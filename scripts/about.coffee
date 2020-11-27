@@ -39,6 +39,6 @@ module.exports = (robot) ->
       text: hitlerMsg
       username: robot.name
       as_user: true
-      mrkdwn_in: ["text"]
+      type: "mrkdwn"
 
     res.send response
