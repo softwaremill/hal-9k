@@ -9,7 +9,7 @@ module.exports = (robot) ->
   fochMsg = 'No co? Każdy może się pomylić :foch:'
   motylaNogaMsg ='Poczytaj sobie https://www.youtube.com/watch?v=OGXfPVdmosY'
   sorryMsg = 'Przepraszam, ja też miewam gorsze dni :('
-  hitlerMsg = '*Koniec flejmu, wracać do pracy*! :muscle:'
+  hitlerMsg = 'Koniec *flejma*, wracać do *pracy*! :muscle:'
 
   robot.respond /(about|o sobie|introduce yourself)$/i, (res) ->
     res.send "Od czego by tu zacząć... no tak jestem wybitnie uzdolniony" +
