@@ -43,5 +43,5 @@ module.exports = (robot) ->
           text: hitlerMsg
       }]
 
-    robot.logger.info "Sending hitler message: #{response}"
+    robot.logger.info "Sending hitler message: #{JSON.stringify response}"
     res.send response
