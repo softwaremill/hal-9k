@@ -35,4 +35,9 @@ module.exports = (robot) ->
     res.send sorryMsg
 
   robot.hear /^hitler(!)?/i, (res) ->
-    res.send hitlerMsg
+    response =
+      text: hitlerMsg
+      username: robot.name
+      as_user: true
+
+    res.send response
