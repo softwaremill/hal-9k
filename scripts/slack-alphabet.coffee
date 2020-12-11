@@ -14,7 +14,7 @@ module.exports = (robot) ->
 
     word = res.match[2]
     translated = for char in word
-      c = char.toLowerCase
+      c = char.toLowerCase()
       if c == ' '
         char
       else
