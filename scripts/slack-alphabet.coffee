@@ -11,6 +11,8 @@ _ = require 'lodash'
 
 module.exports = (robot) ->
 
+  specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/
+
   robot.respond /(translate|tłumacz|tlumacz) (.*)/i, (res) ->
     robot.logger.info "Got sentence to translate: #{res.match[2]}"
 
@@ -19,6 +21,8 @@ module.exports = (robot) ->
       lowered = char.toLowerCase()
       if lowered == ' '
         '  '
+      else if specialChars.test lowered
+        lowered
       else
         ":alphabet-white-#{_.deburr lowered}:"
 
