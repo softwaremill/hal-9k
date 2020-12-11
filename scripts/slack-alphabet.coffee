@@ -96,7 +96,7 @@ diacriticsMap =
 
 removeDiacritics = (str) ->
   for char, match in diacriticsMap
-  str.replace match, str
+    str.replace match, str
 
 module.exports = (robot) ->
 
