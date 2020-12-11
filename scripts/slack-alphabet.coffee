@@ -20,5 +20,11 @@ module.exports = (robot) ->
       else
         ":alphabet-white-#{c}:"
 
-    robot.logger.info "Translated: #{translated}"
-    res.send translated
+    msg = translated.reduceRight (x, y) -> x + y
+    robot.logger.info "Translated: #{msg}"
+
+    response =
+      type: "mrkdwn"
+      text: msg
+
+    res.send response
