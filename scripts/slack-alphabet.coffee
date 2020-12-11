@@ -18,7 +18,7 @@ module.exports = (robot) ->
     translated = for char in word
       lowered = char.toLowerCase()
       if lowered == ' '
-        char
+        '  '
       else
         ":alphabet-white-#{_.deburr lowered}:"
 
