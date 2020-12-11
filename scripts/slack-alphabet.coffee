@@ -21,4 +21,4 @@ module.exports = (robot) ->
         ":alphabet-white-#{c}:"
 
     robot.logger.info "Translated: #{translated}"
-    robot.send translated
+    res.send translated
