@@ -7,6 +7,8 @@
 # Commands:
 #   hubot translate|tłumacz|tlumacz <text> - translates the <text>
 
+_ = require 'lodash'
+
 module.exports = (robot) ->
 
   robot.respond /(translate|tłumacz|tlumacz) (.*)/i, (res) ->
