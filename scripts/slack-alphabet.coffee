@@ -20,7 +20,7 @@ module.exports = (robot) ->
       else
         ":alphabet-white-#{c}:"
 
-    msg = translated.reduceRight (x, y) -> x + y
+    msg = translated.reduce (x, y) -> x + y
     robot.logger.info "Translated: #{msg}"
 
     response =
