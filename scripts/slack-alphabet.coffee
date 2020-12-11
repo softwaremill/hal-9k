@@ -10,9 +10,9 @@
 module.exports = (robot) ->
 
   robot.respond /(translate|tłumacz|tlumacz) (.*)/i, (res) ->
-    robot.logger.info "Got translate command: #{res.match[1]}"
+    robot.logger.info "Got sentence to translate: #{res.match[2]}"
 
-    word = res.match[1]
+    word = res.match[2]
     translated = for char in word
       c = char.toLowerCase
       if c == ' '
@@ -20,4 +20,5 @@ module.exports = (robot) ->
       else
         ":alphabet-white-#{c}:"
 
+    robot.logger.info "Translated: #{translated}"
     robot.send translated
