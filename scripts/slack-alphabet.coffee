@@ -112,14 +112,13 @@ module.exports = (robot) ->
 
     word = res.match[2]
     translated = for char in word
-      c = char.toLowerCase()
-      if c == ' '
+      lowered = char.toLowerCase()
+      if lowered == ' '
         char
       else
-        ":alphabet-white-#{c}:"
+        ":alphabet-white-#{removeDiacritics lowered}:"
 
     msg = translated.reduce (x, y) -> x + y
-    msg = removeDiacritics msg
     robot.logger.info "Translated: #{msg}"
 
     response =
