@@ -102,7 +102,7 @@ for base, letters in defaultDiacriticsRemovalMap
     diacriticsMap[char] = base
 
 removeDiacritics = (str) ->
-  str.replace /[^\u0000-\u007E]/g, char ->
+  str.replace /[^\u0000-\u007E]/g, (char) ->
     diacriticsMap[char] or char
 
 module.exports = (robot) ->
