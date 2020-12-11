@@ -11,10 +11,10 @@ _ = require 'lodash'
 
 module.exports = (robot) ->
 
-  robot.respond /(translate|tłumacz|tlumacz) (.*)/i, (res) ->
-    robot.logger.info "Got sentence to translate: #{res.match[2]}"
+  robot.respond /translate (.*)/i, (res) ->
+    robot.logger.info "Got sentence to translate: #{res.match[1]}"
 
-    word = res.match[2]
+    word = res.match[1]
     translated = for char in word
       lowered = char.toLowerCase()
       if lowered == ' '
