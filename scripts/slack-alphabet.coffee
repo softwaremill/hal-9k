@@ -7,14 +7,17 @@
 # Commands:
 #   hubot translate|tłumacz|tlumacz <text> - translates the <text>
 
-
 module.exports = (robot) ->
+
   robot.respond /(translate|tłumacz|tlumacz) (.*)/i, (res) ->
-    word = res.match[2]
+    robot.logger.info "Got translate command: #{res.match[1]}"
+
+    word = res.match[1]
     translated = for char in word
-      if char == ' '
+      c = char.toLowerCase
+      if c == ' '
         char
       else
-        ":alphabet-white-#{char}:"
+        ":alphabet-white-#{c}:"
 
     robot.send translated
