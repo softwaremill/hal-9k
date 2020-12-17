@@ -83,7 +83,8 @@ spec:
         if (env.BRANCH_NAME == 'master') {
           withCredentials([file(credentialsId: 'janusz-secrets', variable: 'secrets')]) {
             sh """
-              helm dependency update helm/janusz-the-bot/
+              helm repo add stable https://charts.helm.sh/stable
+              helm dependency update ./helm/janusz-the-bot/
               helm upgrade --install --atomic\
                 --set image.tag=${dockerTag}\
                 -f ${env.secrets}\
