@@ -160,6 +160,19 @@ module.exports = (robot) ->
   robot.respond /jakie dziś czwarte/i, get4thQ
   robot.respond /poproszę o czwarte pytanie/i, get4thQ
 
+  robot.respond /(wywal|kick|drop) (czwarte|4te|4|4th) "(.*)"/i, (res) ->
+    robot.logger.info "Dropping 4th question '#{res.match[2]}' by #{res.message.user.name}"
+
+    onSuccess = (body, response) ->
+      robot.logger.info("User #{dropUser} dropped question #{droppedQuestion}. Status: #{response.statusCode}. Body: #{body}")
+      res.send "I gotowe :wapno:"
+
+    onError = (err, errCode) ->
+      robot.logger.error("Error dropping question #{droppedQuestion} by user #{dropUser}: (#{errCode}) #{err}")
+      res.reply "No i: #{err} :shit:"
+
+    fourthQuestion.drop robot, onSuccess, onError, res.message.user.name, res.match[2]
+
   robot.adapter.client.rtm.on 'message', (event) ->
     if (event.bot_id != undefined && event.text.match(///#{FourthQuestionVotingEndSentence}///i))
       for item in EmojiToNumberOfVotedQuestionMap
