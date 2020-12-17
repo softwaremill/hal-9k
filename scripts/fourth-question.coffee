@@ -162,7 +162,7 @@ module.exports = (robot) ->
 
   robot.respond /(wywal|kick|drop) (czwarte|4te|4|4th) "(.*)"/i, (res) ->
     dropUser = res.message.user.name
-    droppedQuestion = res.match[2]
+    droppedQuestion = res.match[3]
 
     robot.logger.info "Dropping 4th question '#{droppedQuestion}' by #{dropUser}"
 
