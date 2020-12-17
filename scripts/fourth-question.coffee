@@ -11,7 +11,7 @@
 #   hubot to jakie dziś czwarte - zwraca czwarte pytanie na dzisiaj
 #   hubot jakie dziś czwarte - zwraca czwarte pytanie na dzisiaj
 #   hubot poproszę o czwarte pytanie - zwraca czwarte pytanie na dzisiaj
-#   hubot (wywal|kick|drop) (czwarte|4te|4|4th) "<pytanie>" - usuwa 4te pytanie z puli
+#   hubot (wywal|kick|drop) (czwarte|4te|4|4th) <pytanie> - usuwa 4te pytanie z puli
 
 fourthQuestion = require './fourth_question/FourthQuestionDao'
 CronJob = require('cron').CronJob
@@ -161,7 +161,7 @@ module.exports = (robot) ->
   robot.respond /jakie dziś czwarte/i, get4thQ
   robot.respond /poproszę o czwarte pytanie/i, get4thQ
 
-  robot.respond /(wywal|kick|drop) (czwarte|4te|4|4th) "(.*)"/i, (res) ->
+  robot.respond /(wywal|kick|drop) (czwarte|4te|4|4th) (.*)/i, (res) ->
     dropUser = res.message.user.name
     droppedQuestion = res.match[3]
 
@@ -169,7 +169,7 @@ module.exports = (robot) ->
 
     onSuccess = (body, response) ->
       robot.logger.info("User #{dropUser} dropped question #{droppedQuestion}. Status: #{response.statusCode}. Body: #{body}")
-      res.send "I gotowe :wapno:"
+      res.send "I gotowe, _#{droppedQuestion}_ :arrow_right: :wapno:"
 
     onError = (err, errCode) ->
       robot.logger.error("Error dropping question #{droppedQuestion} by user #{dropUser}: (#{errCode}) #{err}")
