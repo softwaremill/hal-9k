@@ -11,6 +11,7 @@
 #   hubot to jakie dziś czwarte - zwraca czwarte pytanie na dzisiaj
 #   hubot jakie dziś czwarte - zwraca czwarte pytanie na dzisiaj
 #   hubot poproszę o czwarte pytanie - zwraca czwarte pytanie na dzisiaj
+#   hubot (wywal|kick|drop) (czwarte|4te|4|4th) "<pytanie>" - usuwa 4te pytanie z puli
 
 fourthQuestion = require './fourth_question/FourthQuestionDao'
 CronJob = require('cron').CronJob
