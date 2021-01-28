@@ -89,7 +89,7 @@ module.exports = (robot) ->
   displayQuestionOnChrumChannel = (suppressPredefined) ->
     return ->
       chrumRoomSender = (text) ->
-        robot.messageRoom "#chrum", text
+        robot.messageRoom "#social-chrum", text
 
       errorHandler =
         (err, errCode) ->
