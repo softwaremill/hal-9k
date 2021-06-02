@@ -30,7 +30,32 @@ spec:
             - name: http
               containerPort: 8080
               protocol: TCP
+          env:
+            - name: MYSQL_URL
+              value: "mysql://$(MYSQL_USER):$(MYSQL_PASS)@$(MYSQL_HOST)/$(MYSQL_DB)"
+            - name: MYSQL_HOST
+              valueFrom:
+                {{ include "dbHostConfigSource" . }}:
+                key: {{ .Values.db.hostConfig.key }}
+                name: {{ .Values.db.hostConfig.name }}
+            - name: MYSQL_DB
+              valueFrom:
+                {{ include "dbNameConfigSource" . }}:
+                key: {{ .Values.db.dbNameConfig.key }}
+                name: {{ .Values.db.dbNameConfig.name }}
+            - name: MYSQL_USER
+              valueFrom:
+                {{ include "dbUsernameConfigSource" . }}:
+                key: {{ .Values.db.usernameConfig.key }}
+                name: {{ .Values.db.usernameConfig.name }}
+            - name: MYSQL_PASS
+              valueFrom:
+                {{ include "dbPasswordConfigSource" . }}:
+                key: {{ .Values.db.passwordConfig.key }}
+                name: {{ .Values.db.passwordConfig.name }}
           envFrom:
+            - secretRef:
+                name: {{ tpl .Values.appConfigSecret . }}
             - configMapRef:
                 name: {{ include "janusz-the-bot.fullname" . }}
           livenessProbe:

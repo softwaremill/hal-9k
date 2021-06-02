@@ -5,32 +5,31 @@
 replicaCount: 1
 
 image:
-  repository: softwaremill/janusz-the-bot
+  repository: eu.gcr.io/sml-gke-iac/janusz-the-bot
   tag: latest
   pullPolicy: IfNotPresent
 
-imagePullSecrets:
-  - name: sml-docker-hub
+imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
 service:
   type: ClusterIP
-  port: 80
+  port: 8080
 
 ingress:
   enabled: true
   annotations:
     kubernetes.io/ingress.class: nginx
-    kubernetes.io/tls-acme: "false"
+    cert-manager.io/cluster-issuer: letsencrypt-issuer
   path: /
   hosts:
     - host: janusz-the-bot.sml.io
       paths: [/status,/slack/actions]
-  tls: []
-    # - secretName: janusz-the-bot-tls
-    #  hosts:
-    #  - janusz-the-bot.sml.io
+  tls:
+    - secretName: janusz-the-bot-tls
+      hosts:
+        - janusz-the-bot.sml.io
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -51,9 +50,7 @@ tolerations: []
 affinity: {}
 
 mysql:
-  mysqlRootPassword: pass
   mysqlUser: janusz
-  mysqlPassword: jnausz
   mysqlDatabase: janusz
   initializationFiles:
     janusz-db.sql: |-
@@ -62,50 +59,51 @@ mysql:
       CREATE TABLE IF NOT EXISTS brain (id INT,data TEXT, PRIMARY KEY (id));
 
 slack:
-  token: 11111111111 # hubot https://softwaremill.slack.com/services/B03JTM099
-  oauthToken: 11111111111 # classic app https://api.slack.com/apps/A0156M45HSB
-  signingSecret: 34534543
-  verificationToken: 1231231231231
+  # hubot https://softwaremill.slack.com/services/B03JTM099
+  # classic app https://api.slack.com/apps/A0156M45HSB
   exitOnDisconnect: true
   apiUrl: "https://softwaremill.slack.com/api"
   logLevel: info
 
 backend:
   fourthQuestionLambdaUrl: "https://amazonaws.com/FourthQuestionApiDeploy/fourth-question"
-  grammarStatsAppAuthToken: secret
   grammarStatsAppUrl: "https://janusz-backend.sml.io"
   kudosAppLogin: "SMLKudos"
-  kudosAppPassword: secret
-  restApiSecret: secret
 
 bitbucket:
   username: "softwaremill"
-  password: secrret
-
-gogole:
-  apiKey: secret
-  cseId: secret
-  cseKey: secret
-  searchCx: secret
-  searchKey: secret
 
 scalaTimes:
-  jwtSecret: secret
   appUrl: "https://scalatimes.tools.softwaremill.com"
 
 trello:
   board: "51acaaefbeac745c31005966"
-  key: secret
-  token: secret
 
 imgflipApi:
   username: "JanuszTheBot"
-  password: secret
 
 mailgun:
-  apikey: secret
   domain: "sandboxe517492f75f54aab8ffac7c9afb4c3ab.mailgun.org"
 
 sendgrid:
   username: "app22582599@heroku.com"
-  password: secret
+
+db:
+  hostConfig:
+    name: mysql-configuration
+    key: DB_HOST
+    kind: configMap
+  dbNameConfig:
+    name: janusz-the-bot-mysql
+    key: DB_NAME
+    kind: secret
+  usernameConfig:
+    name: janusz-the-bot-mysql
+    key: USERNAME
+    kind: secret
+  passwordConfig:
+    name: janusz-the-bot-mysql
+    key: PASSWORD
+    kind: secret
+
+appConfigSecret: "{{ .Release.Name }}-secrets"

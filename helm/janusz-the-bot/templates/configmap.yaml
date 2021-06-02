@@ -5,35 +5,16 @@ metadata:
   labels:
 {{- include "janusz-the-bot.labels" . | nindent 4 }}
 data:
-  HUBOT_SLACK_TOKEN: {{ .Values.slack.token }}
-  HUBOT_SLACK_OAUTH_TOKEN: {{ .Values.slack.oauthToken }}
-  HUBOT_SLACK_VERIFICATION_TOKEN: {{ .Values.slack.verificationToken }}
-  HUBOT_SLACK_SIGNING_SECRET: {{ .Values.slack.signingSecret }}
   MYSQL_URL: mysql://{{ .Values.mysql.mysqlUser }}:{{ .Values.mysql.mysqlPassword }}@{{ include "janusz-the-bot.fullname" . }}-mysql/{{ .Values.mysql.mysqlDatabase }}
   FOURTH_QUESTION_LAMBDA_URL: {{ .Values.backend.fourthQuestionLambdaUrl }}
-  HUBOT_BITBUCKET_PASSWORD: {{ .Values.bitbucket.password }}
   HUBOT_BITBUCKET_USERNAME: {{ .Values.bitbucket.username }}
-  HUBOT_GOOGLE_API: {{ .Values.gogole.apiKey }}
-  HUBOT_GOOGLE_CSE_ID: {{ .Values.gogole.cseId }}
-  HUBOT_GOOGLE_CSE_KEY: {{ .Values.gogole.cseKey }}
-  HUBOT_GOOGLE_SEARCH_CX: {{ .Values.gogole.searchCx }}
-  HUBOT_GOOGLE_SEARCH_KEY: {{ .Values.gogole.searchKey }}
-  HUBOT_GRAMMAR_STATS_APP_AUTH_TOKEN: {{ .Values.backend.grammarStatsAppAuthToken }}
   HUBOT_GRAMMAR_STATS_APP_URL: {{ .Values.backend.grammarStatsAppUrl }}
   HUBOT_KUDOS_APP_LOGIN: {{ .Values.backend.kudosAppLogin }}
-  HUBOT_KUDOS_APP_PASSWORD: {{ .Values.backend.kudosAppPassword }}
-  HUBOT_SCALA_TIMES_APP_JWT_SECRET: {{ .Values.scalaTimes.jwtSecret }}
   HUBOT_SCALA_TIMES_APP_URL: {{ .Values.scalaTimes.appUrl }}
   HUBOT_SLACK_EXIT_ON_DISCONNECT: {{ .Values.slack.exitOnDisconnect | quote }}
   HUBOT_TRELLO_BOARD: {{ .Values.trello.board }}
-  HUBOT_TRELLO_KEY: {{ .Values.trello.key }}
-  HUBOT_TRELLO_TOKEN: {{ .Values.trello.token }}
-  IMGFLIP_API_PASSWORD: {{ .Values.imgflipApi.password }}
   IMGFLIP_API_USERNAME: {{ .Values.imgflipApi.username }}
-  MAILGUN_APIKEY: {{ .Values.mailgun.apikey }}
   MAILGUN_DOMAIN: {{ .Values.mailgun.domain }}
-  REST_API_SECRET: {{ .Values.backend.restApiSecret }}
-  SENDGRID_PASSWORD: {{ .Values.sendgrid.password }}
   SENDGRID_USERNAME: {{ .Values.sendgrid.username }}
   SLACK_API_URL: {{ .Values.slack.apiUrl }}
   HUBOT_LOG_LEVEL: {{ .Values.slack.logLevel }}
