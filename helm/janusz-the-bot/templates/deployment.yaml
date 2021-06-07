@@ -68,10 +68,6 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-      initContainers:
-        - name: init-mydb
-          image: mysql:5.7
-          command: ['sh', '-c', 'until mysqladmin --host={{ include "janusz-the-bot.fullname" . }}-mysql --port={{ .Values.mysql.service.port | default "3306" }} -u root -p{{ .Values.mysql.mysqlRootPassword }} ping; do echo waiting for {{ include "janusz-the-bot.fullname" . }}-mysql; sleep 2; done;']
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
