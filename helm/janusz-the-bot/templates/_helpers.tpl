@@ -62,3 +62,19 @@ Create the name of the service account to use
     {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
+
+{{- define "dbHostConfigSource" -}}
+{{- printf "%s%s" .Values.db.hostConfig.kind "KeyRef" -}}
+{{- end -}}
+
+{{- define "dbNameConfigSource" -}}
+{{- printf "%s%s" .Values.db.dbNameConfig.kind "KeyRef" -}}
+{{- end -}}
+
+{{- define "dbUsernameConfigSource" -}}
+{{- printf "%s%s" .Values.db.usernameConfig.kind "KeyRef" -}}
+{{- end -}}
+
+{{- define "dbPasswordConfigSource" -}}
+{{- printf "%s%s" .Values.db.passwordConfig.kind "KeyRef" -}}
+{{- end -}}
