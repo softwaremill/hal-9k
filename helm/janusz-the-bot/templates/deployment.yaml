@@ -32,7 +32,7 @@ spec:
               protocol: TCP
           env:
             - name: MYSQL_URL
-              value: "mysql://$(MYSQL_USER):$(MYSQL_PASS)@$(MYSQL_HOST)/$(MYSQL_DB)"
+              value: "mysql://$MYSQL_USER:$MYSQL_PASS@$MYSQL_HOST/$MYSQL_DB"
             - name: MYSQL_HOST
               valueFrom:
                 {{ include "dbHostConfigSource" . }}:
