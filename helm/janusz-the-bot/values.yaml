@@ -62,7 +62,7 @@ slack:
 
 backend:
   fourthQuestionLambdaUrl: "https://amazonaws.com/FourthQuestionApiDeploy/fourth-question"
-  grammarStatsAppUrl: "https://janusz-backend.sml.io"
+  grammarStatsAppUrl: "http://janusz-backend:9095"
   kudosAppLogin: "SMLKudos"
 
 bitbucket:
