@@ -15,7 +15,7 @@ fullnameOverride: ""
 
 service:
   type: ClusterIP
-  port: 8080
+  port: 80
 
 ingress:
   enabled: true
@@ -52,11 +52,6 @@ affinity: {}
 mysql:
   mysqlUser: janusz
   mysqlDatabase: janusz
-  initializationFiles:
-    janusz-db.sql: |-
-      CREATE DATABASE IF NOT EXISTS janusz DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
-      USE janusz;
-      CREATE TABLE IF NOT EXISTS brain (id INT,data TEXT, PRIMARY KEY (id));
 
 slack:
   # hubot https://softwaremill.slack.com/services/B03JTM099
