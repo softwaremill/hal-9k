@@ -24,6 +24,7 @@
     "@slack/client": "5.0.2",
     "@slack/interactive-messages": "0.2.0",
     "cron": "1.0.0",
+    "fd-slicer": "^1.1.0",
     "flip": "~0.1.1",
     "hubot": "3.3.2",
     "hubot-flip": "^2.17.1",
