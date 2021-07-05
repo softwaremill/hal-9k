@@ -25,7 +25,7 @@ ingress:
   path: /
   hosts:
     - host: janusz-the-bot.sml.io
-      paths: [/status,/slack/actions]
+      paths: [/status,/slack/actions,/memes]
   tls:
     - secretName: janusz-the-bot-tls
       hosts:
